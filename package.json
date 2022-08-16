@@ -46,7 +46,8 @@
 			"[Ff]eat:": "",
 			"[Ff]ix:": "",
 			"[Bb]reak:": "",
-			"[Dd]oc:": ""
+			"[Dd]oc:": "",
+			"[Cc]hore:": ""
 		}
 	},
 	"dependencies": {
