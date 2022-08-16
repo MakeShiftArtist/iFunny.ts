@@ -1,0 +1,11 @@
+# VsCode
+.vscode
+# Logs
+*.log
+
+# Outputs
+dist/
+types/
+
+# NPM
+node_modules/
