@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"target": "es2016",
+		"lib": ["es2022"],
+		"module": "commonjs",
+		"outDir": "./dist",
+		"declaration": true,
+		"declarationDir": "./types",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"baseUrl": "src",
+		"paths": {
+			"client/*": ["client/*"],
+			"@Client": ["client/Client.ts"]
+		}
+	},
+	"include": ["./src/**/*"]
+}
