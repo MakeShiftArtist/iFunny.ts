@@ -1,6 +1,7 @@
 import { BaseClient, BaseClientConfig } from "./BaseClient";
 import {
 	APIClientUser as ClientPayload,
+	Endpoints,
 	RESTAPIAccountSuccess,
 	RESTAPIErrorResponse,
 	RESTAPIOauth2LoginSuccess,
@@ -8,7 +9,6 @@ import {
 } from "@ifunny/ifunny-api-types";
 
 import { AxiosResponse } from "axios";
-import { Endpoints } from "../utils/Endpoints";
 import { If } from "../utils/Util";
 import { handleError } from "../errors/ErrorHandler";
 import { iFunnyError } from "../errors/iFunnyError";
