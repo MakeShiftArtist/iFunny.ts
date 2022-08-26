@@ -1,5 +1,3 @@
-const kCode = Symbol("code");
-
 import { Messages } from "./Messages";
 import { iFunnyErrorCodes } from "./iFunnyErrorCodes";
 
