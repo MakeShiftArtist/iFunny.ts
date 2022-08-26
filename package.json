@@ -53,7 +53,7 @@
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.1.0",
-		"@ifunny/ifunny-api-types": "^0.6.9",
+		"@ifunny/ifunny-api-types": "^0.7.1",
 		"axios": "^0.27.2",
 		"eventemitter3": "^4.0.7"
 	}
