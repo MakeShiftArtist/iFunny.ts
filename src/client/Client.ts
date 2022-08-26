@@ -10,6 +10,7 @@ import {
 import { AxiosResponse } from "axios";
 import { Endpoints } from "../utils/Endpoints";
 import { If } from "../utils/Util";
+import { handleError } from "../errors/ErrorHandler";
 import { iFunnyError } from "../errors/iFunnyError";
 import { iFunnyErrorCodes } from "../errors/iFunnyErrorCodes";
 import { isAxiosError } from "../utils/Methods";
@@ -140,18 +141,27 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		acceptMailOffers: boolean = false,
 		login: boolean = true
 	): Promise<this> {
-		let response = await this.instance.post<RESTAPISignUpSuccess>(Endpoints.user(), {
-			reg_type: "pwd",
-			nick,
-			email,
-			password,
-			accept_mailing: acceptMailOffers ? 1 : 0,
-		});
-		this.payload.id = response.data.data.id;
-		if (login) {
-			return await this.login(email, password);
+		try {
+			let response = await this.instance.post<RESTAPISignUpSuccess>(
+				Endpoints.user(),
+				{
+					reg_type: "pwd",
+					nick,
+					email,
+					password,
+					accept_mailing: acceptMailOffers ? 1 : 0,
+				}
+			);
+			this.payload.id = response.data.data.id;
+			if (login) {
+				return await this.login(email, password);
+			}
+			return this;
+		} catch (error) {
+			if (!(error instanceof Error)) throw error;
+
+			throw handleError(error);
 		}
-		return this;
 	}
 }
 
