@@ -4,6 +4,7 @@ import {
 	RESTAPIAccountSuccess,
 	RESTAPIErrorResponse,
 	RESTAPIOauth2LoginSuccess,
+	RESTAPISignUpSuccess,
 } from "@ifunny/ifunny-api-types";
 
 import { AxiosResponse } from "axios";
@@ -136,15 +137,21 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		nick: string,
 		email: string,
 		password: string,
+		acceptMailOffers: boolean = false,
 		login: boolean = true
 	): Promise<this> {
-		let response = await this.instance.post<RESTAPISignUpSuccess>(Endpoints.token, {
-			grant_type: "password",
-			username: email,
+		let response = await this.instance.post<RESTAPISignUpSuccess>(Endpoints.user(), {
+			reg_type: "pwd",
+			nick,
+			email,
 			password,
+			accept_mailing: acceptMailOffers ? 1 : 0,
 		});
-		this.bearer = response.data.access_token;
-		return await this.fetch();
+		this.payload.id = response.data.data.id;
+		if (login) {
+			return await this.login(email, password);
+		}
+		return this;
 	}
 }
 
