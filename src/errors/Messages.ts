@@ -1,4 +1,4 @@
-import { RESTAPICaptchaError } from "../../../../iFunny/Wrappers/@iFunny/ifunny-api-types/src/utils/errors";
+import { RESTAPICaptchaError } from "@ifunny/ifunny-api-types";
 import { iFunnyErrorCodes } from "./iFunnyErrorCodes";
 
 function desc(title: string, description?: string | null, fallback: string = ".") {
