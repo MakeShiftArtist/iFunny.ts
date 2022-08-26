@@ -6,7 +6,7 @@
 	"types": "types",
 	"scripts": {
 		"test": "jest",
-		"changelog": "auto-changelog",
+		"changelog": "auto-changelog -p  && git add CHANGELOG.md && git commit -m \"Update CHANGELOG.md\"",
 		"changelog-debug": "auto-changelog -p --template json --output changelog-data.json",
 		"type": "tsc",
 		"build": "npx tsc && npm run type",
