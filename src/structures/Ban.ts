@@ -1,8 +1,7 @@
-import { APIBanType, APIBan as BanPayload } from "@ifunny/ifunny-api-types";
+import { APIBanType, APIBan as BanPayload, Endpoints } from "@ifunny/ifunny-api-types";
 
 import { Base } from "./Base";
 import { Client } from "../client/Client";
-import { Endpoints } from "utils/Endpoints";
 import { User } from "./User";
 
 /**

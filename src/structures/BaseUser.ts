@@ -1,4 +1,4 @@
-import { APIUser, APIUserNums } from "@ifunny/ifunny-api-types";
+import { APIUser, APIUserNums, Endpoints } from "@ifunny/ifunny-api-types";
 
 import { Base } from "./Base";
 import type { Client } from "../client/Client";
@@ -22,7 +22,7 @@ export class BaseUser extends Base<UserPayload> {
 	constructor(client: Client, id: string, payload: any = {}) {
 		super(client, id, payload);
 		this.payload = payload;
-		this.endpoint_url = `/users/${id}`;
+		this.endpoint_url = Endpoints.user(id);
 	}
 
 	/**
