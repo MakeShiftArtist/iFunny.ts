@@ -106,7 +106,7 @@ export class BaseClient extends EventEmitter {
 	 * @param params The params to pass to the url
 	 * @yields The value of the key
 	 */
-	public async *paginate<T extends unknown>(
+	protected async *paginate<T extends unknown>(
 		url: string,
 		key: string,
 		params?: any
