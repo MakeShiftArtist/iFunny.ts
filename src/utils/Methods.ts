@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 
 import { BasicAuthConfig } from "./Util";
 import { DefaultBasicAuthConfig } from "./Constants";
+import { RESTAPIErrorResponse } from "@ifunny/ifunny-api-types";
 import crypto from "crypto";
 import { iFunnyError } from "../errors/iFunnyError";
 import { iFunnyErrorCodes } from "../errors/iFunnyErrorCodes";
@@ -41,7 +42,9 @@ export function assertError(item: any): item is Error {
 	return assert(item instanceof Error, `Unknown Error: ${item}`);
 }
 
-export function isAxiosError(err: Error): err is AxiosError {
+export function isAxiosError<T extends RESTAPIErrorResponse = RESTAPIErrorResponse>(
+	err: Error
+): err is AxiosError<T> {
 	return axios.isAxiosError(err);
 }
 
