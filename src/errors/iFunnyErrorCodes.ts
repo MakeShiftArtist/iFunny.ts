@@ -6,15 +6,16 @@ export enum iFunnyErrorCodes {
 	ClientNotLoggedIn,
 	InvalidClient,
 
+	// Library Errors
+	InvalidBasicTokenLength,
+	UncaughtAxiosError,
+
 	// Auth Errors
 	InvalidTokenType,
 	InvalidBasicToken,
 	InvalidBearerToken,
 	InvalidGrant,
 	CaptchaRequired,
-
-	// Library Errors
-	InvalidBasicTokenLength,
 
 	// User Errors
 	UserNotFound,
