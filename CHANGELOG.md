@@ -2,6 +2,39 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
+## [v0.3.0](https://github.com/ifunny-co/iFunny.ts/compare/v0.2.2...v0.3.0) - 2022-08-28
+
+
+### Features
+
+*  Added Client.users @MakeShiftArtist ([`63a12f3`](https://github.com/ifunny-co/iFunny.ts/commit/63a12f3fa39862e90153968dbadf078f433969da))
+*  Add UserNotFound and UserUnavailable @MakeShiftArtist ([`3a2d5c4`](https://github.com/ifunny-co/iFunny.ts/commit/3a2d5c4abba790d4245f5bb4214b02564415a7dd))
+*  Add UncaughtAxiosError @MakeShiftArtist ([`baf4633`](https://github.com/ifunny-co/iFunny.ts/commit/baf463372be68a74ccf6f1f77ae0f5069f703844))
+*  isAxiosError returns AxiosError&lt;RESTAPIErrorResponse&gt; @MakeShiftArtist ([`dbe355d`](https://github.com/ifunny-co/iFunny.ts/commit/dbe355d514cebd6d0bed1600c2726ada02645ef4))
+
+### Fixes
+
+*  Improved error handler @MakeShiftArtist ([`36be51c`](https://github.com/ifunny-co/iFunny.ts/commit/36be51c8d6925672fe77e07b0698baba6184b02e))
+*  Cache works properly now @MakeShiftArtist ([`37f9c7a`](https://github.com/ifunny-co/iFunny.ts/commit/37f9c7a6fda432373b5026c959b4c568ddf71fce))
+*  Fixed UserManager @MakeShiftArtist ([`edf6e5f`](https://github.com/ifunny-co/iFunny.ts/commit/edf6e5f4560102abf63e009ce6bbcc5013af83a7))
+*  Added missing messages @MakeShiftArtist ([`de5c80f`](https://github.com/ifunny-co/iFunny.ts/commit/de5c80f98a4e9af3573f5a57c571de133ca8c12e))
+*  Fixed tsconfig.json @MakeShiftArtist ([`86cdb1b`](https://github.com/ifunny-co/iFunny.ts/commit/86cdb1bfa784bcb54cd8aa4443ae283baa55acc9))
+*  Add npmignore @MakeShiftArtist ([`931444f`](https://github.com/ifunny-co/iFunny.ts/commit/931444f543164257b79cc3eb9cef0982c3164cc0))
+*  Added new and unknown static methods to iFunnyError @MakeShiftArtist ([`d129fa7`](https://github.com/ifunny-co/iFunny.ts/commit/d129fa7c43fc1aea8c7fc4b2f532cb2bd32b38e3))
+*  isAxiosError now takes a data type @MakeShiftArtist ([`c6e3424`](https://github.com/ifunny-co/iFunny.ts/commit/c6e3424a2d0a88b20d30cd18df5e6669c376b885))
+*  Removed useless fetch override from User @MakeShiftArtist ([`57830a5`](https://github.com/ifunny-co/iFunny.ts/commit/57830a5547b47f249a2c12a74708e41609509256))
+*  interceptors use handleError @MakeShiftArtist ([`819d1c5`](https://github.com/ifunny-co/iFunny.ts/commit/819d1c5abb2092f039cac3597c3cb8883cfc98cc))
+*  Added override keyword to BaseUser.id @MakeShiftArtist ([`934fb65`](https://github.com/ifunny-co/iFunny.ts/commit/934fb6516baea77302f4e2c71ed06fed6eb3215c))
+*  Added override keyword to BaseContent.id @MakeShiftArtist ([`b680bff`](https://github.com/ifunny-co/iFunny.ts/commit/b680bff335bab0969c365a6406c064c58e92525b))
+
+
+### Chores
+
+*  Update @ifunny/ifunny-api-types and scripts @MakeShiftArtist ([`d7a0a97`](https://github.com/ifunny-co/iFunny.ts/commit/d7a0a977865d7041cf433af8ba11baba425210b7))
+
+
+
+
 ## [v0.2.2](https://github.com/ifunny-co/iFunny.ts/compare/v0.2.1...v0.2.2) - 2022-08-28
 
 
