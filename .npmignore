@@ -1,0 +1,20 @@
+# Testing
+test.ts
+
+# VsCode
+.vscode
+.github
+
+# Logs
+*.log
+
+# Src
+src/
+tests/
+jest.config.js
+.prettierignore
+changelog-template.hbs
+tsconfig.json
+
+# NPM
+node_modules/
