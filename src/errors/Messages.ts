@@ -1,4 +1,4 @@
-import { RESTAPICaptchaError } from "@ifunny/ifunny-api-types";
+import { RESTAPIErrorCaptchaRequired } from "@ifunny/ifunny-api-types";
 import { iFunnyErrorCodes } from "./iFunnyErrorCodes";
 
 function desc(title: string, description?: string | null, fallback: string = ".") {
@@ -8,7 +8,7 @@ function desc(title: string, description?: string | null, fallback: string = "."
 export const Messages = {
 	// Unknown Error
 	[iFunnyErrorCodes.UnknownError]: (error: any) =>
-		`An unknown error occurred: ${error}`,
+		desc("An unknown error occurred", error),
 
 	// Client Setup Errors
 	[iFunnyErrorCodes.ClientNotLoggedIn]: (action?: string) =>
@@ -16,22 +16,27 @@ export const Messages = {
 	[iFunnyErrorCodes.InvalidClient]: (description?: string) =>
 		desc("The client is invalid", description),
 
+	// Library Errors
+	[iFunnyErrorCodes.InvalidBasicTokenLength]: (description?: string) =>
+		desc("The basic token must be 156 or 112 characters long", description),
+	[iFunnyErrorCodes.UncaughtAxiosError]: (message: string) =>
+		desc("Uncaught axios error", message),
+
 	// Auth Errors
 	[iFunnyErrorCodes.InvalidTokenType]: (tokenType?: string) =>
 		desc("Invalid token type", tokenType),
-	[iFunnyErrorCodes.InvalidBasicToken]: () => "An invalid basic token was provided.",
-	[iFunnyErrorCodes.InvalidBearerToken]: () => "An invalid bearer token was provided.",
-	[iFunnyErrorCodes.InvalidGrant]: (description: string) => `${description}`,
-	[iFunnyErrorCodes.CaptchaRequired]: (data: RESTAPICaptchaError) =>
-		`A captcha is required. Open this url in a browser then retry request: ${data.data.captcha_url}`,
-
-	// Library Errors
-	[iFunnyErrorCodes.InvalidBasicTokenLength]: () =>
-		"The basic token must be 156 or 112 characters long.",
+	[iFunnyErrorCodes.InvalidBasicToken]: (token?: string) =>
+		desc("An invalid basic token was provided", token),
+	[iFunnyErrorCodes.InvalidBearerToken]: (token?: string) =>
+		desc("An invalid bearer token was provided", token),
+	[iFunnyErrorCodes.InvalidGrant]: (description?: string) =>
+		desc("Invalid Auth Token", description),
+	[iFunnyErrorCodes.CaptchaRequired]: (data: RESTAPIErrorCaptchaRequired) =>
+		desc("A captcha is required", data.data.captcha_url),
 
 	// User Errors
-	[iFunnyErrorCodes.UserNotFound]: (description: string) => description,
-	[iFunnyErrorCodes.UserUnavailable]: (description: string) => description,
+	[iFunnyErrorCodes.UserNotFound]: (user?: string) => desc("User not found", user),
+	[iFunnyErrorCodes.UserUnavailable]: (user?: string) => desc("User unavailable", user),
 };
 
 export default Messages;
