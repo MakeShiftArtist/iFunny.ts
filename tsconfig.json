@@ -1,22 +1,19 @@
 {
+	"compileOnSave": true,
 	"compilerOptions": {
-		"target": "es2016",
-		"lib": ["es2022"],
-		"module": "commonjs",
-		"outDir": "./dist",
 		"declaration": true,
-		"declarationDir": "./types",
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
+		"declarationDir": "types",
+		"declarationMap": true,
 		"forceConsistentCasingInFileNames": true,
-		"strict": true,
-		"skipLibCheck": true,
+		"module": "CommonJS",
+		"noImplicitOverride": true,
+		"noUnusedLocals": true,
+		"outDir": "dist",
+		"removeComments": false,
 		"sourceMap": true,
-		"baseUrl": "src",
-		"paths": {
-			"client/*": ["client/*"],
-			"@Client": ["client/Client.ts"]
-		}
+		"strict": true,
+		"target": "ES2020",
+		"pretty": true
 	},
-	"include": ["./src/**/*"]
+	"include": ["src/**/*.ts"]
 }
