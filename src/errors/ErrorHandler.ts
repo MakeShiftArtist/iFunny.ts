@@ -1,38 +1,69 @@
 import {
-	RESTAPIError as APIError,
-	RESTAPICaptchaError as CaptchaError,
+	IFUNNY_ERRORS,
+	RESTAPIErrorBadRequest,
+	RESTAPIErrorCaptchaRequired,
+	RESTAPIErrorResponse,
 } from "@ifunny/ifunny-api-types";
 
 import { iFunnyError } from "./iFunnyError";
 import { iFunnyErrorCodes } from "./iFunnyErrorCodes";
 import { isAxiosError } from "../utils/Methods";
 
-function handleCaptcha(data: CaptchaError) {
-	return new iFunnyError(iFunnyErrorCodes.CaptchaRequired, data);
+function handleCaptcha(data: RESTAPIErrorCaptchaRequired) {
+	return iFunnyError.new(iFunnyErrorCodes.CaptchaRequired, data);
 }
 
-export function handleAPIError(error: APIError) {
-	switch (error.error) {
-		case "captcha_required":
-			return handleCaptcha(error as CaptchaError);
-		case "unknown_error":
-			return new iFunnyError(
-				iFunnyErrorCodes.UnknownError,
-				`(${error.status}) ${error.error_description}`
-			);
+/**
+ * Handles bad requests errors
+ * @param error Bad request error data
+ * @returns
+ */
+function handleBadRequest(error: RESTAPIErrorBadRequest) {
+	switch (error.error_description) {
+		case "Invalid user id":
+			// ? User with that ID does not exist
+			return null;
 		default:
-			return new iFunnyError(
+			return iFunnyError.new(
 				iFunnyErrorCodes.UnknownError,
-				JSON.stringify(error, null, 2)
+				error.error_description
 			);
 	}
 }
 
-export function handleError(error: unknown) {
-	if (!(error instanceof Error)) {
-		return new iFunnyError(iFunnyErrorCodes.UnknownError, error);
+/**
+ * Handles an error returned by the iFunny error
+ * @param error {@link RESTAPIErrorResponse}
+ * @returns
+ */
+export function handleAPIError(error: RESTAPIErrorResponse) {
+	switch (error.error) {
+		case IFUNNY_ERRORS.BAD_REQUEST:
+			// @ts-ignore
+			return handleBadRequest(error);
+
+		case IFUNNY_ERRORS.CAPTCHA_REQUIRED:
+			return handleCaptcha(error);
+
+		default:
+			return iFunnyError.new(
+				iFunnyErrorCodes.UnknownError,
+				error.error_description
+			);
 	}
-	if (isAxiosError(error) && error.response?.data) {
-		return handleAPIError(error.response.data as APIError);
-	} else return error;
+}
+
+/**
+ * Handles errors thrown when making axios requests
+ * @param error Error to handle
+ * @returns `null` or custom iFunnyError
+ */
+export function handleError(error: unknown) {
+	if (!isAxiosError(error)) {
+		return iFunnyError.unknown(error);
+	}
+	if (error.response?.data) {
+		return handleAPIError(error.response.data);
+	}
+	return iFunnyError.new(iFunnyErrorCodes.UncaughtAxiosError, error.message);
 }
