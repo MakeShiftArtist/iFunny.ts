@@ -37,7 +37,7 @@ function makeError(Base: typeof Error) {
 		/**
 		 * The name of the error
 		 */
-		get name() {
+		override get name() {
 			return `iFunny${super.name} - ${iFunnyErrorCodes[this.code]} [${this.code}]`;
 		}
 
@@ -46,6 +46,19 @@ function makeError(Base: typeof Error) {
 			...args: ResolveArgs<K>
 		): string {
 			return message(code, ...args);
+		}
+
+		static new<K extends keyof typeof Messages>(code: K, ...args: ResolveArgs<K>) {
+			return new iFunnyError(code, ...args);
+		}
+
+		/**
+		 * Easily create an unknown error
+		 * @param error Unknown error to turn into iFunny Error
+		 * @returns
+		 */
+		static unknown(error: unknown) {
+			return iFunnyError.new(iFunnyErrorCodes.UnknownError, error);
 		}
 	};
 }
@@ -66,9 +79,7 @@ function message<K extends keyof typeof Messages>(
 	if (!msg) throw new Error(`An invalid error code was used: ${code}.`);
 	// @ts-ignore
 	if (typeof msg === "function") return msg(...args); // TODO: Fix this resolving to 1 function instead of union of functions
-	if (!args?.length) return msg;
-	args.unshift(msg);
-	return args.join(" ");
+	return msg;
 }
 
 /**
