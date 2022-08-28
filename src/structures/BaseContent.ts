@@ -13,7 +13,7 @@ export class BaseContent extends Base<APIContent> {
 	/**
 	 * The ID of the Content.
 	 */
-	public get id(): string {
+	public override get id(): string {
 		return super.id;
 	}
 
