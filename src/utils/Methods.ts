@@ -1,9 +1,10 @@
+import * as crypto from "crypto";
+
 import axios, { AxiosError } from "axios";
 
 import { BasicAuthConfig } from "./Util";
 import { DefaultBasicAuthConfig } from "./Constants";
 import { RESTAPIErrorResponse } from "@ifunny/ifunny-api-types";
-import crypto from "crypto";
 import { iFunnyError } from "../errors/iFunnyError";
 import { iFunnyErrorCodes } from "../errors/iFunnyErrorCodes";
 
@@ -34,18 +35,13 @@ export function assert(claim: boolean, error: Error | string): claim is true {
 }
 
 /**
- *
- * @param item The item to check
- * @returns
+ * Validates that something is an Axios Error
+ * @param item Item to validate
  */
-export function assertError(item: any): item is Error {
-	return assert(item instanceof Error, `Unknown Error: ${item}`);
-}
-
 export function isAxiosError<T extends RESTAPIErrorResponse = RESTAPIErrorResponse>(
-	err: Error
-): err is AxiosError<T> {
-	return axios.isAxiosError(err);
+	item: unknown
+): item is AxiosError<T> {
+	return axios.isAxiosError(item);
 }
 
 /**
