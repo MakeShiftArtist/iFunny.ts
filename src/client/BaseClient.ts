@@ -63,9 +63,11 @@ export class BaseClient extends EventEmitter {
 		});
 
 		this.instance.interceptors.response.use(
-			(response) => response,
-			(error) => {
-				throw handleError(error);
+			(onSuccess) => onSuccess,
+			(onFail) => {
+				const error = handleError(onFail);
+				if (error instanceof Error) throw error;
+				return error;
 			}
 		);
 
