@@ -79,7 +79,7 @@ export class BaseUser extends Base<UserPayload> {
 	/**
 	 * The user's unique id
 	 */
-	get id() {
+	override get id() {
 		return super.id;
 	}
 
