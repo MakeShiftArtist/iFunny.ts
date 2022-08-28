@@ -2,18 +2,16 @@ import { BaseClient, BaseClientConfig } from "./BaseClient";
 import {
 	APIClientUser as ClientPayload,
 	Endpoints,
-	RESTAPIAccountSuccess,
-	RESTAPIErrorResponse,
 	RESTAPIOauth2LoginSuccess,
 	RESTAPISignUpSuccess,
+	RESTAPISuccessResponse as Success,
 } from "@ifunny/ifunny-api-types";
 
-import { AxiosResponse } from "axios";
+import { APIClientUser } from "@ifunny/ifunny-api-types";
 import { If } from "../utils/Util";
-import { handleError } from "../errors/ErrorHandler";
+import { UserManager } from "../managers/UserManager";
 import { iFunnyError } from "../errors/iFunnyError";
 import { iFunnyErrorCodes } from "../errors/iFunnyErrorCodes";
-import { isAxiosError } from "../utils/Methods";
 
 interface ClientConfig extends Partial<BaseClientConfig> {}
 
@@ -22,8 +20,14 @@ interface ClientConfig extends Partial<BaseClientConfig> {}
  * @extends BaseClient
  */
 export class Client<Authorized extends boolean = boolean> extends BaseClient {
+	/**
+	 * User manager object
+	 */
+	private _users: UserManager;
+
 	constructor(config?: ClientConfig, payload: Partial<ClientPayload> = {}) {
 		super(config, payload);
+		this._users = new UserManager(this);
 	}
 
 	public get basic(): string {
@@ -58,6 +62,10 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		return !!this.bearer;
 	}
 
+	/**
+	 * Updates the Client's payload
+	 * @returns The Client instance
+	 */
 	async fetch(): Promise<this> {
 		if (!this.isAuthorized()) {
 			throw new iFunnyError(
@@ -66,30 +74,20 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 			);
 		}
 
-		try {
-			const response = await this.instance.get<RESTAPIAccountSuccess>(
-				Endpoints.account
-			);
-			console.log(response);
+		const response = await this.instance.get<Success<APIClientUser>>(
+			Endpoints.account
+		);
 
-			let data = response.data;
-			this.payload = data.data;
-			return this;
-		} catch (error) {
-			if (error instanceof Error && isAxiosError(error)) {
-				const resp = error.response as AxiosResponse<RESTAPIErrorResponse>;
-				//console.log(JSON.stringify(resp, null, 2));
-				switch (error?.response?.status) {
-					case 401:
-						throw new iFunnyError(
-							iFunnyErrorCodes.InvalidGrant,
-							resp.data.error_description
-						);
-				}
-				throw error;
-			}
-			throw error;
-		}
+		let data = response.data;
+		this.payload = data.data;
+		return this;
+	}
+
+	/**
+	 * The client's user manager
+	 */
+	get users() {
+		return this._users;
 	}
 
 	/**
@@ -103,27 +101,17 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		if (this.isAuthorized()) {
 			return await this.fetch();
 		}
-		try {
-			let response = await this.instance.post<RESTAPIOauth2LoginSuccess>(
-				Endpoints.token,
-				{
-					grant_type: "password",
-					username: email,
-					password,
-				}
-			);
-			this.bearer = response.data.access_token;
-			return await this.fetch();
-		} catch (error) {
-			if (!(error instanceof Error) || !isAxiosError(error)) throw error;
-			const resp = error.response as AxiosResponse<RESTAPIErrorResponse>;
-			switch (resp.data.error) {
-				case "captcha_required":
-					throw new iFunnyError(iFunnyErrorCodes.CaptchaRequired, resp.data);
-				default:
-					throw new iFunnyError(iFunnyErrorCodes.UnknownError, error);
+
+		let response = await this.instance.post<RESTAPIOauth2LoginSuccess>(
+			Endpoints.token,
+			{
+				grant_type: "password",
+				username: email,
+				password,
 			}
-		}
+		);
+		this.bearer = response.data.access_token;
+		return await this.fetch();
 	}
 
 	/**
@@ -141,27 +129,18 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		acceptMailOffers: boolean = false,
 		login: boolean = true
 	): Promise<this> {
-		try {
-			let response = await this.instance.post<RESTAPISignUpSuccess>(
-				Endpoints.user(),
-				{
-					reg_type: "pwd",
-					nick,
-					email,
-					password,
-					accept_mailing: acceptMailOffers ? 1 : 0,
-				}
-			);
-			this.payload.id = response.data.data.id;
-			if (login) {
-				return await this.login(email, password);
-			}
-			return this;
-		} catch (error) {
-			if (!(error instanceof Error)) throw error;
-
-			throw handleError(error);
+		let response = await this.instance.post<RESTAPISignUpSuccess>(Endpoints.user(), {
+			reg_type: "pwd",
+			nick,
+			email,
+			password,
+			accept_mailing: acceptMailOffers ? 1 : 0,
+		});
+		this.payload.id = response.data.data.id;
+		if (login) {
+			return await this.login(email, password);
 		}
+		return this;
 	}
 }
 
