@@ -2,6 +2,19 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
+## [v0.2.2](https://github.com/ifunny-co/iFunny.ts/compare/v0.2.1...v0.2.2) - 2022-08-28
+
+
+
+### Fixes
+
+*  Changed paginate to a protected method @MakeShiftArtist ([`4fa12b3`](https://github.com/ifunny-co/iFunny.ts/commit/4fa12b3323b34c48372e469b83fbfe8d8a9af162))
+
+
+
+
+
+
 ## [v0.2.1](https://github.com/ifunny-co/iFunny.ts/compare/v0.2.0...v0.2.1) - 2022-08-25
 
 
