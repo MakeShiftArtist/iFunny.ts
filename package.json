@@ -8,8 +8,8 @@
 		"test": "jest",
 		"changelog": "auto-changelog -p  && git add CHANGELOG.md && git commit -m \"Update CHANGELOG.md\"",
 		"changelog-debug": "auto-changelog -p --template json --output changelog-data.json",
-		"type": "tsc",
-		"build": "npx tsc && npm run type",
+		"build": "tsc",
+		"type": "tsc --emitDeclarationOnly",
 		"update-deps": "npx npm-check-updates -u && npm install"
 	},
 	"repository": {
@@ -53,7 +53,7 @@
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.1.0",
-		"@ifunny/ifunny-api-types": "^0.7.1",
+		"@ifunny/ifunny-api-types": "^0.7.2",
 		"axios": "^0.27.2",
 		"eventemitter3": "^4.0.7"
 	}
