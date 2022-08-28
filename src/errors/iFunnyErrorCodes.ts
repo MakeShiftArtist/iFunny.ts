@@ -15,4 +15,8 @@ export enum iFunnyErrorCodes {
 
 	// Library Errors
 	InvalidBasicTokenLength,
+
+	// User Errors
+	UserNotFound,
+	UserUnavailable,
 }

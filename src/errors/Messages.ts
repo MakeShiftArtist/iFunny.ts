@@ -28,6 +28,10 @@ export const Messages = {
 	// Library Errors
 	[iFunnyErrorCodes.InvalidBasicTokenLength]: () =>
 		"The basic token must be 156 or 112 characters long.",
+
+	// User Errors
+	[iFunnyErrorCodes.UserNotFound]: (description: string) => description,
+	[iFunnyErrorCodes.UserUnavailable]: (description: string) => description,
 };
 
 export default Messages;
