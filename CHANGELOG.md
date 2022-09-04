@@ -2,6 +2,19 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
+## [v0.3.1](https://github.com/ifunny-co/iFunny.ts/compare/v0.3.0...v0.3.1) - 2022-09-04
+
+
+
+
+
+### Chores
+
+*  Updated @ifunny/ifunny-api-types version @MakeShiftArtist ([`4394b91`](https://github.com/ifunny-co/iFunny.ts/commit/4394b91d668a52a7ffa1c99c829380deac09a333))
+
+
+
+
 ## [v0.3.0](https://github.com/ifunny-co/iFunny.ts/compare/v0.2.2...v0.3.0) - 2022-08-28
 
 
