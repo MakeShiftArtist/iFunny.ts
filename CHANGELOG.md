@@ -2,7 +2,7 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
-## [v0.3.2](https://github.com/ifunny-co/iFunny.ts/compare/v0.3.2...v0.3.2) - 2022-09-05
+## [v0.3.3](https://github.com/ifunny-co/iFunny.ts/compare/v0.3.2...v0.3.3) - 2022-09-05
 
 
 
