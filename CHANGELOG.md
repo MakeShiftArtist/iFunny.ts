@@ -2,6 +2,21 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
+## [v0.3.2](https://github.com/ifunny-co/iFunny.ts/compare/v0.3.2...v0.3.2) - 2022-09-05
+
+
+
+### Fixes
+
+*  Update dependencies @MakeShiftArtist ([`7f60a69`](https://github.com/ifunny-co/iFunny.ts/commit/7f60a6934efc03725593555f29679b704dcf8426))
+*  Removed unused jest config @MakeShiftArtist ([`014ea04`](https://github.com/ifunny-co/iFunny.ts/commit/014ea04df8b2a0287f89c1913af9fc7ca89a302d))
+*  Added .env to .gitignore adn .npmignore @MakeShiftArtist ([`1771051`](https://github.com/ifunny-co/iFunny.ts/commit/17710519585ea8f6c3b49f31f403c3096a22d8e4))
+
+
+
+
+
+
 ## v0.3.2 - 2022-09-05
 
 
