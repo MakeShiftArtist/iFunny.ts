@@ -2,7 +2,7 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
-## 0.3.1 - 2022-09-05
+## v0.3.2 - 2022-09-05
 
 
 ### Features
@@ -30,6 +30,7 @@
 ### Fixes
 
 *  Add package.json and package-lock.json @MakeShiftArtist ([`b1a46a9`](https://github.com/ifunny-co/iFunny.ts/commit/b1a46a9989357fa2aee95a533eccf5ca7259be4a))
+*  CHANGELOG.md to OLD_CHANGELOG.md due to version bug @MakeShiftArtist ([`905b780`](https://github.com/ifunny-co/iFunny.ts/commit/905b78078ca46ae9de595b46d6c0c2ede9514c41))
 *  Improved error handler @MakeShiftArtist ([`36be51c`](https://github.com/ifunny-co/iFunny.ts/commit/36be51c8d6925672fe77e07b0698baba6184b02e))
 *  Cache works properly now @MakeShiftArtist ([`37f9c7a`](https://github.com/ifunny-co/iFunny.ts/commit/37f9c7a6fda432373b5026c959b4c568ddf71fce))
 *  Fixed UserManager @MakeShiftArtist ([`edf6e5f`](https://github.com/ifunny-co/iFunny.ts/commit/edf6e5f4560102abf63e009ce6bbcc5013af83a7))
