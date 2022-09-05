@@ -5,15 +5,11 @@ import type { Client } from "../client/Client";
 import { Collection } from "@discordjs/collection";
 import { MemeExperience } from "./MemeExperience";
 
-interface UserPayload extends Partial<APIUser> {
-	id: APIUser["id"];
-}
-
 /**
  * Base User class that user class will inherit from.
  * @extends Base
  */
-export class BaseUser extends Base<UserPayload> {
+export class BaseUser extends Base<APIUser> {
 	/**
 	 * @param client The client instance
 	 * @param id The id of the user
@@ -58,8 +54,8 @@ export class BaseUser extends Base<UserPayload> {
 	 * Collection of Bans the user has
 	 */
 	get bans() {
-		let bans = this.get("bans");
-		return bans ? new Collection(bans.map((ban) => [ban.id, ban])) : null;
+		let bans = this.get("bans") ?? [];
+		return new Collection(bans.map((ban) => [ban.id, ban]));
 	}
 
 	/**
