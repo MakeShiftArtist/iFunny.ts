@@ -2,6 +2,20 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
+## [v0.3.4](https://github.com/ifunny-co/iFunny.ts/compare/v0.3.3...v0.3.4) - 2022-09-05
+
+
+
+### Fixes
+
+*  Moved Nullify to utils/Util @MakeShiftArtist ([`3a01fcb`](https://github.com/ifunny-co/iFunny.ts/commit/3a01fcbe0cadf2357be023f873ef646ff2338c8f))
+*  Changed BaseUser.payload to APIUser @MakeShiftArtist ([`4e367be`](https://github.com/ifunny-co/iFunny.ts/commit/4e367bedf0f2f414f07d2e3c8f32421e6c159ec2))
+
+
+
+
+
+
 ## [v0.3.3](https://github.com/ifunny-co/iFunny.ts/compare/v0.3.2...v0.3.3) - 2022-09-05
 
 
