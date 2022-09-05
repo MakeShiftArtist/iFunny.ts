@@ -41,3 +41,28 @@ export type BasicAuthConfig = {
 	clientSecret: string;
 	length: BasicAuthLength;
 };
+
+/**
+ * Replaces `undefined` in Union Types with `null`
+ * @example
+ * interface FooBar {
+ * 	foo?: string,
+ * 	bar?: number,
+ * 	spam: boolean
+ * }
+ *
+ * function foobar<K extends keyof Foobar>(key: K, obj: FooBar) {
+ * 	return (obj[key] ?? null) as Nullify<FooBar[K]>
+ * }
+ *
+ * const FooBarVar: FooBar = {
+ * 	foo: '420',
+ * 	bar: 69,
+ * 	spam: true
+ * }
+ *
+ * foobar('foo', FooBar) // string | null
+ * foobar('bar', FooBar) // number | null
+ * foobar('spam', FooBar) // boolean
+ */
+export type Nullify<T> = T extends undefined ? null : T;

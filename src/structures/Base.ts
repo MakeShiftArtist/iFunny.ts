@@ -1,5 +1,6 @@
 import { APIBasePayload } from "@ifunny/ifunny-api-types";
 import { Client } from "../client/Client";
+import { Nullify } from "../utils/Util";
 
 const DefaultObjectEndpoint = "/account";
 
@@ -78,11 +79,9 @@ export class Base<Payload extends APIBasePayload> {
 	 * @param key The key to get the value of
 	 * @returns
 	 */
-	protected get<P extends Payload, K extends keyof P>(
-		key: K
-	): Exclude<P[K], undefined> | null {
+	protected get<P extends Payload, K extends keyof P>(key: K): Nullify<P[K]> {
 		// @ts-ignore
-		return this.payload[key] ?? null;
+		return (this.payload[key] ?? null) as Nullify<P[K]>;
 	}
 
 	/**
