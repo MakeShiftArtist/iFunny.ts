@@ -1,5 +1,6 @@
 # Testing
 test.ts
+.env
 
 # VsCode
 .vscode
