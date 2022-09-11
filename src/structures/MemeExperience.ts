@@ -46,4 +46,11 @@ export class MemeExperience {
 	get nextMilestone() {
 		return this.data.next_milestone;
 	}
+
+	/**
+	 * Days until the user reaches the next milestone
+	 */
+	get daysUntilNextMilestone() {
+		return this.nextMilestone - this.days;
+	}
 }
