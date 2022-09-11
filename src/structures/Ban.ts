@@ -1,4 +1,4 @@
-import { APIBanType, APIBan as BanPayload, Endpoints } from "@ifunny/ifunny-api-types";
+import { APIBan, Endpoints } from "@ifunny/ifunny-api-types";
 
 import { Base } from "./Base";
 import { Client } from "../client/Client";
@@ -7,9 +7,9 @@ import { User } from "./User";
 /**
  * Represents a Ban on iFunny
  */
-export class Ban extends Base<BanPayload> {
+export class Ban extends Base<APIBan> {
 	/**
-	 * Id of the user the ban is attached to
+	 * User the Ban belongs to
 	 */
 	private readonly _user: User;
 
@@ -19,55 +19,50 @@ export class Ban extends Base<BanPayload> {
 	 * @param id Id of the ban itself
 	 * @param payload Payload of the ban if applicable
 	 */
-	constructor(
-		client: Client,
-		user: User | string,
-		id: string,
-		payload: Partial<BanPayload> = {}
-	) {
-		super(client, id, payload);
-		this._user = user instanceof User ? user : new User(client, user);
+	constructor(client: Client, user: User, payload: APIBan) {
+		super(client, payload);
+		this._user = user;
 		this.payload = payload;
-		this.endpoint_url = Endpoints.bans(this._user.id, id);
+		this.endpoint_url = Endpoints.bans(this._user.id, this.id);
 	}
 
 	/**
 	 * Timestamp (in seconds) of when it expires
 	 */
 	get expiresAtTimestamp() {
-		let time = this.get("date_until");
-		return typeof time === "number" ? time * 1000 : null;
+		let ms = this.get("date_until");
+		return typeof ms === "number" ? ms * 1000 : null;
 	}
 
 	/**
 	 * Date object of when the ban expires
 	 */
 	get expiresAt() {
-		let time = this.expiresAtTimestamp;
-		return time ? new Date(time) : null;
+		let ms = this.expiresAtTimestamp;
+		return ms ? new Date(ms) : null;
 	}
 
 	/**
 	 * How long (in seconds) until the ban expires
 	 */
 	get expiresInTimestamp() {
-		let time = this.expiresAtTimestamp;
-		return time ? time - new Date().getTime() : null;
+		let ms = this.expiresAtTimestamp;
+		return ms ? ms - new Date().getTime() : null;
 	}
 
 	/**
-	 * Date object of how much time is left until the ban expires
+	 * Date object of how much ms is left until the ban expires
 	 */
 	get expiresIn() {
-		let time = this.expiresInTimestamp;
-		return time ? new Date(time) : null;
+		let ms = this.expiresInTimestamp;
+		return ms ? new Date(ms) : null;
 	}
 
 	/**
 	 * The type of the ban
 	 */
 	get type() {
-		return this.get("type") as APIBanType | null;
+		return this.get("type");
 	}
 
 	/**
