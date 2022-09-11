@@ -2,6 +2,7 @@ import {
 	IFUNNY_ERRORS,
 	RESTAPIErrorBadRequest,
 	RESTAPIErrorCaptchaRequired,
+	RESTAPIErrorNotFound,
 	RESTAPIErrorResponse,
 } from "@ifunny/ifunny-api-types";
 
@@ -21,7 +22,6 @@ function handleCaptcha(data: RESTAPIErrorCaptchaRequired) {
 function handleBadRequest(error: RESTAPIErrorBadRequest) {
 	switch (error.error_description) {
 		case "Invalid user id":
-			// ? User with that ID does not exist
 			return null;
 		default:
 			return iFunnyError.new(
@@ -31,23 +31,47 @@ function handleBadRequest(error: RESTAPIErrorBadRequest) {
 	}
 }
 
+function handleNotFound(error: RESTAPIErrorNotFound) {
+	const message = error.error_description;
+	if (
+		message.startsWith("User with nick") ||
+		message.startsWith("Unable to find user with id: ")
+	) {
+		return iFunnyError.new(iFunnyErrorCodes.UserNotFound, message);
+	} else {
+		return iFunnyError.unknown(error.error_description);
+	}
+}
+
 /**
  * Handles an error returned by the iFunny error
  * @param error {@link RESTAPIErrorResponse}
- * @returns
  */
 export function handleAPIError(error: RESTAPIErrorResponse) {
+	// TODO: Handle all errors
 	switch (error.error) {
 		case IFUNNY_ERRORS.BAD_REQUEST:
-			// @ts-ignore
 			return handleBadRequest(error);
 
 		case IFUNNY_ERRORS.CAPTCHA_REQUIRED:
 			return handleCaptcha(error);
-
+		case IFUNNY_ERRORS.UNAUTHORIZED:
+			return iFunnyError.new(
+				iFunnyErrorCodes.Unauthorized,
+				error.error_description
+			);
+		case IFUNNY_ERRORS.INVALID_EMAIL:
+		case IFUNNY_ERRORS.EMAIL_EXISTS:
+			return iFunnyError.new(
+				iFunnyErrorCodes.InvalidEmail,
+				error.error_description
+			);
+		case IFUNNY_ERRORS.NOT_FOUND:
+			return handleNotFound(error);
 		default:
 			return iFunnyError.new(
 				iFunnyErrorCodes.UnknownError,
+				// @ts-ignore
 				error.error_description
 			);
 	}
