@@ -11,10 +11,11 @@ export const Messages = {
 		desc("An unknown error occurred", error),
 
 	// Client Setup Errors
-	[iFunnyErrorCodes.ClientNotLoggedIn]: (action?: string) =>
-		desc("The client needs to be logged in to", action, "do this."),
 	[iFunnyErrorCodes.InvalidClient]: (description?: string) =>
 		desc("The client is invalid", description),
+	[iFunnyErrorCodes.InvalidEmail]: (description: string) => description,
+	[iFunnyErrorCodes.Unauthorized]: (description?: string) =>
+		desc("Client unauthorized to make request", description),
 
 	// Library Errors
 	[iFunnyErrorCodes.InvalidBasicTokenLength]: (description?: string) =>
@@ -35,8 +36,10 @@ export const Messages = {
 		desc("A captcha is required", data.data.captcha_url),
 
 	// User Errors
-	[iFunnyErrorCodes.UserNotFound]: (user?: string) => desc("User not found", user),
+	[iFunnyErrorCodes.InvalidUserId]: (id?: string) => desc("Invalid user id", id),
+	[iFunnyErrorCodes.UserNotFound]: (description?: string) => description,
 	[iFunnyErrorCodes.UserUnavailable]: (user?: string) => desc("User unavailable", user),
+	[iFunnyErrorCodes.UserDeleted]: (user?: string) => desc("User was deleted", user),
 };
 
 export default Messages;

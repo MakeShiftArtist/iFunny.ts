@@ -2,9 +2,10 @@ export enum iFunnyErrorCodes {
 	// Unknown Error
 	UnknownError,
 
-	// Client Setup Errors
-	ClientNotLoggedIn,
+	// Client Errors
 	InvalidClient,
+	InvalidEmail,
+	Unauthorized,
 
 	// Library Errors
 	InvalidBasicTokenLength,
@@ -18,6 +19,8 @@ export enum iFunnyErrorCodes {
 	CaptchaRequired,
 
 	// User Errors
+	InvalidUserId,
 	UserNotFound,
 	UserUnavailable,
+	UserDeleted,
 }
