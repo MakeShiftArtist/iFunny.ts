@@ -2,7 +2,7 @@ import { Base } from "../structures/Base";
 import { Client } from "../client/Client";
 import { Collection } from "@discordjs/collection";
 
-type DataStructure = new (client: Client, id: string, ...extra: any[]) => Base<any>;
+type DataStructure = new (client: Client, payload: any, ...extra: any[]) => Base<any>;
 
 /**
  * Manages API methods of a data model
