@@ -12,13 +12,12 @@ import { MemeExperience } from "./MemeExperience";
 export class BaseUser extends Base<APIUser> {
 	/**
 	 * @param client The client instance
-	 * @param id The id of the user
 	 * @param payload Payload to create the User with
 	 */
-	constructor(client: Client, id: string, payload: any = {}) {
-		super(client, id, payload);
+	constructor(client: Client, payload: APIUser) {
+		super(client, payload);
 		this.payload = payload;
-		this.endpoint_url = Endpoints.user(id);
+		this.endpoint_url = Endpoints.user(payload.id);
 	}
 
 	/**
