@@ -2,6 +2,39 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
+## [v0.4.0](https://github.com/ifunny-co/iFunny.ts/compare/v0.3.4...v0.4.0) - 2022-09-11
+
+
+### Features
+
+*  Fully implemented BaseContent @MakeShiftArtist ([`6123a3b`](https://github.com/ifunny-co/iFunny.ts/commit/6123a3bdb666951b7e3279db9a6dae29e12b43e4))
+*  Add Creator @MakeShiftArtist ([`b024e29`](https://github.com/ifunny-co/iFunny.ts/commit/b024e29f61bc471bd4fd9f0c5557c82b68985892))
+*  Added nicks and email checking and fixed fetch @MakeShiftArtist ([`b76bde7`](https://github.com/ifunny-co/iFunny.ts/commit/b76bde77e7a21fa3d89fee8329aa61914a4ec5a0))
+*  Improved Error Handling @MakeShiftArtist ([`3b85fc2`](https://github.com/ifunny-co/iFunny.ts/commit/3b85fc2791b135ef41b7ef53edbc8176ebbe6d4e))
+*  Added more custom errors @MakeShiftArtist ([`86edf10`](https://github.com/ifunny-co/iFunny.ts/commit/86edf105973da191bd1d1249208c09c05197c418))
+*  Created Thumbnail (WIP) @MakeShiftArtist ([`1898320`](https://github.com/ifunny-co/iFunny.ts/commit/189832086c5d6b21ac8bc8f678980e89c1e2a698))
+*  Add daysUntilNextMilestone @MakeShiftArtist ([`b7ac7d9`](https://github.com/ifunny-co/iFunny.ts/commit/b7ac7d90b91e2612fb16112f5adf3d145d82841f))
+
+### Fixes
+
+*  Structures now pass payload instead of ID @MakeShiftArtist ([`dd8312a`](https://github.com/ifunny-co/iFunny.ts/commit/dd8312a91ce54945038ac5404653cca560302291))
+*  Payload is now a required arg for structures @MakeShiftArtist ([`8dee88d`](https://github.com/ifunny-co/iFunny.ts/commit/8dee88dae591716984e833aa14e724d7d1674453))
+*  Fixed old error code label @MakeShiftArtist ([`0c41deb`](https://github.com/ifunny-co/iFunny.ts/commit/0c41debd2b6ebf1af8d0f01261aaf199bfef9de6))
+*  DataStructure now takes payload instead of id @MakeShiftArtist ([`652d4c0`](https://github.com/ifunny-co/iFunny.ts/commit/652d4c0a8145a0e5bf52c20526c0d765504e7b21))
+
+### Documentation
+
+*  Ban now has better docs @MakeShiftArtist ([`21937a9`](https://github.com/ifunny-co/iFunny.ts/commit/21937a9a20584b906cf357d6724f918608c1b1fa))
+*  Improved docs for CachedManager @MakeShiftArtist ([`c585d68`](https://github.com/ifunny-co/iFunny.ts/commit/c585d68fb37d010ca7db5e1cb6127a3aa443136a))
+
+### Chores
+
+*  Update dependencies @MakeShiftArtist ([`cdf61ef`](https://github.com/ifunny-co/iFunny.ts/commit/cdf61ef0ce57484df3a309372e7a1d064d25e529))
+*  iFunnyError#code to iFunnyError.#code @MakeShiftArtist ([`122bc08`](https://github.com/ifunny-co/iFunny.ts/commit/122bc0889b6570c16a242950340613512095e3ae))
+
+
+
+
 ## [v0.3.4](https://github.com/ifunny-co/iFunny.ts/compare/v0.3.3...v0.3.4) - 2022-09-05
 
 
