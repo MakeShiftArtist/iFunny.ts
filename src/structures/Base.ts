@@ -15,7 +15,7 @@ export class Base<Payload extends APIBasePayload> {
 	/**
 	 * The payload of the object.
 	 */
-	protected _payload: Partial<Payload>;
+	protected _payload: Payload;
 	/**
 	 * Endpoint url the object will request to
 	 */
@@ -25,10 +25,9 @@ export class Base<Payload extends APIBasePayload> {
 	 * @param client The client instance
 	 * @param payload The payload of the object
 	 */
-	constructor(client: Client, id: string, payload: Partial<Payload> = {}) {
+	constructor(client: Client, payload: Payload) {
 		this._client = client;
-
-		this._payload = payload ?? { id: id };
+		this._payload = payload;
 	}
 
 	/**
@@ -41,7 +40,7 @@ export class Base<Payload extends APIBasePayload> {
 	/**
 	 * Get the payload of the object
 	 */
-	public get payload() {
+	public get payload(): Payload {
 		return this._payload;
 	}
 
