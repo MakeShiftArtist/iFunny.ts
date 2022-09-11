@@ -68,10 +68,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 */
 	async fetch(): Promise<this> {
 		if (!this.isAuthorized()) {
-			throw new iFunnyError(
-				iFunnyErrorCodes.ClientNotLoggedIn,
-				"Fetch account data"
-			);
+			throw new iFunnyError(iFunnyErrorCodes.Unauthorized, "Fetch account data");
 		}
 
 		const response = await this.instance.get<Success<APIClientUser>>(
