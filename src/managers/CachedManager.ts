@@ -29,11 +29,18 @@ export class CachedManager<T extends DataStructure> {
 		this._holds = holds;
 	}
 
+	/**
+	 * The cache of users
+	 */
 	public get cache() {
 		return this._cache;
 	}
 
-	resolve(idOrInstance: string | InstanceType<T>) {
+	/**
+	 * Resolves an id or instance into an instance
+	 * @param idOrInstance Id of the instance or the instance itself
+	 */
+	resolve(idOrInstance: string | InstanceType<T>): InstanceType<T> | null {
 		if (idOrInstance instanceof this._holds) return idOrInstance;
 		if (typeof idOrInstance === "string") {
 			return this._cache.get(idOrInstance) ?? null;
@@ -41,7 +48,11 @@ export class CachedManager<T extends DataStructure> {
 		return null;
 	}
 
-	resolveId(idOrInstance: string | InstanceType<T>) {
+	/**
+	 * Resolves an id or instance into an id
+	 * @param idOrInstance Id of the instance of the instance itself
+	 */
+	resolveId(idOrInstance: string | InstanceType<T>): string | null {
 		if (idOrInstance instanceof this._holds) return idOrInstance.id;
 		if (typeof idOrInstance === "string") return idOrInstance;
 		return null;
