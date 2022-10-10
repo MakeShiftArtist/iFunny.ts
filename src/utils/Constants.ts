@@ -1,4 +1,4 @@
-import { BasicAuthConfig, BasicAuthLength } from "./Util";
+import { BasicAuthConfig, BasicAuthLength } from "./Types";
 
 // * User Agent
 // ? As of 7/24/22 on Android 7.1.2
@@ -6,8 +6,8 @@ import { BasicAuthConfig, BasicAuthLength } from "./Util";
 // App Version
 
 export type SemanticVersion = `${number}.${number}.${number}`;
-export const DefaultAppVersion: SemanticVersion = "8.8.11";
-export const DefaultAppBuild: number = 1130392;
+export const DefaultAppVersion: SemanticVersion = "8.12.1";
+export const DefaultAppBuild: number = 1130530;
 export const DefaultAppAgent = `iFunny/${DefaultAppVersion}(${DefaultAppBuild})`;
 export const DefaultClientId: string = "MsOIJ39Q28";
 export const DefaultClientSecret: string = "PTDc3H8a)Vi=UYap";
