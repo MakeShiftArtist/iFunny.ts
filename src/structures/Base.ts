@@ -1,6 +1,6 @@
 import { APIBasePayload } from "@ifunny/ifunny-api-types";
 import { Client } from "../client/Client";
-import { Nullify } from "../utils/Util";
+import { Nullify } from "../utils/Types";
 
 const DefaultObjectEndpoint = "/account";
 

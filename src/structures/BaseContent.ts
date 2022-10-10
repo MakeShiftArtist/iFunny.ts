@@ -1,7 +1,12 @@
 import { Base } from "./Base";
 import Client from "../client/Client";
 import { Creator } from "./Creator";
-import { CONTENT_TYPE, APIContent, APIContentData } from "@ifunny/ifunny-api-types";
+import {
+	CONTENT_TYPE,
+	APIContent,
+	APIContentData,
+	APIContentType,
+} from "@ifunny/ifunny-api-types";
 
 /**
  * The Base Content that all Content Types will extend
@@ -296,7 +301,7 @@ export class BaseContent extends Base<APIContent> {
 	/**
 	 * The type of the post
 	 */
-	get type() {
+	get type(): APIContentType {
 		return this.get("type");
 	}
 
