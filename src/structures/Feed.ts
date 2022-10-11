@@ -17,11 +17,11 @@ export class Feed extends BaseFeed {
 	}
 
 	/**
-	 * Paginates through content in a feed
+	 * Scrolls through content in a feed from left to right
 	 * @param params Params to pass into the pagination requests - Updates automatically
 	 * @param markAsRead Should each post be marked as read after viewing? (Default: false)
 	 */
-	async *paginate(params?: PaginateConfig, markAsRead: boolean = false) {
+	async *scroll(params?: PaginateConfig, markAsRead: boolean = false) {
 		for await (const content of this.client.util.paginate<APIContent>(
 			this.url,
 			"content",
