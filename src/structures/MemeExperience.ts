@@ -4,7 +4,14 @@ import { APIMemeExperience } from "@ifunny/ifunny-api-types";
  * The Meme Experience for a user
  */
 export class MemeExperience {
+	/**
+	 * Raw data from the API
+	 */
 	protected data: APIMemeExperience;
+
+	/**
+	 * @param data The raw api data for the meme experience
+	 */
 	constructor(data: APIMemeExperience) {
 		this.data = data;
 	}
@@ -54,3 +61,5 @@ export class MemeExperience {
 		return this.nextMilestone - this.days;
 	}
 }
+
+export default MemeExperience;
