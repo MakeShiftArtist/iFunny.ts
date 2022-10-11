@@ -6,16 +6,18 @@ import {
 	APIContent,
 	APIContentData,
 	APIContentType,
+	Endpoints,
 } from "@ifunny/ifunny-api-types";
 
 /**
  * The Base Content that all Content Types will extend
  */
 export class BaseContent extends Base<APIContent> {
-	private _creator: Creator | null = null;
+	#creator: Creator | null = null;
 
 	constructor(client: Client, payload: APIContent) {
 		super(client, payload);
+		this.endpoint_url = Endpoints.content(payload.id);
 		this.payload = payload;
 	}
 
@@ -87,9 +89,9 @@ export class BaseContent extends Base<APIContent> {
 	 * The creator of the post
 	 */
 	get creator() {
-		if (this._creator) return this._creator;
+		if (this.#creator) return this.#creator;
 		const user = this.get("creator");
-		return user ? (this._creator ??= new Creator(this.client, user)) : user;
+		return user ? (this.#creator ??= new Creator(this.client, user)) : user;
 	}
 
 	/**
