@@ -8,7 +8,9 @@
 		"test": "jest",
 		"changelog": "auto-changelog -p  && git add CHANGELOG.md && git commit -m \"Update CHANGELOG.md\"",
 		"changelog-debug": "auto-changelog -p --template json --output changelog-data.json",
+		"clean": "rm -r -f ./dist && rm -r -f ./types",
 		"build": "tsc",
+		"rebuild": "npm run clean && npm run build",
 		"type": "tsc --emitDeclarationOnly",
 		"update-deps": "npx npm-check-updates -u && npm install"
 	},
@@ -52,7 +54,7 @@
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.1.0",
-		"@ifunny/ifunny-api-types": "^0.8.3",
+		"@ifunny/ifunny-api-types": "^0.9.3",
 		"axios": "^0.27.2",
 		"eventemitter3": "^4.0.7"
 	}
