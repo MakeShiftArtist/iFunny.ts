@@ -2,27 +2,24 @@ import {
 	APIBase,
 	APIVersion,
 	DefaultHeaders,
-	DefaultUserAgent,
+	DefaultClientId,
+	DefaultClientSecret,
 } from "../utils/Constants";
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders } from "axios";
+import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
 
 import { Agent } from "https";
 import { APIClientUser as ClientPayload } from "@ifunny/ifunny-api-types";
 import { EventEmitter } from "eventemitter3";
-import { URLSearchParams } from "url";
-import { createBasicAuth } from "../utils/Methods";
-import { handleError } from "../errors/ErrorHandler";
 
-export interface BaseClientConfig {
-	userAgent: string;
-	basic: string;
-	bearer: string;
+export interface ClientConfig {
+	basic: string | null;
+	bearer: string | null;
 	headers: AxiosRequestHeaders;
 	clientId: string;
 	clientSecret: string;
 }
 
-export type BaseClientOptions = Partial<BaseClientConfig>;
+export type ClientOptions = Partial<ClientConfig>;
 
 /**
  * Base Client for the Client to extend
@@ -36,49 +33,55 @@ export class BaseClient extends EventEmitter {
 
 	protected _payload: Partial<ClientPayload>;
 
-	protected _basic: string;
+	#config: ClientConfig;
 
-	protected _bearer: string | null = null;
-
-	constructor(options: BaseClientOptions = {}, payload: Partial<ClientPayload> = {}) {
+	/**
+	 * @param config Options to initialize the BaseClient with
+	 * @param payload The payload for the client if applicable
+	 */
+	constructor(config: ClientOptions = {}, payload: Partial<ClientPayload> = {}) {
 		super();
 		// Set defaults
-		this._basic = options.basic || createBasicAuth();
-		this._bearer = options.bearer || null;
+		this.#config = Object.assign(BaseClient.DefaultConfig, config);
 
-		const headers = options?.headers ?? DefaultHeaders;
+		const headers = Object.assign(DefaultHeaders, config?.headers);
 
-		headers["user-agent"] = options?.userAgent ?? DefaultUserAgent;
 		this.instance = axios.create({
 			baseURL: `https://${APIBase}/v${APIVersion}`,
-			headers: headers,
+			headers,
 			httpsAgent: new Agent({ keepAlive: true }),
 		});
 
 		this.instance.interceptors.request.use((config) => {
+			config ??= {};
 			config.headers ??= headers;
 			config.headers.Authorization = this.authorization;
-			//console.log(`set headers:\n ${JSON.stringify(config.headers, null, 2)}`);
+
 			return config;
 		});
 
-		this.instance.interceptors.response.use(
-			(onSuccess) => onSuccess,
-			(onFail) => {
-				const error = handleError(onFail);
-				if (error instanceof Error) throw error;
-				return error;
-			}
-		);
-
 		this._payload = Object.assign({}, payload);
+	}
+
+	static DefaultConfig: ClientConfig = {
+		basic: null,
+		bearer: null,
+		headers: DefaultHeaders,
+		clientId: DefaultClientId,
+		clientSecret: DefaultClientSecret,
+	};
+
+	get config() {
+		return this.#config;
 	}
 
 	/**
 	 * The authorization string used for requests
 	 */
 	get authorization() {
-		return this._bearer ? `Bearer ${this._bearer}` : `Basic ${this._basic}`;
+		return this.config.bearer
+			? `Bearer ${this.config.bearer}`
+			: `Basic ${this.config.basic}`;
 	}
 
 	/**
@@ -99,49 +102,5 @@ export class BaseClient extends EventEmitter {
 	 */
 	protected _eval(script: string) {
 		return eval(script);
-	}
-
-	/**
-	 * Paginates through items in a REST API endpoint.
-	 * @param url The url to get
-	 * @param key The key to get the array of values from
-	 * @param params The params to pass to the url
-	 * @yields The value of the key
-	 */
-	protected async *paginate<T extends unknown>(
-		url: string,
-		key: string,
-		params?: any
-	): AsyncGenerator<T> {
-		if (!url) throw new Error("paginate: url is required");
-		if (!key) throw new Error("paginate: key is required");
-
-		let method: "GET" | "POST" = "GET";
-		if (url.toLowerCase() === "collective") {
-			method = "POST";
-		}
-
-		let hasNext: boolean;
-		if (!params) params = new URLSearchParams();
-
-		let config: AxiosRequestConfig =
-			method === "GET"
-				? { method, url, params: new URLSearchParams(params) }
-				: { method, url, data: params || {} };
-
-		do {
-			let { data } = await this.instance.request(config);
-			const items = data?.data?.[key]?.items;
-			if (!Array.isArray(items)) throw new Error("paginate: items is not an array");
-
-			hasNext = data?.data?.[key]?.paging?.has_next ?? false;
-			if (hasNext) {
-				params.set("next", data.data[key].paging.cursors.next);
-			}
-
-			for (let item of items) {
-				yield item;
-			}
-		} while (hasNext);
 	}
 }
