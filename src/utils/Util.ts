@@ -1,5 +1,9 @@
-import { RESTAPIErrorResponse } from "@ifunny/ifunny-api-types";
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import {
+	RESTAPIErrorResponse,
+	RESTAPIItems,
+	RESTAPISuccessResponse,
+} from "@ifunny/ifunny-api-types";
+import axios, { AxiosError, AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 import Client from "../client/Client";
 import { DefaultBasicAuthConfig } from "./Constants";
 import { BasicAuthConfig } from "./Types";
@@ -120,7 +124,8 @@ export class Util {
 	public async *paginate<T extends unknown>(
 		url: string,
 		key: string,
-		params?: PaginateConfig
+		params?: PaginateConfig,
+		full: boolean = false
 	): AsyncGenerator<T> {
 		// Verify config
 		if (!url) throw new Error("paginate: url is required");
@@ -133,26 +138,44 @@ export class Util {
 		}
 
 		let hasNext: boolean;
-		let data = method === "POST" ? new FormData() : new URLSearchParams();
+		let data = new URLSearchParams();
 
+		// Set params
 		for (const key in params) {
 			data.set(key, `${params[key as keyof PaginateConfig]}`);
 		}
 
+		// Request config
 		let config: AxiosRequestConfig =
-			method === "GET" ? { method, url, params } : { method, url, data: params };
+			method === "GET" ? { method, url, params: data } : { method, url, data };
 
-		do {
-			let { data } = await this.#client.instance.request(config);
-			const items = data?.data?.[key]?.items;
-			if (!Array.isArray(items)) throw new Error("paginate: items is not an array");
+		loop: do {
+			interface Items {
+				[key: string]: RESTAPIItems<T>;
+			}
+			const response = await this.#client.instance.request<
+				RESTAPISuccessResponse<Items>
+			>(config);
 
-			hasNext = data?.data?.[key]?.paging?.has_next ?? false;
+			const items = response.data?.data?.[key]?.items;
+			if (!Array.isArray(items)) throw new Error(`paginate: items is not an array`);
+
+			// Set next param
+			hasNext = response.data?.data?.[key]?.paging?.hasNext ?? false;
+
 			if (hasNext) {
-				data.set("next", data.data[key].paging.cursors.next);
+				data.set("next", response.data.data[key].paging.cursors.next!);
+			}
+
+			// Yield the full data if wanted
+			if (full) {
+				//console.log("yield full");
+				yield response.data as Awaited<T>;
+				continue loop;
 			}
 
 			for (let item of items) {
+				//console.log("yield item");
 				yield item;
 			}
 		} while (hasNext);
@@ -165,6 +188,20 @@ export class Util {
 	 */
 	async sleep(ms: number): Promise<void> {
 		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
+
+	/**
+	 * Client headers
+	 */
+	get headers() {
+		return this.#client.instance.defaults.headers.common;
+	}
+
+	/**
+	 * Updates client headers
+	 */
+	set headers(headers: AxiosRequestHeaders) {
+		Object.assign(this.#client.instance.defaults.headers.common, headers);
 	}
 }
 
