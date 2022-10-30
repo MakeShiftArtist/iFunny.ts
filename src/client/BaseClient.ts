@@ -13,6 +13,7 @@ import { EventEmitter } from "eventemitter3";
 
 export interface ClientConfig {
 	basic: string | null;
+	basicLength: 156 | 112;
 	bearer: string | null;
 	headers: AxiosRequestHeaders;
 	clientId: string;
@@ -65,6 +66,7 @@ export class BaseClient extends EventEmitter {
 
 	static DefaultConfig: ClientConfig = {
 		basic: null,
+		basicLength: 112,
 		bearer: null,
 		headers: DefaultHeaders,
 		clientId: DefaultClientId,
