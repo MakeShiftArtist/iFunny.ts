@@ -15,7 +15,8 @@
 		"target": "ES2020",
 		"pretty": true,
 		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"stripInternal": true
 	},
 	"include": ["src/**/*.ts"]
 }
