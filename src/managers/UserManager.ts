@@ -12,8 +12,12 @@ import { iFunnyErrorCodes } from "../errors/iFunnyErrorCodes";
 
 /**
  * Manages iFunny Users
+ * @extends CachedManager<User>
  */
 export class UserManager extends CachedManager<typeof User> {
+	/**
+	 * @param client Client instance attached to the UserManager
+	 */
 	constructor(client: Client) {
 		super(client, User);
 	}
@@ -51,13 +55,14 @@ export class UserManager extends CachedManager<typeof User> {
 	 * @param idOrNick Id or nick of the user
 	 * @param byNick Whether to lookup by nick (Default: false)
 	 * @param cached Whater to return the cached result (Default: true)
-	 * @returns
+	 * @returns User|null if the client is authorized
+	 * @throws iFunnyError
 	 */
 	public async fetch(
 		idOrNick: string,
 		byNick: boolean = false,
 		cached: boolean = true
-	) {
+	): Promise<User | null> {
 		try {
 			let user = this.resolve(idOrNick);
 			if (cached && user) return user;
@@ -68,7 +73,7 @@ export class UserManager extends CachedManager<typeof User> {
 			if (!data) return data;
 			user = new User(this.client, data.data);
 			this.cache.set(user.id, user);
-			this.cache.set(user.nick!, user);
+			this.cache.set(user.nick, user);
 			return user;
 		} catch (error) {
 			if (error instanceof iFunnyError) {
