@@ -53,14 +53,6 @@ export class BaseClient extends EventEmitter {
 			httpsAgent: new Agent({ keepAlive: true }),
 		});
 
-		this.instance.interceptors.request.use((config) => {
-			config ??= {};
-			config.headers ??= headers;
-			config.headers.Authorization = this.authorization;
-
-			return config;
-		});
-
 		this._payload = Object.assign({}, payload);
 	}
 
@@ -75,15 +67,6 @@ export class BaseClient extends EventEmitter {
 
 	get config() {
 		return this.#config;
-	}
-
-	/**
-	 * The authorization string used for requests
-	 */
-	get authorization() {
-		return this.config.bearer
-			? `Bearer ${this.config.bearer}`
-			: `Basic ${this.config.basic}`;
 	}
 
 	/**

@@ -52,6 +52,13 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		this.#feeds = new FeedManager(this);
 		this.#content = new ContentManager(this);
 
+		this.instance.interceptors.request.use((config) => {
+			config ??= {};
+			config.headers ??= this.config.headers;
+			config.headers.Authorization = this.authorization;
+			return config;
+		});
+
 		this.instance.interceptors.response.use(
 			(onSuccess) => onSuccess,
 			(onFail) => {
@@ -103,6 +110,13 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		this.instance.defaults.headers.common.Authorization = this.isAuthorized()
 			? `Bearer ${this.bearer}`
 			: `Basic ${this.basic}`;
+	}
+
+	/**
+	 * The authorization string used for requests
+	 */
+	get authorization() {
+		return this.bearer ? `Bearer ${this.bearer}` : `Basic ${this.basic}`;
 	}
 
 	/**
