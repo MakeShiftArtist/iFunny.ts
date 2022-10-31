@@ -39,6 +39,12 @@
 		"typedoc": "^0.23.15",
 		"typescript": "^4.8.2"
 	},
+	"dependencies": {
+		"@discordjs/collection": "^1.1.0",
+		"@ifunny/ifunny-api-types": "^0.9.4",
+		"axios": "^0.27.2",
+		"eventemitter3": "^4.0.7"
+	},
 	"auto-changelog": {
 		"template": "changelog-template.hbs",
 		"hideEmptyReleases": true,
@@ -51,11 +57,5 @@
 			"[Dd]oc:": "",
 			"[Cc]hore:": ""
 		}
-	},
-	"dependencies": {
-		"@discordjs/collection": "^1.1.0",
-		"@ifunny/ifunny-api-types": "^0.9.3",
-		"axios": "^0.27.2",
-		"eventemitter3": "^4.0.7"
 	}
 }
