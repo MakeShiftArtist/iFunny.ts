@@ -4,6 +4,8 @@ import { Collection } from "@discordjs/collection";
 
 type DataStructure = new (client: Client, payload: any, ...extra: any[]) => Base<any>;
 
+// TODO: Implement actual cache instead of using a collection
+
 /**
  * Manages API methods of a data model
  */
@@ -16,24 +18,35 @@ export class CachedManager<T extends DataStructure> {
 	/**
 	 * The cache of items for this manager
 	 */
-	private readonly _cache: Collection<string, InstanceType<T>> = new Collection();
+	readonly #cache: Collection<string, InstanceType<T>> = new Collection();
 
 	/**
 	 * The data structure belonging to this manager
 	 */
-	protected readonly _holds: T;
+	readonly #holds: T;
 
+	/**
+	 * @param client Client attached to the CachedManager
+	 * @param holds The class constructor the manager uses
+	 */
 	constructor(client: Client, holds: T) {
 		this.client = client;
 
-		this._holds = holds;
+		this.#holds = holds;
 	}
 
 	/**
 	 * The cache of users
 	 */
 	public get cache() {
-		return this._cache;
+		return this.#cache;
+	}
+
+	/**
+	 * The class this manager holds
+	 */
+	public get holds() {
+		return this.#holds;
 	}
 
 	/**
@@ -41,9 +54,9 @@ export class CachedManager<T extends DataStructure> {
 	 * @param idOrInstance Id of the instance or the instance itself
 	 */
 	resolve(idOrInstance: string | InstanceType<T>): InstanceType<T> | null {
-		if (idOrInstance instanceof this._holds) return idOrInstance;
+		if (idOrInstance instanceof this.#holds) return idOrInstance;
 		if (typeof idOrInstance === "string") {
-			return this._cache.get(idOrInstance) ?? null;
+			return this.#cache.get(idOrInstance) ?? null;
 		}
 		return null;
 	}
@@ -53,7 +66,7 @@ export class CachedManager<T extends DataStructure> {
 	 * @param idOrInstance Id of the instance of the instance itself
 	 */
 	resolveId(idOrInstance: string | InstanceType<T>): string | null {
-		if (idOrInstance instanceof this._holds) return idOrInstance.id;
+		if (idOrInstance instanceof this.#holds) return idOrInstance.id;
 		if (typeof idOrInstance === "string") return idOrInstance;
 		return null;
 	}
