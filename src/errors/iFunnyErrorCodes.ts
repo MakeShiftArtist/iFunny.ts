@@ -23,4 +23,7 @@ export enum iFunnyErrorCodes {
 	UserNotFound,
 	UserUnavailable,
 	UserDeleted,
+
+	// Content Errors
+	ContentNotFound,
 }

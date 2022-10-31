@@ -5,10 +5,11 @@ import {
 	RESTAPIErrorNotFound,
 	RESTAPIErrorResponse,
 } from "@ifunny/ifunny-api-types";
+import { AxiosResponse } from "axios";
+import Client from "../client/Client";
 
 import { iFunnyError } from "./iFunnyError";
 import { iFunnyErrorCodes } from "./iFunnyErrorCodes";
-import { isAxiosError } from "../utils/Methods";
 
 function handleCaptcha(data: RESTAPIErrorCaptchaRequired) {
 	return iFunnyError.new(iFunnyErrorCodes.CaptchaRequired, data);
@@ -16,63 +17,83 @@ function handleCaptcha(data: RESTAPIErrorCaptchaRequired) {
 
 /**
  * Handles bad requests errors
- * @param error Bad request error data
- * @returns
+ * @param response AxiosResponse instance
+ * @returns Error
  */
-function handleBadRequest(error: RESTAPIErrorBadRequest) {
-	switch (error.error_description) {
+function handleBadRequest(response: AxiosResponse<RESTAPIErrorBadRequest>) {
+	switch (response.data.error_description) {
 		case "Invalid user id":
-			return null;
+			return iFunnyError.new(iFunnyErrorCodes.UserNotFound, response.config.url);
 		default:
 			return iFunnyError.new(
 				iFunnyErrorCodes.UnknownError,
-				error.error_description
+				response.data.error_description
 			);
 	}
 }
 
-function handleNotFound(error: RESTAPIErrorNotFound) {
-	const message = error.error_description;
-	if (
-		message.startsWith("User with nick") ||
-		message.startsWith("Unable to find user with id: ")
-	) {
-		return iFunnyError.new(iFunnyErrorCodes.UserNotFound, message);
-	} else {
-		return iFunnyError.unknown(error.error_description);
+function handleNotFound(response: AxiosResponse<RESTAPIErrorNotFound>) {
+	const message = response.data.error_description;
+	switch (true) {
+		case /(?<=User with nick )(\S+)(?= not found)/g.test(message):
+		case /(?<=Unable to find user with id: )(\S{24})/g.test(message):
+			return iFunnyError.new(iFunnyErrorCodes.UserNotFound, message);
+
+		case /Content not found/g.test(message):
+			return iFunnyError.new(
+				iFunnyErrorCodes.ContentNotFound,
+				response.config.url!
+			);
+		default:
+			return iFunnyError.unknown(JSON.stringify(response.data, null, 2));
 	}
 }
 
 /**
  * Handles an error returned by the iFunny error
- * @param error {@link RESTAPIErrorResponse}
+ * @param response {@link RESTAPIErrorResponse}
  */
-export function handleAPIError(error: RESTAPIErrorResponse) {
+export function handleAPIError(response: AxiosResponse<RESTAPIErrorResponse>) {
 	// TODO: Handle all errors
-	switch (error.error) {
+	switch (response.data.error) {
 		case IFUNNY_ERRORS.BAD_REQUEST:
-			return handleBadRequest(error);
+			return handleBadRequest(response as AxiosResponse<RESTAPIErrorBadRequest>);
 
 		case IFUNNY_ERRORS.CAPTCHA_REQUIRED:
-			return handleCaptcha(error);
+			return handleCaptcha(response.data);
+
 		case IFUNNY_ERRORS.UNAUTHORIZED:
 			return iFunnyError.new(
 				iFunnyErrorCodes.Unauthorized,
-				error.error_description
+				response.data.error_description
 			);
+
 		case IFUNNY_ERRORS.INVALID_EMAIL:
 		case IFUNNY_ERRORS.EMAIL_EXISTS:
 			return iFunnyError.new(
 				iFunnyErrorCodes.InvalidEmail,
-				error.error_description
+				response.data.error_description
 			);
+
 		case IFUNNY_ERRORS.NOT_FOUND:
-			return handleNotFound(error);
+			return handleNotFound(response as AxiosResponse<RESTAPIErrorNotFound>);
+
+		case IFUNNY_ERRORS.INVALID_GRANT:
+			return iFunnyError.new(
+				iFunnyErrorCodes.InvalidGrant,
+				`${response.data.error_description} - ${response.config.headers}`
+			);
+
+		case IFUNNY_ERRORS.INVALID_CLIENT:
+			return iFunnyError.new(
+				iFunnyErrorCodes.InvalidClient,
+				`${response.data.error_description} - ${response.request.config}`
+			);
+
 		default:
 			return iFunnyError.new(
 				iFunnyErrorCodes.UnknownError,
-				// @ts-ignore
-				error.error_description
+				JSON.stringify(response.data, null, 2)
 			);
 	}
 }
@@ -82,12 +103,13 @@ export function handleAPIError(error: RESTAPIErrorResponse) {
  * @param error Error to handle
  * @returns `null` or custom iFunnyError
  */
-export function handleError(error: unknown) {
-	if (!isAxiosError(error)) {
-		return iFunnyError.unknown(error);
+export function handleError(client: Client, error: unknown) {
+	if (!(error instanceof Error)) throw iFunnyError.unknown(error);
+	if (!client.util.isAxiosError(error)) {
+		throw error;
 	}
 	if (error.response?.data) {
-		return handleAPIError(error.response.data);
+		return handleAPIError(error.response);
 	}
-	return iFunnyError.new(iFunnyErrorCodes.UncaughtAxiosError, error.message);
+	return iFunnyError.new(iFunnyErrorCodes.UncaughtAxiosError, error);
 }

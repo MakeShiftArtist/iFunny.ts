@@ -10,12 +10,16 @@ function makeError(Base: typeof Error) {
 		 * The error code for the error
 		 */
 		#code: iFunnyErrorCodes;
+
+		#args: any[];
+
 		/**
 		 * @param code The error code for the error
 		 * @param args Args to pass into the message formatter function
 		 */
 		constructor(code: iFunnyErrorCodes, ...args: any[]) {
-			super(message(code, args));
+			super(message(code, ...args));
+			this.#args = args;
 			this.#code = code;
 			Error.captureStackTrace?.(this, iFunnyError);
 		}
@@ -25,6 +29,10 @@ function makeError(Base: typeof Error) {
 		 */
 		get code() {
 			return this.#code;
+		}
+
+		get args() {
+			return this.#args;
 		}
 
 		/**
