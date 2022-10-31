@@ -1,4 +1,4 @@
-import { BaseClient, BaseClientConfig } from "./BaseClient";
+import { BaseClient } from "./BaseClient";
 import {
 	APIClientUser as ClientPayload,
 	Endpoints,
@@ -8,48 +8,98 @@ import {
 } from "@ifunny/ifunny-api-types";
 
 import { APIClientUser } from "@ifunny/ifunny-api-types";
-import { If } from "../utils/Util";
+import { If } from "../utils/Types";
 import { UserManager } from "../managers/UserManager";
 import { iFunnyError } from "../errors/iFunnyError";
 import { iFunnyErrorCodes } from "../errors/iFunnyErrorCodes";
-
-interface ClientConfig extends Partial<BaseClientConfig> {}
+import { Util } from "../utils/Util";
+import { ClientOptions } from "./BaseClient";
+import { FeedManager } from "../managers/FeedManager";
+import { handleError } from "../errors/ErrorHandler";
+import ContentManager from "../managers/ContentManager";
 
 /**
- * Client for the Discord API.
+ * Client for the iFunny API.
  * @extends BaseClient
  */
 export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	/**
 	 * User manager object
 	 */
-	private _users: UserManager;
+	readonly #users: UserManager;
+	/**
+	 * Feed manager object
+	 */
+	readonly #feeds: FeedManager;
+	/**
+	 * Content manager object
+	 */
+	readonly #content: ContentManager;
 
-	constructor(config?: ClientConfig, payload: Partial<ClientPayload> = {}) {
+	/**
+	 * Client utility class
+	 */
+	readonly #util: Util;
+
+	/**
+	 * @param config The config for the Client
+	 * @param payload Payload for the client if applicable
+	 */
+	constructor(config?: ClientOptions, payload: Partial<ClientPayload> = {}) {
 		super(config, payload);
-		this._users = new UserManager(this);
+		this.#util = new Util(this);
+		this.#users = new UserManager(this);
+		this.#feeds = new FeedManager(this);
+		this.#content = new ContentManager(this);
+
+		this.instance.interceptors.response.use(
+			(onSuccess) => onSuccess,
+			(onFail) => {
+				const error = handleError(this, onFail);
+				if (error instanceof Error) throw error;
+				return error;
+			}
+		);
 	}
 
+	/**
+	 * Utility class for the client
+	 */
+	get util() {
+		return this.#util;
+	}
+
+	/**
+	 * Basic token used by the client.\
+	 * If not set in constructor, one was generated
+	 */
 	public get basic(): string {
-		return this._basic;
+		return (
+			this.config.basic ||
+			this.util.createBasicAuth({
+				clientId: this.config.clientId,
+				clientSecret: this.config.clientSecret,
+				length: this.config.basicLength,
+			})
+		);
 	}
 
 	public set basic(value: string) {
-		this._basic = value;
+		this.config.basic = value;
 	}
 
 	/**
 	 * The bearer token for the client
 	 */
 	get bearer(): If<Authorized, string, null> {
-		return this._bearer as If<Authorized, string, null>;
+		return this.config.bearer as If<Authorized, string, null>;
 	}
 
 	/**
 	 * Sets the bearer token for the client. If set to null, the client will not use a bearer token.
 	 */
 	set bearer(value: string | null) {
-		this._bearer = value || null;
+		this.config.bearer = value || null;
 		this.instance.defaults.headers.common.Authorization = this.isAuthorized()
 			? `Bearer ${this.bearer}`
 			: `Basic ${this.basic}`;
@@ -84,7 +134,21 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * The client's user manager
 	 */
 	get users() {
-		return this._users;
+		return this.#users;
+	}
+
+	/**
+	 * The content feeds for the Client
+	 */
+	get feeds() {
+		return this.#feeds;
+	}
+
+	/**
+	 * The Client's Content manager
+	 */
+	get content() {
+		return this.#content;
 	}
 
 	/**
@@ -99,12 +163,22 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 			return await this.fetch();
 		}
 
+		const auth = `Basic ${this.basic}`;
+		const data = new FormData();
+		data.set("grant_type", "password");
+		data.set("username", email);
+		data.set("password", password);
 		let response = await this.instance.post<RESTAPIOauth2LoginSuccess>(
 			Endpoints.token,
+			data,
 			{
-				grant_type: "password",
-				username: email,
-				password,
+				headers: {
+					accept: "application/json",
+					applicationstate: 1,
+					authorization: auth,
+					connection: "Keep-Alive",
+					"content-type": "application/x-www-form-urlencoded",
+				},
 			}
 		);
 		this.bearer = response.data.access_token;
@@ -126,13 +200,18 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		acceptMailOffers: boolean = false,
 		login: boolean = true
 	): Promise<this> {
-		let response = await this.instance.post<RESTAPISignUpSuccess>(Endpoints.user(), {
-			reg_type: "pwd",
-			nick,
-			email,
-			password,
-			accept_mailing: acceptMailOffers ? 1 : 0,
-		});
+		const data = new FormData();
+		data.set("reg_type", "pwd");
+		data.set("nick", nick);
+		data.set("email", email);
+		data.set("password", password);
+		data.set("accept_mailing", acceptMailOffers ? "1" : "0");
+
+		let response = await this.instance.post<RESTAPISignUpSuccess>(
+			Endpoints.user(),
+			data.toString()
+		);
+
 		this.payload.id = response.data.data.id;
 		if (login) {
 			return await this.login(email, password);
