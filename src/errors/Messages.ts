@@ -1,7 +1,8 @@
 import { RESTAPIErrorCaptchaRequired } from "@ifunny/ifunny-api-types";
+import { AxiosError } from "axios";
 import { iFunnyErrorCodes } from "./iFunnyErrorCodes";
 
-function desc(title: string, description?: string | null, fallback: string = ".") {
+function desc(title: string, description?: any, fallback: string = ".") {
 	return title + (description ? `: ${description}` : fallback);
 }
 
@@ -20,8 +21,8 @@ export const Messages = {
 	// Library Errors
 	[iFunnyErrorCodes.InvalidBasicTokenLength]: (description?: string) =>
 		desc("The basic token must be 156 or 112 characters long", description),
-	[iFunnyErrorCodes.UncaughtAxiosError]: (message: string) =>
-		desc("Uncaught axios error", message),
+	[iFunnyErrorCodes.UncaughtAxiosError]: (error: AxiosError) =>
+		desc("Uncaught axios error", error),
 
 	// Auth Errors
 	[iFunnyErrorCodes.InvalidTokenType]: (tokenType?: string) =>
@@ -40,6 +41,9 @@ export const Messages = {
 	[iFunnyErrorCodes.UserNotFound]: (description?: string) => description,
 	[iFunnyErrorCodes.UserUnavailable]: (user?: string) => desc("User unavailable", user),
 	[iFunnyErrorCodes.UserDeleted]: (user?: string) => desc("User was deleted", user),
+
+	// Content Errors
+	[iFunnyErrorCodes.ContentNotFound]: (id: string) => desc("Content not found", id),
 };
 
 export default Messages;
