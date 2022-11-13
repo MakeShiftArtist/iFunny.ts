@@ -27,7 +27,7 @@ export class Util {
 	/**
 	 * @param client Client attached to the Utility class
 	 */
-	constructor(client: Client) {
+	public constructor(client: Client) {
 		this.#client = client;
 	}
 
@@ -35,6 +35,7 @@ export class Util {
 	 * Asserts a claim to be true
 	 * @param claim The claim to check
 	 * @param error The message to send if the claim evaluted to false
+	 * @internal
 	 */
 	assert(claim: boolean, error: Error | string): claim is true {
 		if (!claim) {
@@ -55,7 +56,7 @@ export class Util {
 	 * @param opts.length The length of the token to create
 	 * @returns A basic auth token
 	 */
-	createBasicAuth(opts?: BasicAuthConfig) {
+	public createBasicAuth(opts?: BasicAuthConfig) {
 		const { length, clientId, clientSecret } = Object.assign(
 			DefaultBasicAuthConfig,
 			opts
@@ -85,21 +86,9 @@ export class Util {
 	}
 
 	/**
-	 * Returns a Date object from a timestamp
-	 * @param timestamp Number of seconds of the timestamp
-	 * @param inMilliseconds Whether the timestamp is already in milliseconds or not
-	 * @returns
-	 */
-	dateFromTimestamp(timestamp: number, inMilliseconds: boolean = true): Date {
-		// ? Converts timestamp to milliseconds if necessary
-		if (!inMilliseconds) timestamp *= 1000;
-
-		return new Date(timestamp);
-	}
-
-	/**
 	 * Validates that something is an Axios Error
 	 * @param item Item to validate
+	 * @internal
 	 */
 	isAxiosError(item: unknown): item is AxiosError & {
 		response: AxiosResponse<unknown>;
@@ -111,7 +100,8 @@ export class Util {
 	/**
 	 * Validates that an object matches the RESTAPIErrorResponse schema
 	 * @param error Error to validate
-	 * @returns error is RESTAPIErrorRespons
+	 * @returns error is RESTAPIErrorResponse
+	 * @internal
 	 */
 	isAPIError(error: unknown): error is RESTAPIErrorResponse {
 		if (!this.hasProperty(error, "error")) return false;
@@ -128,7 +118,7 @@ export class Util {
 	 * @param date Custom date
 	 * @returns GMT timestamp of the date
 	 */
-	ifModifiedSince(date?: Date): string {
+	public if_modified_since(date?: Date): string {
 		date ??= new Date();
 		return date.toUTCString();
 	}
@@ -139,8 +129,9 @@ export class Util {
 	 * @param key The key to get the array of values from
 	 * @param params The params to pass to the url
 	 * @yields The value of the key
+	 * @internal
 	 */
-	public async *paginate<T extends unknown>(
+	async *paginate<T extends unknown>(
 		url: string,
 		key: string,
 		params?: PaginateConfig,
@@ -205,7 +196,7 @@ export class Util {
 	 * @param ms The number of milliseconds to wait
 	 * @returns A promise that resolves after the given amount of time
 	 */
-	async sleep(ms: number): Promise<void> {
+	public async sleep(ms: number): Promise<void> {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
 
@@ -214,7 +205,7 @@ export class Util {
 	 * @param data Data to convert to JSON
 	 * @returns JSON data
 	 */
-	toJSON(data: unknown): string {
+	public toJSON(data: unknown): string {
 		return JSON.stringify(data, null, 2);
 	}
 
@@ -223,6 +214,7 @@ export class Util {
 	 * @param obj Object to check key for
 	 * @param prop Property to check is defined
 	 * @returns `obj` has property `prop`
+	 * @internal
 	 */
 	hasProperty<Obj, Prop extends string>(
 		obj: Obj,
@@ -234,14 +226,14 @@ export class Util {
 	/**
 	 * Client headers
 	 */
-	get headers(): AxiosRequestHeaders {
+	public get headers(): AxiosRequestHeaders {
 		return this.#client.instance.defaults.headers.common;
 	}
 
 	/**
 	 * Updates client headers
 	 */
-	set headers(headers: AxiosRequestHeaders) {
+	public set headers(headers: AxiosRequestHeaders) {
 		Object.assign(this.#client.instance.defaults.headers.common, headers);
 	}
 }
