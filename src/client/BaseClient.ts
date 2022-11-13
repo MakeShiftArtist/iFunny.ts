@@ -10,14 +10,16 @@ import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
 import { Agent } from "https";
 import { APIClientUser as ClientPayload } from "@ifunny/ifunny-api-types";
 import { EventEmitter } from "eventemitter3";
+import { ICachingOptions } from "node-ts-cache";
 
 export interface ClientConfig {
 	basic: string | null;
-	basicLength: 156 | 112;
+	basic_length: 156 | 112;
 	bearer: string | null;
 	headers: AxiosRequestHeaders;
-	clientId: string;
-	clientSecret: string;
+	client_id: string;
+	client_secret: string;
+	cache_config: ICachingOptions;
 }
 
 export type ClientOptions = Partial<ClientConfig>;
@@ -57,16 +59,28 @@ export class BaseClient extends EventEmitter {
 		this.#payload = Object.assign({}, payload);
 	}
 
+	/**
+	 * Default Config for the Client
+	 */
 	public static readonly DEFAULT_CONFIG: ClientConfig = {
 		basic: null,
-		basicLength: 112,
+		basic_length: 112,
 		bearer: null,
 		headers: DefaultHeaders,
-		clientId: DefaultClientId,
-		clientSecret: DefaultClientSecret,
+		client_id: DefaultClientId,
+		client_secret: DefaultClientSecret,
+		cache_config: {
+			ttl: 1000 * 60 * 30,
+			isLazy: true,
+			isCachedForever: false,
+			calculateKey: JSON.stringify,
+		},
 	};
 
-	public get config() {
+	/**
+	 * Current config for the Client
+	 */
+	public get config(): ClientConfig {
 		return this.#config;
 	}
 
@@ -77,6 +91,9 @@ export class BaseClient extends EventEmitter {
 		return this.#payload;
 	}
 
+	/**
+	 * Prevents overwriting the payload
+	 */
 	public set payload(value: Partial<ClientPayload>) {
 		this.#payload = Object.assign(this.payload, value);
 	}
@@ -90,3 +107,5 @@ export class BaseClient extends EventEmitter {
 		return eval(script);
 	}
 }
+
+export default BaseClient;
