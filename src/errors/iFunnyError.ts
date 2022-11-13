@@ -4,9 +4,8 @@ import {
 	RESTAPIErrorResponse,
 	RESTAPIiFunnyError,
 } from "@ifunny/ifunny-api-types";
-
-import Client from "../client/Client";
-import CaptchaError from "./CaptchaError";
+import { CaptchaError } from "./CaptchaError";
+import { Client } from "../client/Client";
 
 /**
  * A class for representing an error thrown by iFunny.ts
@@ -19,6 +18,7 @@ export class iFunnyError<
 	readonly #client: Client;
 
 	/**
+	 * @param client Client instance attached to the Error
 	 * @param error The error thrown by the API
 	 */
 	constructor(client: Client, error: APIError) {

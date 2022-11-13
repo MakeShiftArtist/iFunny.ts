@@ -1,9 +1,9 @@
+import { Client } from "../client/Client";
+import { iFunnyError } from "./iFunnyError";
 import {
 	RESTAPICaptchaType,
 	RESTAPIErrorCaptchaRequired,
 } from "@ifunny/ifunny-api-types/types";
-import Client from "../client/Client";
-import { iFunnyError } from "./iFunnyError";
 
 /**
  * Represents a captcha returned by the API
