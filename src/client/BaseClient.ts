@@ -29,10 +29,11 @@ export type ClientOptions = Partial<ClientConfig>;
 export class BaseClient extends EventEmitter {
 	/**
 	 * The axios instance used for requests
+	 * @internal
 	 */
-	public readonly instance: AxiosInstance;
+	readonly instance: AxiosInstance;
 
-	protected _payload: Partial<ClientPayload>;
+	#payload: Partial<ClientPayload>;
 
 	#config: ClientConfig;
 
@@ -40,10 +41,10 @@ export class BaseClient extends EventEmitter {
 	 * @param config Options to initialize the BaseClient with
 	 * @param payload The payload for the client if applicable
 	 */
-	constructor(config: ClientOptions = {}, payload: Partial<ClientPayload> = {}) {
+	public constructor(config: ClientOptions = {}, payload: Partial<ClientPayload> = {}) {
 		super();
 		// Set defaults
-		this.#config = Object.assign(BaseClient.DefaultConfig, config);
+		this.#config = Object.assign(BaseClient.DEFAULT_CONFIG, config);
 
 		const headers = Object.assign(DefaultHeaders, config?.headers);
 
@@ -53,10 +54,10 @@ export class BaseClient extends EventEmitter {
 			httpsAgent: new Agent({ keepAlive: true }),
 		});
 
-		this._payload = Object.assign({}, payload);
+		this.#payload = Object.assign({}, payload);
 	}
 
-	static DefaultConfig: ClientConfig = {
+	public static readonly DEFAULT_CONFIG: ClientConfig = {
 		basic: null,
 		basicLength: 112,
 		bearer: null,
@@ -65,19 +66,19 @@ export class BaseClient extends EventEmitter {
 		clientSecret: DefaultClientSecret,
 	};
 
-	get config() {
+	public get config() {
 		return this.#config;
 	}
 
 	/**
 	 * Gets the payload
 	 */
-	get payload(): Partial<ClientPayload> {
-		return this._payload;
+	public get payload(): Partial<ClientPayload> {
+		return this.#payload;
 	}
 
-	set payload(value: Partial<ClientPayload>) {
-		this._payload = Object.assign(this.payload, value);
+	public set payload(value: Partial<ClientPayload>) {
+		this.#payload = Object.assign(this.payload, value);
 	}
 
 	/**
