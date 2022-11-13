@@ -5,7 +5,6 @@ import {
 	RESTAPISignUpSuccess,
 	RESTAPISuccessResponse as Success,
 } from "@ifunny/ifunny-api-types";
-
 import { BaseClient } from "./BaseClient";
 import { CaptchaError } from "../errors/CaptchaError";
 import { ClientOptions } from "./BaseClient";
