@@ -1,7 +1,7 @@
-import { APIContent } from "@ifunny/ifunny-api-types/types";
-import Client from "../client/Client";
+import { APIContent } from "@ifunny/ifunny-api-types";
+import { BaseFeed, PaginateConfig } from "./BaseFeed";
+import { Client } from "../client/Client";
 import { Content } from "./Content";
-import BaseFeed, { PaginateConfig } from "./BaseFeed";
 
 /**
  * Represents a feed on iFunny
@@ -12,7 +12,7 @@ export class Feed extends BaseFeed {
 	 * @param client Client attached to the Feed
 	 * @param url Url for the feed
 	 */
-	constructor(client: Client, url: string) {
+	public constructor(client: Client, url: string) {
 		super(client, url);
 	}
 
@@ -21,18 +21,22 @@ export class Feed extends BaseFeed {
 	 * @param params Params to pass into the pagination requests - Updates automatically
 	 * @param markAsRead Should each post be marked as read after viewing? (Default: false)
 	 */
-	async *scroll(params?: PaginateConfig, markAsRead: boolean = false) {
-		for await (const content of this.client.util.paginate<APIContent>(
+	public async *scroll(params?: PaginateConfig, markAsRead: boolean = false) {
+		for await (const api_content of this.client.util.paginate<APIContent>(
 			this.url,
 			"content",
 			Object.assign({ limit: 30 }, params)
 		)) {
 			if (markAsRead) {
-				this.client.content.markAsRead(content.id);
+				this.client.content.mark_as_read(api_content.id);
 			}
-			this.client.content.cache.set(content.id, new Content(this.client, content));
+			const content = new Content(this.client, api_content);
 
-			yield this.client.content.cache.get(content.id) as Content;
+			this.client.content.cache.set(content.id, content);
+
+			yield content;
 		}
 	}
 }
+
+export default Feed;
