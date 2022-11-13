@@ -26,7 +26,7 @@ export class Base<Payload extends APIBasePayload> {
 	 * @param client The client instance
 	 * @param payload The payload of the object
 	 */
-	constructor(client: Client, payload: Payload) {
+	public constructor(client: Client, payload: Payload) {
 		this.#client = client;
 		this.#payload = payload;
 	}

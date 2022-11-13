@@ -1,129 +1,145 @@
-import { APIContentCreator } from "@ifunny/ifunny-api-types";
-import Client from "../client/Client";
+import {
+	APIContentCreator,
+	APINickColor,
+	APIProfilePhoto,
+	APIUserNums,
+	APIUserRating,
+} from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
+import { Client } from "../client/Client";
 import { User } from "./User";
 
+/**
+ * Preresents a Content Creator on iFunny
+ * @extends Base<APIContentCreator>
+ */
 export class Creator extends Base<APIContentCreator> {
-	constructor(client: Client, payload: APIContentCreator) {
+	#user: User | null = null;
+
+	/**
+	 * @param client Client instance for the Creator
+	 * @param payload Payload of the content creator
+	 */
+	public constructor(client: Client, payload: APIContentCreator) {
 		super(client, payload);
 	}
-
-	private _user: User | null = null;
 
 	/**
 	 * The Content Creator's User Object
 	 */
-	async user() {
-		return (this._user ??= await this.client.users.fetch(this.id));
-	}
-
-	/**
-	 * The user ID of the Creator
-	 */
-	override get id() {
-		return super.id;
+	public async user(): Promise<User> {
+		return (this.#user ??= await this.client.users.fetch(this.id))!;
 	}
 
 	/**
 	 * Is the creator banned
 	 */
-	get isBanned() {
+	public get is_banned(): boolean {
 		return this.get("is_banned");
 	}
 
 	/**
 	 * Is the creator blocked by the Client
 	 */
-	get isBlocked() {
+	public get is_blocked(): boolean {
 		return this.get("is_blocked");
 	}
 
 	/**
 	 * Is the creator a deleted user
 	 */
-	get isDeleted() {
+	public get is_deleted(): boolean {
 		return this.get("is_deleted");
 	}
 
 	/**
 	 * Is the creator subscribed to the Client
 	 */
-	get isSubscriber() {
+	public get is_subscriber(): boolean {
 		return this.get("is_in_subscribers");
 	}
 
 	/**
 	 * Is the Client subscribed to the Creator
 	 */
-	get isSubscription() {
+	public get is_subscription(): boolean {
 		return this.get("is_in_subscriptions");
 	}
 
 	/**
 	 * Is the Creator verified
 	 */
-	get isVerified() {
+	public get is_verified(): boolean {
 		return this.get("is_verified");
 	}
 
 	/**
-	 * The creators nick
+	 * The creator's nick
 	 * @alias username
 	 */
-	get nick() {
+	public get nick(): string {
 		return this.get("nick");
 	}
 
 	/**
-	 * The creators username
-	 * @alias nick
+	 * The creator's nick color
 	 */
-	get username() {
-		return this.nick;
-	}
-
-	/**
-	 * The creators nick color
-	 */
-	get nickColor() {
+	public get nick_color(): APINickColor | null {
 		return this.get("nick_color");
 	}
 
 	/**
-	 * The creators nums
+	 * The creator's nums
 	 * @alias stats
 	 */
-	get num() {
+	public get num(): APIUserNums {
 		return this.get("num");
 	}
 
 	/**
-	 * The creators stats
-	 * @alias num
+	 * The creator's original nick
 	 */
-	get stats() {
-		return this.num;
-	}
-
-	/**
-	 * The craetor's original nick
-	 */
-	get originalNick() {
+	public get original_nick(): string {
 		return this.get("original_nick");
 	}
 
 	/**
 	 * The creator's profile photo
 	 */
-	get photo() {
+	public get photo(): APIProfilePhoto | null {
 		return this.get("photo");
+	}
+
+	/**
+	 * The creator's rating
+	 */
+	public get rating(): APIUserRating {
+		return this.get("rating");
+	}
+
+	/**
+	 * The creator's stats
+	 * @alias num
+	 */
+	public get stats(): APIUserNums {
+		return this.num;
 	}
 
 	/**
 	 * Total number of posts the creator has\
 	 * ? This isn't in Creator.num for some reason
 	 */
-	get totalPosts() {
+	public get total_posts(): number {
 		return this.get("total_posts");
 	}
+
+	/**
+	 * The creator's username
+	 * @alias nick
+	 */
+	public get username(): string {
+		return this.nick;
+	}
 }
+
+export default Creator;

@@ -11,7 +11,7 @@ export class User extends BaseUser {
 	 * @param client Client instance associated with the User
 	 * @param payload Payload of the User
 	 */
-	constructor(client: Client, payload: APIUserProfile) {
+	public constructor(client: Client, payload: APIUserProfile) {
 		super(client, payload);
 	}
 }

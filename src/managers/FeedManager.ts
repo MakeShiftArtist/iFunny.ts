@@ -16,7 +16,7 @@ export class FeedManager {
 	/**
 	 * @param client Client instance
 	 */
-	constructor(client: Client) {
+	public constructor(client: Client) {
 		this.#client = client;
 		this.#features = new Feed(this.#client, Feed.Types.FEATURES);
 		this.#collective = new Feed(this.#client, Feed.Types.COLLECTIVE);

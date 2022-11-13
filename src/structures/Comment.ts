@@ -13,7 +13,7 @@ export class Comment extends BaseComment {
 	 * @param content Content attached to the Comment
 	 * @param payload Payload of the Comment
 	 */
-	constructor(content: Content, payload: APIComment) {
+	public constructor(content: Content, payload: APIComment) {
 		super(content, payload);
 	}
 }

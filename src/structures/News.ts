@@ -1,12 +1,17 @@
 import { APINews } from "@ifunny/ifunny-api-types";
 import { Nullify } from "../utils/Types";
 
+// TODO: Document News properties
+
 /**
  * Represents a News object from the Activity Feed
  */
 export class News {
 	readonly #payload: APINews;
-	constructor(news: APINews) {
+	/**
+	 * @param news Payload of the News Object
+	 */
+	public constructor(news: APINews) {
 		this.#payload = news;
 	}
 

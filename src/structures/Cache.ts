@@ -17,7 +17,7 @@ export type DataStructure = new (
 export class Cache<Holds extends DataStructure> extends CacheContainer {
 	readonly #holds: Holds;
 	#config: ICachingOptions;
-	constructor(holds: Holds, config: ICachingOptions) {
+	public constructor(holds: Holds, config: ICachingOptions) {
 		super(new MemoryStorage());
 		this.#holds = holds;
 		this.#config = config;
@@ -26,7 +26,7 @@ export class Cache<Holds extends DataStructure> extends CacheContainer {
 	/**
 	 * Cache Config this is using
 	 */
-	get config() {
+	public get config() {
 		return this.#config;
 	}
 

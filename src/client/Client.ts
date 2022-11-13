@@ -44,6 +44,7 @@ export interface SignUpOptions {
 /**
  * Client for the iFunny API.
  * @extends BaseClient
+ * @template Authorized
  */
 export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	/**
@@ -68,7 +69,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * @param config The config for the Client
 	 * @param payload Payload for the client if applicable
 	 */
-	constructor(config?: ClientOptions, payload: Partial<APIClientUser> = {}) {
+	public constructor(config?: ClientOptions, payload: Partial<APIClientUser> = {}) {
 		super(config, payload);
 		this.#util = new Util(this);
 		this.#users = new UserManager(this, this.config.cache_config);
@@ -97,7 +98,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	/**
 	 * Utility class for the client
 	 */
-	get util(): Util {
+	public get util(): Util {
 		return this.#util;
 	}
 
@@ -126,14 +127,14 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	/**
 	 * The bearer token for the client
 	 */
-	get bearer(): If<Authorized, string, null> {
+	public get bearer(): If<Authorized, string, null> {
 		return this.config.bearer as If<Authorized, string, null>;
 	}
 
 	/**
 	 * Sets the bearer token for the client. If set to null, the client will not use a bearer token.
 	 */
-	set bearer(value: string | null) {
+	public set bearer(value: string | null) {
 		this.config.bearer = value || null;
 		this.instance.defaults.headers.common.Authorization = this.is_authorized()
 			? `Bearer ${this.bearer}`
@@ -143,14 +144,14 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	/**
 	 * The authorization string used for requests
 	 */
-	get authorization(): string {
+	public get authorization(): string {
 		return this.bearer ? `Bearer ${this.bearer}` : `Basic ${this.basic}`;
 	}
 
 	/**
 	 * Is the client using a bearer token to make requests?
 	 */
-	is_authorized(): this is Client<true> {
+	public is_authorized(): this is Client<true> {
 		return !!this.bearer;
 	}
 
@@ -158,7 +159,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * Updates the Client's payload
 	 * @returns The Client instance
 	 */
-	async fetch(): Promise<this> {
+	public async fetch(): Promise<this> {
 		if (!this.is_authorized()) {
 			throw new Error(
 				"Client is not authorized with a bearer token. Please generate one with Client#login"
@@ -177,24 +178,36 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	/**
 	 * The client's user manager
 	 */
-	get users(): UserManager {
+	public get users(): UserManager {
 		return this.#users;
 	}
 
 	/**
 	 * The content feeds for the Client
 	 */
-	get feeds(): FeedManager {
+	public get feeds(): FeedManager {
 		return this.#feeds;
 	}
 
 	/**
 	 * The Client's Content manager
 	 */
-	get content(): ContentManager {
+	public get content(): ContentManager {
 		return this.#content;
 	}
 
+	/**
+	 * Logs in using the stored bearer token.\
+	 * Does NOT Generate a new bearer token
+	 */
+	public async login(): Promise<this>;
+	/**
+	 * Logs the Client in an generates a new Bearer token.\
+	 * If a bearer token is stored, these are ignored
+	 * @param email The email to log in with
+	 * @param password The password to log in with
+	 */
+	public async login(email: string, password: string): Promise<this>;
 	/**
 	 * Logs into iFunny with an Email and Password\
 	 * If you already have a bearer token, don't use this method
@@ -202,7 +215,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * @param password The password to login with
 	 * @returns The Client instance
 	 */
-	async login(email?: string, password?: string): Promise<this> {
+	public async login(email?: string, password?: string): Promise<this> {
 		if (this.is_authorized()) {
 			return await this.fetch();
 		}
@@ -245,7 +258,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * @param options.login Should the client login after sign up? (Default: true)
 	 * @returns The instance of the client
 	 */
-	async sign_up(options: SignUpOptions): Promise<this> {
+	public async sign_up(options: SignUpOptions): Promise<this> {
 		const data = new FormData();
 		data.set("reg_type", "pwd");
 		data.set("nick", options.nick);

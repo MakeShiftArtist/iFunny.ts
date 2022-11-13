@@ -10,6 +10,7 @@ import { Client } from "../client/Client";
 /**
  * A class for representing an error thrown by iFunny.ts
  * @extends Error
+ * @template APIError
  */
 export class iFunnyError<
 	APIError extends RESTAPIErrorResponse = RESTAPIErrorResponse
@@ -21,7 +22,7 @@ export class iFunnyError<
 	 * @param client Client instance attached to the Error
 	 * @param error The error thrown by the API
 	 */
-	constructor(client: Client, error: APIError) {
+	public constructor(client: Client, error: APIError) {
 		super(error.error_description);
 		this.#client = client;
 		if (iFunnyError.isRawCaptchaError(client, error)) {
@@ -42,28 +43,28 @@ export class iFunnyError<
 	/**
 	 * The error code for the error
 	 */
-	get code(): RESTAPIiFunnyError {
+	public get code(): RESTAPIiFunnyError {
 		return this.raw.error;
 	}
 
 	/**
 	 * Status code returned by the API
 	 */
-	get status() {
+	public get status() {
 		return this.raw.status;
 	}
 
 	/**
 	 * Raw error returned by the API
 	 */
-	get raw() {
+	public get raw() {
 		return this.#error;
 	}
 
 	/**
 	 * The name of the error
 	 */
-	override get name() {
+	public override get name() {
 		return `${this.constructor.name} - ${this.code} [${this.status}]`;
 	}
 
@@ -97,17 +98,24 @@ export class iFunnyError<
 	}
 
 	/**
-	 *
+	 * Type guards an object into CaptchaError
 	 * @param error Error to validate
-	 * @returns
+	 * @returns error is CaptchaError
 	 */
 	public static isCaptchaError(error: unknown): error is CaptchaError {
 		return error instanceof CaptchaError;
 	}
 
-	isCaptchaError(): this is CaptchaError;
-	isCaptchaError(error: unknown): error is CaptchaError;
-	isCaptchaError(error?: unknown) {
+	/**
+	 * Type Guards this Error into CaptchaError
+	 */
+	public isCaptchaError(): this is CaptchaError;
+	/**
+	 * Type Guards error into CaptchaError
+	 * @param error Error to Type Guard
+	 */
+	public isCaptchaError(error: unknown): error is CaptchaError;
+	public isCaptchaError(error?: unknown) {
 		return iFunnyError.isCaptchaError(error ?? this);
 	}
 }

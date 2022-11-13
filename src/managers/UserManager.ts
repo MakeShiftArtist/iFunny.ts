@@ -18,7 +18,7 @@ export class UserManager extends CachedManager<typeof User> {
 	/**
 	 * @param client Client instance attached to the UserManager
 	 */
-	constructor(client: Client, cache_config: ICachingOptions) {
+	public constructor(client: Client, cache_config: ICachingOptions) {
 		super(client, User, cache_config);
 	}
 

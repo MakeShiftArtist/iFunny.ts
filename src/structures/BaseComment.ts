@@ -17,7 +17,7 @@ export class BaseComment extends Base<APIComment> {
 	 * @param content Content the Comment is attached to
 	 * @param payload Payload of the Comment
 	 */
-	constructor(content: Content, payload: APIComment) {
+	public constructor(content: Content, payload: APIComment) {
 		super(content.client, payload);
 		this.#content = content;
 	}
@@ -25,61 +25,61 @@ export class BaseComment extends Base<APIComment> {
 	/**
 	 * Content ID the comment is attached to
 	 */
-	get content_id() {
+	public get content_id() {
 		return this.get("cid");
 	}
 
 	/**
 	 * Content attached to the Comment
 	 */
-	get content() {
+	public get content() {
 		return this.#content;
 	}
 
-	get thumbnails() {
+	public get thumbnails() {
 		return this.get("content_thumbs");
 	}
 
-	get date() {
+	public get date() {
 		return this.get("date");
 	}
 
-	get is_edited() {
+	public get is_edited() {
 		return this.get("is_edited");
 	}
 
-	is_reply() {
+	public is_reply() {
 		return this.get("is_reply");
 	}
 
-	get is_smiled() {
+	public get is_smiled() {
 		return this.get("is_smiled");
 	}
 
-	get is_unsmiled() {
+	public get is_unsmiled() {
 		return this.get("is_unsmiled");
 	}
 
-	get last_reply() {
+	public get last_reply() {
 		return this.get("last_reply");
 	}
 
-	get num() {
+	public get num() {
 		return this.get("num");
 	}
 
-	get state() {
+	public get state() {
 		return this.get("state");
 	}
 
-	get status() {
+	public get status() {
 		return this.get("status");
 	}
 
 	/**
 	 * The text of the Comment. Can be an empty string
 	 */
-	get text() {
+	public get text() {
 		return this.get("text");
 	}
 
@@ -87,7 +87,7 @@ export class BaseComment extends Base<APIComment> {
 	 * Author of the Comment
 	 * @alias creator
 	 */
-	get author(): SimpleUser {
+	public get author(): SimpleUser {
 		return (this.#author ??= new SimpleUser(this.client, this.get("user")));
 	}
 
@@ -95,7 +95,7 @@ export class BaseComment extends Base<APIComment> {
 	 * Author of the Comment
 	 * @alias author
 	 */
-	get creator(): SimpleUser {
+	public get creator(): SimpleUser {
 		return this.author;
 	}
 }

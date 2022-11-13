@@ -18,7 +18,7 @@ export class BanSmall extends Base<APIBanSmall> {
 	 * @param user User or Id of the user that the ban belongs to
 	 * @param payload Payload of the ban if applicable
 	 */
-	constructor(client: Client, user: User, payload: APIBanSmall) {
+	public constructor(client: Client, user: User, payload: APIBanSmall) {
 		super(client, payload);
 		this.#user = user;
 		this.payload = payload;

@@ -22,7 +22,7 @@ export class SimpleUser extends Base<APISimpleUser> {
 	 * @param client Client attached to the SimpleUser
 	 * @param payload Payload for the SimpleUser
 	 */
-	constructor(client: Client, payload: APISimpleUser) {
+	public constructor(client: Client, payload: APISimpleUser) {
 		super(client, payload);
 		this.endpoint_url = Endpoints.user(this.id);
 	}

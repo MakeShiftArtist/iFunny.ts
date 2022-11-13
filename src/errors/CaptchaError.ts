@@ -15,21 +15,21 @@ export class CaptchaError extends iFunnyError<RESTAPIErrorCaptchaRequired> {
 	 * @param client Client instance
 	 * @param error Raw Error returned by the API
 	 */
-	constructor(client: Client, error: RESTAPIErrorCaptchaRequired) {
+	public constructor(client: Client, error: RESTAPIErrorCaptchaRequired) {
 		super(client, error);
 	}
 
 	/**
 	 * The type of the captcha
 	 */
-	get type(): RESTAPICaptchaType {
+	public get type(): RESTAPICaptchaType {
 		return this.raw.data.type;
 	}
 
 	/**
 	 * URL to open to solve the captcha.
 	 */
-	get captcha_url(): string {
+	public get captcha_url(): string {
 		return this.raw.data.captcha_url;
 	}
 }

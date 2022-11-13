@@ -13,9 +13,14 @@ import { ICachingOptions } from "node-ts-cache";
 
 /**
  * Manages content for the Client
+ * @extends CachedManager<Content>
  */
 export class ContentManager extends CachedManager<typeof Content> {
-	constructor(client: Client, cacheConfig: ICachingOptions) {
+	/**
+	 * @param client Client instance
+	 * @param cacheConfig Config to use for Caching
+	 */
+	public constructor(client: Client, cacheConfig: ICachingOptions) {
 		super(client, Content, cacheConfig);
 	}
 
@@ -25,10 +30,15 @@ export class ContentManager extends CachedManager<typeof Content> {
 	 * @param cached Should we return the Cached item? (Default: `true`)
 	 * @returns Content
 	 */
-	async fetch(id: Content | string, cached: boolean = true): Promise<Content | null> {
+	public async fetch(
+		content_or_id: Content | string,
+		cached: boolean = true
+	): Promise<Content | null> {
 		try {
-			let content = await this.resolve(id);
+			let content = await this.resolve(content_or_id);
 			if (content && cached) return content;
+
+			const id = this.resolve_id(content_or_id);
 
 			const { data } = await this.client.instance.get<RESTAPIContentResponse>(
 				`content/${id}`
@@ -36,6 +46,7 @@ export class ContentManager extends CachedManager<typeof Content> {
 
 			content = new Content(this.client, data.data);
 			this.cache.set(content.id, content, this.cache.config);
+
 			return content;
 		} catch (error) {
 			if (!iFunnyError.isiFunnyError(error)) throw error;
@@ -51,7 +62,7 @@ export class ContentManager extends CachedManager<typeof Content> {
 	 * @param content Content to mark as read
 	 * @param from Where the content was marked as read.
 	 */
-	async markAsRead(
+	public async mark_as_read(
 		content: Content | string | (Content | string)[],
 		from?: APIFeedFrom
 	): Promise<boolean> {

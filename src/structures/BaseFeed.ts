@@ -1,9 +1,9 @@
-import Client from "../client/Client";
+import { Client } from "../client/Client";
 
 /**
  * All feed times
  */
-enum FeedType {
+export enum FeedType {
 	FEATURES = "feeds/featured",
 	COLLECTIVE = "feeds/collective",
 	HOME = "timelines/home",
@@ -27,22 +27,22 @@ export class BaseFeed {
 	/**
 	 * The Client instance
 	 */
-	#client: Client;
+	readonly #client: Client;
 	/**
 	 * Url for the feed
 	 */
-	#url: string;
+	readonly #url: string;
 
 	/**
 	 * Types of feed
 	 */
-	static readonly Types = FeedType;
+	public static readonly Types = FeedType;
 
 	/**
 	 * @param client Client attached to the BaseFeed
 	 * @param url The url for the feed
 	 */
-	constructor(client: Client, url: string) {
+	public constructor(client: Client, url: string) {
 		this.#client = client;
 		this.#url = url;
 	}
@@ -50,14 +50,14 @@ export class BaseFeed {
 	/**
 	 * Client attached to the Feed
 	 */
-	get client() {
+	public get client(): Client {
 		return this.#client;
 	}
 
 	/**
 	 * Url used for pagination
 	 */
-	get url() {
+	public get url(): string {
 		return this.#url;
 	}
 }
