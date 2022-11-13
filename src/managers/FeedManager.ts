@@ -1,4 +1,4 @@
-import Client from "../client/Client";
+import { Client } from "../client/Client";
 import { Feed } from "../structures/Feed";
 
 /**
@@ -26,14 +26,14 @@ export class FeedManager {
 	/**
 	 * The featured feed
 	 */
-	get features() {
+	public get features(): Feed {
 		return this.#features;
 	}
 
 	/**
 	 * The collective feed
 	 */
-	get collective() {
+	public get collective(): Feed {
 		return this.#collective;
 	}
 
@@ -41,7 +41,7 @@ export class FeedManager {
 	 * The subscriptions feed
 	 * @alias home
 	 */
-	get subscriptions() {
+	public get subscriptions(): Feed {
 		return this.home;
 	}
 
@@ -49,8 +49,10 @@ export class FeedManager {
 	 * The home feed
 	 * @alias subscriptions
 	 */
-	get home() {
+	public get home(): Feed {
 		// This is the url so I included it
 		return this.#home;
 	}
 }
+
+export default FeedManager;
