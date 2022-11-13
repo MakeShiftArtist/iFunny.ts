@@ -1,14 +1,14 @@
 import {
-	APIUser,
+	APIUserProfile,
 	Endpoints,
+	IFUNNY_ERRORS,
 	RESTAPISuccessResponse as Success,
 } from "@ifunny/ifunny-api-types";
-
 import { CachedManager } from "./CachedManager";
 import { Client } from "../client/Client";
-import { User } from "../structures/User";
+import { ICachingOptions } from "node-ts-cache";
 import { iFunnyError } from "../errors/iFunnyError";
-import { iFunnyErrorCodes } from "../errors/iFunnyErrorCodes";
+import { User } from "../structures/User";
 
 /**
  * Manages iFunny Users
@@ -18,8 +18,8 @@ export class UserManager extends CachedManager<typeof User> {
 	/**
 	 * @param client Client instance attached to the UserManager
 	 */
-	constructor(client: Client) {
-		super(client, User);
+	constructor(client: Client, cache_config: ICachingOptions) {
+		super(client, User, cache_config);
 	}
 
 	/**
@@ -27,7 +27,7 @@ export class UserManager extends CachedManager<typeof User> {
 	 * It's a good idea to check this before signing up or changing your nick
 	 * @param nick Nick to check availability of
 	 */
-	public async nickAvailable(nick: string): Promise<boolean> {
+	public async nick_available(nick: string): Promise<boolean> {
 		const { data } = await this.client.instance.get(Endpoints.nicksAvailable, {
 			params: {
 				nick,
@@ -42,7 +42,7 @@ export class UserManager extends CachedManager<typeof User> {
 	 * It's a good idea to check this before signing up or changing your email
 	 * @param email Email to check availability of
 	 */
-	public async emailAvailable(email: string): Promise<boolean> {
+	public async email_available(email: string): Promise<boolean> {
 		const { data } = await this.client.instance.get(Endpoints.emailsAvailable, {
 			params: { email },
 		});
@@ -64,22 +64,27 @@ export class UserManager extends CachedManager<typeof User> {
 		cached: boolean = true
 	): Promise<User | null> {
 		try {
-			let user = this.resolve(idOrNick);
+			let user = await this.resolve(idOrNick);
 			if (cached && user) return user;
 
-			let { data } = await this.client.instance.request<Success<APIUser> | null>({
-				url: Endpoints.user(idOrNick, byNick),
-			});
+			const { data } =
+				await this.client.instance.request<Success<APIUserProfile> | null>({
+					url: Endpoints.user(idOrNick, byNick),
+				});
+
 			if (!data) return data;
+
 			user = new User(this.client, data.data);
 			this.cache.set(user.id, user);
 			this.cache.set(user.nick, user);
 			return user;
 		} catch (error) {
 			if (error instanceof iFunnyError) {
-				if (error.code === iFunnyErrorCodes.UserNotFound) return null;
+				if (error.code === IFUNNY_ERRORS.NOT_FOUND) return null;
 			}
 			throw error;
 		}
 	}
 }
+
+export default UserManager;
