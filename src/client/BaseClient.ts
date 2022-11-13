@@ -1,3 +1,4 @@
+import { Agent } from "https";
 import {
 	APIBase,
 	APIVersion,
@@ -5,12 +6,10 @@ import {
 	DefaultClientId,
 	DefaultClientSecret,
 } from "../utils/Constants";
-import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
-
-import { Agent } from "https";
 import { APIClientUser as ClientPayload } from "@ifunny/ifunny-api-types";
 import { EventEmitter } from "eventemitter3";
 import { ICachingOptions } from "node-ts-cache";
+import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
 
 export interface ClientConfig {
 	basic: string | null;
