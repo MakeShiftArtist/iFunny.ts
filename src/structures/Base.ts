@@ -1,47 +1,48 @@
-import { APIBasePayload } from "@ifunny/ifunny-api-types";
+import { APIBasePayload, Endpoints } from "@ifunny/ifunny-api-types";
 import { Client } from "../client/Client";
 import { Nullify } from "../utils/Types";
 
-const DefaultObjectEndpoint = "/account";
-
 /**
  * Base class for all structures.
+ * @template Payload
  */
 export class Base<Payload extends APIBasePayload> {
 	/**
 	 * Client instance attached to the Object
 	 */
-	private readonly _client: Client;
+	readonly #client: Client;
+
 	/**
 	 * The payload of the object.
 	 */
-	protected _payload: Payload;
+	#payload: Payload;
+
 	/**
 	 * Endpoint url the object will request to
 	 */
-	private _endpoint_url: string = DefaultObjectEndpoint;
+	#endpoint_url: string = Endpoints.account;
 
 	/**
 	 * @param client The client instance
 	 * @param payload The payload of the object
 	 */
 	constructor(client: Client, payload: Payload) {
-		this._client = client;
-		this._payload = payload;
+		this.#client = client;
+		this.#payload = payload;
 	}
 
 	/**
 	 * The client instance attached to the Object
 	 */
 	public get client() {
-		return this._client;
+		return this.#client;
 	}
 
 	/**
 	 * Get the payload of the object
 	 */
 	public get payload(): Payload {
-		return this._payload;
+		return this.#payload;
 	}
 
 	/**
@@ -49,26 +50,26 @@ export class Base<Payload extends APIBasePayload> {
 	 * @param payload The payload to merge into the current instance
 	 * @returns The current instance
 	 */
-	set payload(payload: Partial<Payload>) {
-		this._payload = Object.assign(this.payload, payload);
+	public set payload(payload: Partial<Payload>) {
+		Object.assign(this.#payload, payload);
 	}
 
 	/**
 	 * Endpoint url for requests to update the payload
 	 */
 	protected get endpoint_url(): string {
-		return this._endpoint_url;
+		return this.#endpoint_url;
 	}
 
 	protected set endpoint_url(value: string) {
-		this._endpoint_url = `${value}`;
+		this.#endpoint_url = `${value}`;
 	}
 
 	/**
 	 * Fetches the objects data from it's endpoint
 	 * @returns The instance of the object
 	 */
-	async fetch(): Promise<this> {
+	public async fetch(): Promise<this> {
 		const response = await this.client.instance.get(this.endpoint_url);
 		return (this.payload = response.data.data);
 	}
@@ -86,8 +87,8 @@ export class Base<Payload extends APIBasePayload> {
 	/**
 	 * The unique id of the object
 	 */
-	get id() {
-		return this.get("id") as string;
+	public get id(): string {
+		return this.get("id");
 	}
 
 	/**
@@ -98,15 +99,20 @@ export class Base<Payload extends APIBasePayload> {
 		return Object.assign(Object.create(this), this);
 	}
 
-	valueOf() {
+	/**
+	 * @returns The object's id
+	 */
+	public valueOf(): string {
 		return this.id;
 	}
 
 	/**
-	 *
-	 * @returns Converts the
+	 * Converts the object instance into JSON
+	 * @returns Stringified payload of the object
 	 */
-	toJSON() {
+	public toJSON(): string {
 		return JSON.stringify(this.payload, null, 2);
 	}
 }
+
+export default Base;
