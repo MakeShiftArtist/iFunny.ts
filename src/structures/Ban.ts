@@ -1,74 +1,147 @@
-import { APIBan, Endpoints } from "@ifunny/ifunny-api-types";
-
+import { APIBan, APIBanReason, APIBanType, Endpoints } from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
-import { Client } from "../client/Client";
+import { Comment } from "./Comment";
+import { Content } from "./Content";
 import { User } from "./User";
 
 /**
- * Represents a Ban on iFunny
+ * Represents a complete Ban Object on iFunny
+ * @extends Base<APIBan>
  */
 export class Ban extends Base<APIBan> {
+	readonly #user: User;
 	/**
-	 * User the Ban belongs to
+	 * @param user User the ban is attached to
+	 * @param payload The payload of the Ban
 	 */
-	private readonly _user: User;
-
-	/**
-	 * @param client The Client instance
-	 * @param user User or Id of the user that the ban belongs to
-	 * @param id Id of the ban itself
-	 * @param payload Payload of the ban if applicable
-	 */
-	constructor(client: Client, user: User, payload: APIBan) {
-		super(client, payload);
-		this._user = user;
-		this.payload = payload;
-		this.endpoint_url = Endpoints.bans(this._user.id, this.id);
+	constructor(user: User, payload: APIBan) {
+		super(user.client, payload);
+		this.#user = user;
+		this.endpoint_url = Endpoints.bans(user.id, payload.id);
 	}
 
 	/**
-	 * Timestamp (in seconds) of when it expires
+	 * The user attached to the Ban
 	 */
-	get expiresAtTimestamp() {
-		let ms = this.get("date_until");
-		return typeof ms === "number" ? ms * 1000 : null;
+	get user(): User {
+		return this.#user;
 	}
 
 	/**
-	 * Date object of when the ban expires
+	 * The type of ban
 	 */
-	get expiresAt() {
-		let ms = this.expiresAtTimestamp;
-		return ms ? new Date(ms) : null;
-	}
-
-	/**
-	 * How long (in seconds) until the ban expires
-	 */
-	get expiresInTimestamp() {
-		let ms = this.expiresAtTimestamp;
-		return ms ? ms - new Date().getTime() : null;
-	}
-
-	/**
-	 * Date object of how much ms is left until the ban expires
-	 */
-	get expiresIn() {
-		let ms = this.expiresInTimestamp;
-		return ms ? new Date(ms) : null;
-	}
-
-	/**
-	 * The type of the ban
-	 */
-	get type() {
+	get type(): APIBanType {
 		return this.get("type");
 	}
 
 	/**
-	 * User that the ban belongs to
+	 * Timestamp of when the Ban expires
 	 */
-	get user() {
-		return this._user;
+	get expires_at(): Date {
+		return new Date(this.get("date_until") * 1000);
+	}
+
+	/**
+	 * How long (in miliseconds) until the Ban expires
+	 */
+	get expires_in(): number {
+		return this.expires_at.getTime() - new Date().getTime();
+	}
+
+	/**
+	 * The reason for the Ban
+	 */
+	get reason(): APIBanReason {
+		return this.get("ban_reason");
+	}
+
+	/**
+	 * The ban reason message
+	 */
+	get reason_message(): string | null {
+		return this.get("ban_reason_message");
+	}
+
+	/**
+	 * Can the ban be appeald?
+	 */
+	get can_be_appealed(): boolean {
+		return this.get("can_be_appealed");
+	}
+
+	/**
+	 * When the ban was created
+	 */
+	get created_at(): Date {
+		return new Date(this.get("created_at") * 1000);
+	}
+
+	/**
+	 * Not sure what this is
+	 */
+	get date_until_minimum(): number | null {
+		return this.get("date_until_minimum");
+	}
+
+	/**
+	 * Is the Ban active?
+	 */
+	get is_active(): boolean {
+		return this.get("is_active");
+	}
+
+	/**
+	 * Has the Ban be appealed?
+	 */
+	get is_appealed(): boolean {
+		return this.get("is_appealed");
+	}
+
+	/**
+	 * Is the ban shortable?
+	 */
+	get is_shortable(): boolean {
+		return this.get("is_shortable");
+	}
+
+	/**
+	 * Don't know what this is yet
+	 */
+	get pid(): number {
+		return this.get("pid");
+	}
+
+	/**
+	 * The Comment related to the Ban if applicable
+	 */
+	get related_comment(): Comment | null {
+		const comment = this.get("related_comment");
+		if (!comment) return null;
+		const content = new Content(this.client, comment.content);
+		return new Comment(content, comment);
+	}
+
+	/**
+	 * The Content related to the Ban if applicable
+	 */
+	get related_content(): Content | null {
+		const content = this.get("related_content");
+		return content ? new Content(this.client, content) : null;
+	}
+
+	/**
+	 * The Ban Type message
+	 */
+	get type_message(): string | null {
+		return this.get("type_message");
+	}
+
+	/**
+	 * Was the Ban shown to the Client?
+	 */
+	get was_shown(): boolean {
+		return this.get("was_shown");
 	}
 }
+
+export default Ban;
