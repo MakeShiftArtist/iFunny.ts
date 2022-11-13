@@ -3,7 +3,7 @@ import { iFunnyError } from "./iFunnyError";
 import {
 	RESTAPICaptchaType,
 	RESTAPIErrorCaptchaRequired,
-} from "@ifunny/ifunny-api-types/types";
+} from "@ifunny/ifunny-api-types";
 
 /**
  * Represents a captcha returned by the API
