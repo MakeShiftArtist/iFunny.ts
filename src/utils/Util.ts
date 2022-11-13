@@ -1,16 +1,19 @@
+import { BasicAuthConfig } from "./Types";
+import { Client } from "../client/Client";
+import { DefaultBasicAuthConfig } from "./Constants";
+import { PaginateConfig } from "../structures/BaseFeed";
 import {
 	RESTAPIErrorResponse,
 	RESTAPIItems,
 	RESTAPISuccessResponse,
 } from "@ifunny/ifunny-api-types";
-import axios, { AxiosError, AxiosRequestConfig, AxiosRequestHeaders } from "axios";
-import Client from "../client/Client";
-import { DefaultBasicAuthConfig } from "./Constants";
-import { BasicAuthConfig } from "./Types";
+import axios, {
+	AxiosError,
+	AxiosRequestConfig,
+	AxiosRequestHeaders,
+	AxiosResponse,
+} from "axios";
 import crypto from "crypto";
-import { iFunnyError } from "../errors/iFunnyError";
-import { iFunnyErrorCodes } from "../errors/iFunnyErrorCodes";
-import { PaginateConfig } from "../structures/BaseFeed";
 
 /**
  * Utility class used by the Client
@@ -72,7 +75,7 @@ export class Util {
 					.toUpperCase();
 				break;
 			default:
-				throw iFunnyError.new(iFunnyErrorCodes.InvalidBasicTokenLength);
+				throw TypeError("Invalid token length. Expected 112 | 156");
 		}
 
 		let a = hex + `_${clientId}:`;
@@ -98,10 +101,26 @@ export class Util {
 	 * Validates that something is an Axios Error
 	 * @param item Item to validate
 	 */
-	isAxiosError<T extends RESTAPIErrorResponse = RESTAPIErrorResponse>(
-		item: unknown
-	): item is AxiosError<T> {
-		return axios.isAxiosError(item);
+	isAxiosError(item: unknown): item is AxiosError & {
+		response: AxiosResponse<unknown>;
+	} {
+		if (!axios.isAxiosError(item) || !item.response) return false;
+		return true;
+	}
+
+	/**
+	 * Validates that an object matches the RESTAPIErrorResponse schema
+	 * @param error Error to validate
+	 * @returns error is RESTAPIErrorRespons
+	 */
+	isAPIError(error: unknown): error is RESTAPIErrorResponse {
+		if (!this.hasProperty(error, "error")) return false;
+		if (!this.hasProperty(error, "error_description")) return false;
+		if (!this.hasProperty(error, "status")) return false;
+		if (typeof error.error !== "string") return false;
+		if (typeof error.error_description !== "string") return false;
+		if (typeof error.status !== "number") return false;
+		return true;
 	}
 
 	/**
@@ -149,7 +168,7 @@ export class Util {
 		let config: AxiosRequestConfig =
 			method === "GET" ? { method, url, params: data } : { method, url, data };
 
-		loop: do {
+		do {
 			interface Items {
 				[key: string]: RESTAPIItems<T>;
 			}
@@ -171,7 +190,7 @@ export class Util {
 			if (full) {
 				//console.log("yield full");
 				yield response.data as Awaited<T>;
-				continue loop;
+				continue;
 			}
 
 			for (let item of items) {
@@ -191,9 +210,31 @@ export class Util {
 	}
 
 	/**
+	 * Converts data into a json like string
+	 * @param data Data to convert to JSON
+	 * @returns JSON data
+	 */
+	toJSON(data: unknown): string {
+		return JSON.stringify(data, null, 2);
+	}
+
+	/**
+	 * Type guard to validate key existance on an object
+	 * @param obj Object to check key for
+	 * @param prop Property to check is defined
+	 * @returns `obj` has property `prop`
+	 */
+	hasProperty<Obj, Prop extends string>(
+		obj: Obj,
+		prop: Prop
+	): obj is Obj & Record<Prop, unknown> {
+		return Object.prototype.hasOwnProperty.call(obj, prop);
+	}
+
+	/**
 	 * Client headers
 	 */
-	get headers() {
+	get headers(): AxiosRequestHeaders {
 		return this.#client.instance.defaults.headers.common;
 	}
 
