@@ -72,8 +72,8 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	constructor(config?: ClientOptions, payload: Partial<APIClientUser> = {}) {
 		super(config, payload);
 		this.#util = new Util(this);
-		this.#users = new UserManager(this, this.config.cacheConfig);
-		this.#content = new ContentManager(this, this.config.cacheConfig);
+		this.#users = new UserManager(this, this.config.cache_config);
+		this.#content = new ContentManager(this, this.config.cache_config);
 		this.#feeds = new FeedManager(this);
 
 		this.instance.interceptors.request.use((config) => {
@@ -110,9 +110,9 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		return (
 			this.config.basic ||
 			this.util.createBasicAuth({
-				clientId: this.config.clientId,
-				clientSecret: this.config.clientSecret,
-				length: this.config.basicLength,
+				clientId: this.config.client_id,
+				clientSecret: this.config.client_secret,
+				length: this.config.basic_length,
 			})
 		);
 	}
