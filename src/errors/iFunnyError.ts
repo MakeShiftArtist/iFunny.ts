@@ -1,105 +1,113 @@
-import { Messages } from "./Messages";
-import { iFunnyErrorCodes } from "./iFunnyErrorCodes";
+import {
+	IFUNNY_ERRORS,
+	RESTAPIErrorCaptchaRequired,
+	RESTAPIErrorResponse,
+	RESTAPIiFunnyError,
+} from "@ifunny/ifunny-api-types";
 
-function makeError(Base: typeof Error) {
+import Client from "../client/Client";
+import CaptchaError from "./CaptchaError";
+
+/**
+ * A class for representing an error thrown by iFunny.ts
+ * @extends Error
+ */
+export class iFunnyError<
+	APIError extends RESTAPIErrorResponse = RESTAPIErrorResponse
+> extends Error {
+	#error: APIError;
+	readonly #client: Client;
+
 	/**
-	 * A class for representing an error thrown by iFunny.ts
+	 * @param error The error thrown by the API
 	 */
-	return class iFunnyError extends Base {
-		/**
-		 * The error code for the error
-		 */
-		#code: iFunnyErrorCodes;
-
-		#args: any[];
-
-		/**
-		 * @param code The error code for the error
-		 * @param args Args to pass into the message formatter function
-		 */
-		constructor(code: iFunnyErrorCodes, ...args: any[]) {
-			super(message(code, ...args));
-			this.#args = args;
-			this.#code = code;
-			Error.captureStackTrace?.(this, iFunnyError);
+	constructor(client: Client, error: APIError) {
+		super(error.error_description);
+		this.#client = client;
+		if (iFunnyError.isRawCaptchaError(client, error)) {
+			this.message += error.data.captcha_url;
 		}
+		this.#error = error;
 
-		/**
-		 * The error code for the error
-		 */
-		get code() {
-			return this.#code;
-		}
+		Error.captureStackTrace?.(this, iFunnyError);
+	}
 
-		get args() {
-			return this.#args;
-		}
+	/**
+	 * Client instance that threw the error
+	 */
+	public get client(): Client {
+		return this.#client;
+	}
 
-		/**
-		 * The type of error
-		 */
-		get error() {
-			return iFunnyErrorCodes[this.code];
-		}
+	/**
+	 * The error code for the error
+	 */
+	get code(): RESTAPIiFunnyError {
+		return this.raw.error;
+	}
 
-		/**
-		 * The name of the error
-		 */
-		override get name() {
-			return `iFunny${super.name} - ${iFunnyErrorCodes[this.code]} [${this.code}]`;
-		}
+	/**
+	 * Status code returned by the API
+	 */
+	get status() {
+		return this.raw.status;
+	}
 
-		createMessage<K extends keyof typeof Messages>(
-			code: K,
-			...args: ResolveArgs<K>
-		): string {
-			return message(code, ...args);
-		}
+	/**
+	 * Raw error returned by the API
+	 */
+	get raw() {
+		return this.#error;
+	}
 
-		static new<K extends keyof typeof Messages>(code: K, ...args: ResolveArgs<K>) {
-			return new iFunnyError(code, ...args);
-		}
+	/**
+	 * The name of the error
+	 */
+	override get name() {
+		return `${this.constructor.name} - ${this.code} [${this.status}]`;
+	}
 
-		/**
-		 * Easily create an unknown error
-		 * @param error Unknown error to turn into iFunny Error
-		 * @returns
-		 */
-		static unknown(error: unknown) {
-			return iFunnyError.new(iFunnyErrorCodes.UnknownError, error);
-		}
-	};
+	/**
+	 * Type guards an object into an iFunnyError
+	 * @param error Object to type guard
+	 * @returns error is iFunnyError
+	 */
+	public static isiFunnyError(error: unknown): error is iFunnyError {
+		return error instanceof iFunnyError;
+	}
+
+	/**
+	 * Type guards an object into captcha like error
+	 * @param client Client instance to use util class for
+	 * @param error Error response from AxiosError#response#data
+	 * @internal
+	 */
+	static isRawCaptchaError(
+		client: Client,
+		error: unknown
+	): error is RESTAPIErrorCaptchaRequired {
+		if (!client.util.isAPIError(error)) return false;
+		if (error.error !== IFUNNY_ERRORS.CAPTCHA_REQUIRED) return false;
+		if (!client.util.hasProperty(error, "data")) return false;
+		if (!client.util.hasProperty(error.data, "captcha_url")) return false;
+		if (!client.util.hasProperty(error.data, "type")) return false;
+		if (typeof error.data.type !== "string") return false;
+		if (typeof error.data.captcha_url !== "string") return false;
+		return true;
+	}
+
+	/**
+	 *
+	 * @param error Error to validate
+	 * @returns
+	 */
+	public static isCaptchaError(error: unknown): error is CaptchaError {
+		return error instanceof CaptchaError;
+	}
+
+	isCaptchaError(): this is CaptchaError;
+	isCaptchaError(error: unknown): error is CaptchaError;
+	isCaptchaError(error?: unknown) {
+		return iFunnyError.isCaptchaError(error ?? this);
+	}
 }
-
-/**
- * Format the message for an error.
- * @param code The error code
- * @param args Arguments to pass for util format or as function args
- * @returns Formatted string
- */
-function message<K extends keyof typeof Messages>(
-	code: K,
-	...args: ResolveArgs<K>
-): string {
-	if (typeof code !== "number")
-		throw new Error("Error code must be a valid iFunnytsErrorCode");
-	const msg = Messages[code];
-	if (!msg) throw new Error(`An invalid error code was used: ${code}.`);
-	// @ts-ignore
-	if (typeof msg === "function") return msg(...args); // TODO: Fix this resolving to 1 function instead of union of functions
-	return msg;
-}
-
-/**
- * Resolves arguments from Messages by its key
- */
-type ResolveArgs<K extends keyof typeof Messages> = typeof Messages[K] extends (
-	...args: any[]
-) => string
-	? Parameters<typeof Messages[K]>
-	: any[];
-
-export const iFunnyError = makeError(Error);
-export const iFunnyTypeError = makeError(TypeError);
-export const iFunnyRangeError = makeError(RangeError);
-export const iFunnyErrorMessage = message;
