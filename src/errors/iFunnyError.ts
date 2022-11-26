@@ -26,7 +26,7 @@ export class iFunnyError<
 		super(error.error_description);
 		this.#client = client;
 		if (iFunnyError.isRawCaptchaError(client, error)) {
-			this.message += error.data.captcha_url;
+			this.message += ": " + error.data.captcha_url;
 		}
 		this.#error = error;
 
