@@ -13,7 +13,7 @@ The go-to iFunny API wrapper library written in TypeScript! Reverse engineered f
 
 Install iFunny.ts
 
-```sh-session
+```powershell
   npm install ifunny.ts
 ```
 
@@ -30,7 +30,7 @@ Store your basic token in a config
 
 ```json
 {
-	"bearer": "yourTokenHere"
+	"basic": "yourTokenHere"
 }
 ```
 
@@ -47,7 +47,7 @@ console.log(client.basic); // should be the one stored
 Get your bearer token
 
 ```ts
-import iFunnyClient from "ifunny.ts";
+import iFunnyClient, { iFunnyError } from "ifunny.ts";
 import config from "./config.json";
 
 const client = new iFunnyClient({ basic: config.basic });
@@ -56,14 +56,18 @@ client.on("ready", (client) => {
 	console.log(client.bearer);
 });
 
-client.login("your@email.com", "yourpassword").catch((error) => {
-	// if a captcha is returned
-	if (error.captcha_url) {
-		// log it
-		console.log(error.captcha_url);
-		// Open the url in any browser and solve it. Then run the script again
-	} else throw error;
-});
+async function main() {
+	await client.prime_basic(); // This only needs to be run once per basic token. Any time you create a new basic token, it needs to be primed. This will wait 15 seconds to prime it
+	try {
+		await client.login("your@email.com", "your_password!");
+		console.log("Client logged in successfully!");
+	} catch (error) {
+		if (!iFunnyError.isiFunnyError(error)) throw error;
+		console.log(error.message);
+	}
+}
+
+main();
 ```
 
 ## Links
