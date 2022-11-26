@@ -37,8 +37,8 @@ export type If<T extends boolean, A, B = null> = T extends true
 export type BasicAuthLength = 112 | 156;
 
 export type BasicAuthConfig = {
-	clientId: string;
-	clientSecret: string;
+	client_id: string;
+	client_secret: string;
 	length: BasicAuthLength;
 };
 

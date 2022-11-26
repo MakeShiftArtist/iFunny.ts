@@ -51,13 +51,13 @@ export class Util {
 	/**
 	 * Generates a basic token
 	 * @param opts Options to create the token with
-	 * @param opts.clientId The client id to use for the token
-	 * @param opts.clientSecret The client secret to use for the token
+	 * @param opts.client_id The client id to use for the token
+	 * @param opts.client_secret The client secret to use for the token
 	 * @param opts.length The length of the token to create
 	 * @returns A basic auth token
 	 */
 	public createBasicAuth(opts?: BasicAuthConfig) {
-		const { length, clientId, clientSecret } = Object.assign(
+		const { length, client_id, client_secret } = Object.assign(
 			DefaultBasicAuthConfig,
 			opts
 		);
@@ -79,8 +79,8 @@ export class Util {
 				throw TypeError("Invalid token length. Expected 112 | 156");
 		}
 
-		let a = hex + `_${clientId}:`;
-		let b = hex + `:${clientId}:${clientSecret}`;
+		let a = hex + `_${client_id}:`;
+		let b = hex + `:${client_id}:${client_secret}`;
 		let c = crypto.createHash("sha1").update(b).digest("hex");
 		return Buffer.from(a + c).toString("base64");
 	}

@@ -6,15 +6,15 @@ import { BasicAuthConfig, BasicAuthLength } from "./Types";
 // App Version
 
 export type SemanticVersion = `${number}.${number}.${number}`;
-export const DefaultAppVersion: SemanticVersion = "8.12.1";
-export const DefaultAppBuild: number = 1130530;
+export const DefaultAppVersion: SemanticVersion = "8.15.1";
+export const DefaultAppBuild: number = 1130736;
 export const DefaultAppAgent = `iFunny/${DefaultAppVersion}(${DefaultAppBuild})`;
 export const DefaultClientId: string = "MsOIJ39Q28";
 export const DefaultClientSecret: string = "PTDc3H8a)Vi=UYap";
 export const DefaultBasicTokenLength: BasicAuthLength = 112;
 export const DefaultBasicAuthConfig: BasicAuthConfig = {
-	clientId: DefaultClientId,
-	clientSecret: DefaultClientSecret,
+	client_id: DefaultClientId,
+	client_secret: DefaultClientSecret,
 	length: DefaultBasicTokenLength,
 };
 
