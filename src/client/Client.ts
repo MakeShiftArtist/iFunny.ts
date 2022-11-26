@@ -14,6 +14,8 @@ import { If } from "../utils/Types";
 import { iFunnyError } from "../errors/iFunnyError";
 import { UserManager } from "../managers/UserManager";
 import { Util } from "../utils/Util";
+import FormData from "form-data";
+import { AppManager } from "../managers/AppManager";
 
 /**
  * Method params for Client#signUp()
@@ -59,6 +61,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * Content manager object
 	 */
 	readonly #content: ContentManager;
+	readonly #app: AppManager;
 
 	/**
 	 * Client utility class
@@ -75,10 +78,11 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		this.#users = new UserManager(this, this.config.cache_config);
 		this.#content = new ContentManager(this, this.config.cache_config);
 		this.#feeds = new FeedManager(this);
+		this.#app = new AppManager(this);
 
 		this.instance.interceptors.request.use((config) => {
 			config.headers ??= this.config.headers;
-			config.headers.Authorization = this.authorization;
+			config.headers.Authorization ??= this.authorization;
 			return config;
 		});
 
@@ -107,14 +111,11 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * If not set in constructor, one was generated
 	 */
 	public get basic(): string {
-		return (
-			this.config.basic ||
-			this.util.createBasicAuth({
-				clientId: this.config.client_id,
-				clientSecret: this.config.client_secret,
-				length: this.config.basic_length,
-			})
-		);
+		return (this.config.basic ||= this.util.createBasicAuth({
+			client_id: this.config.client_id,
+			client_secret: this.config.client_secret,
+			length: this.config.basic_length,
+		}));
 	}
 
 	/**
@@ -122,6 +123,26 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 */
 	public set basic(value: string) {
 		this.config.basic = value;
+	}
+
+	/**
+	 * Prime the Client's basic token
+	 * @returns The Client's basic token
+	 */
+	public async prime_basic(): Promise<string>;
+	/**
+	 * Primes a basic token without updating the Client config. This takes ~15 seconds
+	 * @param basic Basic token to prime
+	 * @returns Basic token being primed
+	 */
+	public async prime_basic(basic: string): Promise<string>;
+	public async prime_basic(basic?: string): Promise<string> {
+		await this.instance.get(Endpoints.counters, {
+			headers: { Authorization: `Basic ${(basic ??= this.basic)}` },
+		});
+		// ? Takes ~15 seconds to prime the basic token
+		await this.util.sleep(1000 * 15);
+		return basic;
 	}
 
 	/**
@@ -196,6 +217,10 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		return this.#content;
 	}
 
+	public get app(): AppManager {
+		return this.#app;
+	}
+
 	/**
 	 * Logs in using the stored bearer token.\
 	 * Does NOT Generate a new bearer token
@@ -208,13 +233,6 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * @param password The password to log in with
 	 */
 	public async login(email: string, password: string): Promise<this>;
-	/**
-	 * Logs into iFunny with an Email and Password\
-	 * If you already have a bearer token, don't use this method
-	 * @param email The email to login with
-	 * @param password The password to login with
-	 * @returns The Client instance
-	 */
 	public async login(email?: string, password?: string): Promise<this> {
 		if (this.is_authorized()) {
 			return await this.fetch();
@@ -225,24 +243,25 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 				"email and password are required if a bearer hasn't been set"
 			);
 		}
-
 		const auth = `Basic ${this.basic}`;
 		const data = new FormData();
-		data.set("grant_type", "password");
-		data.set("username", email);
-		data.set("password", password);
-
+		data.append("grant_type", "password");
+		data.append("username", email);
+		data.append("password", password);
 		const response = await this.instance.post<RESTAPIOauth2LoginSuccess>(
 			Endpoints.token,
 			data,
 			{
-				headers: {
-					accept: "application/json",
-					applicationstate: 1,
-					authorization: auth,
-					connection: "Keep-Alive",
-					"content-type": "application/x-www-form-urlencoded",
-				},
+				headers: Object.assign(
+					{
+						accept: "application/json",
+						applicationstate: 1,
+						authorization: auth,
+						connection: "Keep-Alive",
+						"content-type": "application/x-www-form-urlencoded",
+					},
+					data.getHeaders()
+				),
 			}
 		);
 		this.bearer = response.data.access_token;
@@ -260,15 +279,16 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 */
 	public async sign_up(options: SignUpOptions): Promise<this> {
 		const data = new FormData();
-		data.set("reg_type", "pwd");
-		data.set("nick", options.nick);
-		data.set("email", options.email);
-		data.set("password", options.password);
-		data.set("accept_mailing", !!options.accept_mailing ? "1" : "0");
+		data.append("reg_type", "pwd");
+		data.append("nick", options.nick);
+		data.append("email", options.email);
+		data.append("password", options.password);
+		data.append("accept_mailing", !!options.accept_mailing ? "1" : "0");
 
 		const response = await this.instance.post<RESTAPISignUpSuccess>(
 			Endpoints.user(),
-			data.toString()
+			data,
+			{ headers: data.getHeaders() }
 		);
 
 		this.payload.id = response.data.data.id;
