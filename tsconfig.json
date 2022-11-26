@@ -16,7 +16,9 @@
 		"pretty": true,
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
-		"stripInternal": true
+		"stripInternal": true,
+		"skipDefaultLibCheck": true,
+		"skipLibCheck": true
 	},
 	"include": ["src/**/*.ts"]
 }
