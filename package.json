@@ -5,13 +5,14 @@
 	"main": "dist",
 	"types": "types",
 	"scripts": {
-		"test": "jest",
+		"test": "tsc --noEmit",
 		"changelog": "auto-changelog -p  && git add CHANGELOG.md && git commit -m \"Update CHANGELOG.md\"",
-		"changelog-debug": "auto-changelog -p --template json --output changelog-data.json",
+		"changelog:debug": "auto-changelog -p --template json --output changelog-data.json",
 		"clean": "rm -r -f ./dist && rm -r -f ./types",
 		"build": "tsc",
 		"rebuild": "npm run clean && npm run build",
-		"type": "tsc --emitDeclarationOnly",
+		"version": "npm run changelog",
+		"push": "npm run rebuild && git push && npm publish",
 		"update-deps": "npx npm-check-updates -u && npm install"
 	},
 	"repository": {
