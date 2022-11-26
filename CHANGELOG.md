@@ -2,6 +2,33 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
+## [v0.5.1](https://github.com/ifunny-co/iFunny.ts/compare/v0.5.0...v0.5.1) - 2022-11-26
+
+
+### Features
+
+*  Add AppManager.ts @makeshiftartist ([`9f0844c`](https://github.com/ifunny-co/iFunny.ts/commit/9f0844c9c796fdbcfcf46e263d36a24c61fb26de))
+
+### Fixes
+
+*  Fix Client#login and Client#sign_up @makeshiftartist ([`5de26c9`](https://github.com/ifunny-co/iFunny.ts/commit/5de26c996e89b499e75fb4a97d3ed3ee51b479a8))
+*  Add skipLibCheck and skipDefaultLibCheck @makeshiftartist ([`bf283ed`](https://github.com/ifunny-co/iFunny.ts/commit/bf283edf868fe73182353ca8be6f8ec52aa13f02))
+
+### Documentation
+
+*  Updated readme to follow proper login methods @makeshiftartist ([`6e7071c`](https://github.com/ifunny-co/iFunny.ts/commit/6e7071c3f11a4634414cc895b540db686744e4a8))
+
+### Chores
+
+*  Update dependencies @makeshiftartist ([`b0af39f`](https://github.com/ifunny-co/iFunny.ts/commit/b0af39f0a81362c0122948600324c5d39b16fdbd))
+*  Updated versions and casing @makeshiftartist ([`666cf3c`](https://github.com/ifunny-co/iFunny.ts/commit/666cf3c7fa689390ef5c363b3bb411d10d2de39e))
+*  Changed lets to consts where possible @makeshiftartist ([`3784db1`](https://github.com/ifunny-co/iFunny.ts/commit/3784db1a4f9576cde427e1943d7b669e27c5e550))
+*  Improve scripts @makeshiftartist ([`e74e67b`](https://github.com/ifunny-co/iFunny.ts/commit/e74e67b37b7f6c9c7dbee0413e84fc0e043b9dab))
+*  Improved captcha_required error message @makeshiftartist ([`105c0c7`](https://github.com/ifunny-co/iFunny.ts/commit/105c0c7b82eb78d49f7bb1c2a0d27209f342d787))
+
+
+
+
 ## v0.5.0 - 2022-11-12
 
 
