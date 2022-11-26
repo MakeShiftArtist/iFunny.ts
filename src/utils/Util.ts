@@ -62,7 +62,7 @@ export class Util {
 			opts
 		);
 
-		let uuid = crypto.randomUUID().replace(/\-/g, "");
+		const uuid = crypto.randomUUID().replace(/\-/g, "");
 		let hex: string;
 		switch (length) {
 			case 112:
@@ -79,9 +79,10 @@ export class Util {
 				throw TypeError("Invalid token length. Expected 112 | 156");
 		}
 
-		let a = hex + `_${client_id}:`;
-		let b = hex + `:${client_id}:${client_secret}`;
-		let c = crypto.createHash("sha1").update(b).digest("hex");
+		const a = hex + `_${client_id}:`;
+		const b = hex + `:${client_id}:${client_secret}`;
+		const c = crypto.createHash("sha1").update(b).digest("hex");
+
 		return Buffer.from(a + c).toString("base64");
 	}
 
@@ -148,7 +149,7 @@ export class Util {
 		}
 
 		let hasNext: boolean;
-		let data = new URLSearchParams();
+		const data = new URLSearchParams();
 
 		// Set params
 		for (const key in params) {
@@ -156,7 +157,7 @@ export class Util {
 		}
 
 		// Request config
-		let config: AxiosRequestConfig =
+		const config: AxiosRequestConfig =
 			method === "GET" ? { method, url, params: data } : { method, url, data };
 
 		do {
@@ -184,7 +185,7 @@ export class Util {
 				continue;
 			}
 
-			for (let item of items) {
+			for (const item of items) {
 				//console.log("yield item");
 				yield item;
 			}
