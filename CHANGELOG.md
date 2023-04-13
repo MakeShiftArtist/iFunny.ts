@@ -2,6 +2,19 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
+## [v0.6.4](https://github.com/makeshiftartist/iFunny.ts/compare/v0.6.3...v0.6.4) - 2023-04-13
+
+
+
+
+
+### Chores
+
+*  Fixed urls in package.json @makeshiftartist ([`a674110`](https://github.com/makeshiftartist/iFunny.ts/commit/a674110fcda885c3c3c6d91ffa59f3953b8e6a29))
+
+
+
+
 ## [v0.6.3](https://github.com/makeshiftartist/iFunny.ts/compare/v0.6.2...v0.6.3) - 2023-04-13
 
 
