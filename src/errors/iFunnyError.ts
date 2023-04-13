@@ -8,9 +8,9 @@ import { CaptchaError } from "./CaptchaError";
 import { Client } from "../client/Client";
 
 /**
- * A class for representing an error thrown by iFunny.ts
+ * A class representing an error thrown by iFunny.ts.
  * @extends Error
- * @template APIError
+ * @template APIError - The type of the error response returned by the iFunny REST API.
  */
 export class iFunnyError<
 	APIError extends RESTAPIErrorResponse = RESTAPIErrorResponse
