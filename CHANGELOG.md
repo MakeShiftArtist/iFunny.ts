@@ -2,7 +2,25 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
-## [v0.6.0](https://github.com/makeshiftartist/iFunny.ts/compare/v0.5.1...v0.6.0) - 2023-04-13
+## [v0.6.1](https://github.com/makeshiftartist/iFunny.ts/compare/v0.6.0...v0.6.1) - 2023-04-13
+
+
+
+
+### Documentation
+
+*  Initial Docs @makeshiftartist ([`4e21a9b`](https://github.com/makeshiftartist/iFunny.ts/commit/4e21a9be9b83ba74e254fde175a1c5c4d80674da))
+*  Improve and updated README.md @makeshiftartist ([`ee035a8`](https://github.com/makeshiftartist/iFunny.ts/commit/ee035a83521d6257df96b8f542ef3677f9ee8791))
+
+### Chores
+
+*  Add typedoc-plugin-missing-exports @makeshiftartist ([`4b7a934`](https://github.com/makeshiftartist/iFunny.ts/commit/4b7a9341f9bca1bc4b7a685972894ab2bf2b3b22))
+*  Added login.ts quick start @makeshiftartist ([`4ec5eb0`](https://github.com/makeshiftartist/iFunny.ts/commit/4ec5eb0bdbf659193fb2d469e7e3b262fef03394))
+
+
+
+
+## [v0.6.0](https://github.com/makeshiftartist/iFunny.ts/compare/v0.5.1...v0.6.0) - 2023-04-12
 
 
 ### Features
