@@ -1,22 +1,22 @@
 import {
-	APIContent,
-	APIContentCopyright,
-	APIContentData,
-	APIContentNums,
-	APIContentShotStatus,
-	APIContentSource,
-	APIContentState,
-	APIContentThumbnail,
-	APIContentType,
-	APIContentVisibility,
-	APIFeedFrom,
 	ContentType,
 	Endpoints,
-	Size,
+	type APIContent,
+	type APIContentCopyright,
+	type APIContentData,
+	type APIContentNums,
+	type APIContentShotStatus,
+	type APIContentSource,
+	type APIContentState,
+	type APIContentThumbnail,
+	type APIContentType,
+	type APIContentVisibility,
+	type APIFeedFrom,
+	type Size,
 } from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
-import { Client } from "../client/Client";
 import { Creator } from "./Creator";
+import type { Client } from "../client/Client";
 
 /**
  * The Base Content that all Content Types will extend
@@ -31,7 +31,7 @@ export class BaseContent extends Base<APIContent> {
 	 */
 	public constructor(client: Client, payload: APIContent) {
 		super(client, payload);
-		this.endpoint_url = Endpoints.content(payload.id);
+		this.endpointUrl = Endpoints.content(payload.id);
 		this.payload = payload;
 	}
 
@@ -82,21 +82,21 @@ export class BaseContent extends Base<APIContent> {
 	/**
 	 * Content background color
 	 */
-	public get bg_color(): string {
+	public get bgColor(): string | null {
 		return this.get("bg_color");
 	}
 
 	/**
 	 * Can the post be boosted?
 	 */
-	public get can_be_boosted(): boolean {
+	public get canBeBoosted(): boolean {
 		return this.get("can_be_boosted");
 	}
 
 	/**
 	 * Content url that can be opened in app
 	 */
-	public get canonical_url(): string {
+	public get canonicalUrl(): string {
 		return this.get("canonical_url");
 	}
 
@@ -120,21 +120,21 @@ export class BaseContent extends Base<APIContent> {
 	/**
 	 * When the content was created
 	 */
-	public get created_at(): Date {
+	public get createdAt(): Date {
 		return new Date(this.get("date_create") * 1000);
 	}
 
 	/**
 	 * Not sure what this is
 	 */
-	public get fast_start(): boolean {
+	public get fastStart(): boolean {
 		return this.get("fast_start");
 	}
 
 	/**
 	 * Title set by iFunny
 	 */
-	public get fixed_title(): string {
+	public get fixedTitle(): string | null {
 		return this.get("fixed_title");
 	}
 
@@ -146,44 +146,44 @@ export class BaseContent extends Base<APIContent> {
 	}
 
 	/**
-	 * Was the post removed by iFunny
+	 * Was the post removed by iFunny?
 	 */
-	public get is_abused(): boolean {
+	public get isAbused(): boolean {
 		return this.get("is_abused");
 	}
 
 	/**
-	 * Was the post featured
+	 * Was the post featured?
 	 */
-	public get is_featured(): boolean {
+	public get isFeatured(): boolean {
 		return this.get("is_featured");
 	}
 
 	/**
-	 * Is the Content pinned by the author
+	 * Is the Content pinned by the author?
 	 */
-	public get is_pinned(): boolean {
+	public get isPinned(): boolean {
 		return this.get("is_pinned");
 	}
 
 	/**
-	 * Is the Content republished by the Client
+	 * Is the Content republished by the Client?
 	 */
-	public get is_republished(): boolean {
+	public get isRepublished(): boolean {
 		return this.get("is_republished");
 	}
 
 	/**
-	 * Is the Content smiled by the Client
+	 * Is the Content smiled by the Client?
 	 */
-	public get is_smiled(): boolean {
+	public get isSmiled(): boolean {
 		return this.get("is_smiled");
 	}
 
 	/**
 	 * When the Content was featured if it was featured
 	 */
-	public get featured_at(): Date | null {
+	public get featuredAt(): Date | null {
 		const ms = this.get("issue_at");
 		return ms ? new Date(ms * 1000) : null;
 	}
@@ -213,21 +213,21 @@ export class BaseContent extends Base<APIContent> {
 	/**
 	 * Text generated from iFunny's OCR (Optical Character Recognition)
 	 */
-	public get ocr_text(): string | null {
+	public get ocrText(): string | null {
 		return this.get("ocr_text");
 	}
 
 	/**
 	 * Does the Content use the Old Watermark
 	 */
-	public get old_watermark(): boolean {
+	public get oldWatermark(): boolean {
 		return this.get("old_watermark");
 	}
 
 	/**
 	 * When the Content was published or will publish
 	 */
-	public get published_at(): Date {
+	public get publishedAt(): Date {
 		const seconds = this.get("publish_at") * 1000;
 		return new Date(seconds);
 	}
@@ -246,7 +246,7 @@ export class BaseContent extends Base<APIContent> {
 	 * `shot` - Content can't be posted in comments\
 	 * `hardShot` - Content was removed by iFunny and is not viewable
 	 */
-	public get shot_status(): APIContentShotStatus {
+	public get shotStatus(): APIContentShotStatus {
 		return this.get("shot_status");
 	}
 
@@ -303,7 +303,7 @@ export class BaseContent extends Base<APIContent> {
 	/**
 	 * URL of the original source if it exists
 	 */
-	public get traceback_url(): string | null {
+	public get tracebackUrl(): string | null {
 		return this.get("traceback_url");
 	}
 
@@ -329,6 +329,15 @@ export class BaseContent extends Base<APIContent> {
 	 */
 	public get visibility(): APIContentVisibility {
 		return this.get("visibility");
+	}
+
+	/**
+	 * When concatenated with a string, this automatically returns the content's id instead of the Content object.
+	 * @example
+	 * console.log(`Found post: ${content}`); //  Logs: Found post: 2hu2ab8J
+	 */
+	public override toString(): string {
+		return this.id;
 	}
 }
 

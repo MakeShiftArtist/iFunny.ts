@@ -29,7 +29,7 @@ export class CaptchaError extends iFunnyError<RESTAPIErrorCaptchaRequired> {
 	/**
 	 * URL to open to solve the captcha.
 	 */
-	public get captcha_url(): string {
+	public get captchaUrl(): string {
 		return this.raw.data.captcha_url;
 	}
 }

@@ -13,8 +13,8 @@ export const DefaultClientId: string = "MsOIJ39Q28";
 export const DefaultClientSecret: string = "PTDc3H8a)Vi=UYap";
 export const DefaultBasicTokenLength: BasicAuthLength = 112;
 export const DefaultBasicAuthConfig: BasicAuthConfig = {
-	client_id: DefaultClientId,
-	client_secret: DefaultClientSecret,
+	clientId: DefaultClientId,
+	clientSecret: DefaultClientSecret,
 	length: DefaultBasicTokenLength,
 };
 

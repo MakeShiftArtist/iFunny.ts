@@ -5,6 +5,7 @@ import {
 	DefaultHeaders,
 	DefaultClientId,
 	DefaultClientSecret,
+	DefaultBasicTokenLength,
 } from "../utils/Constants";
 import { APIClientUser as ClientPayload } from "@ifunny/ifunny-api-types";
 import { EventEmitter } from "eventemitter3";
@@ -13,12 +14,12 @@ import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
 
 export interface ClientConfig {
 	basic: string | null;
-	basic_length: 156 | 112;
+	basicLength: 156 | 112;
 	bearer: string | null;
 	headers: AxiosRequestHeaders;
-	client_id: string;
-	client_secret: string;
-	cache_config: ICachingOptions;
+	clientId: string;
+	clientSecret: string;
+	cacheConfig: ICachingOptions;
 }
 
 export type ClientOptions = Partial<ClientConfig>;
@@ -34,15 +35,24 @@ export class BaseClient extends EventEmitter {
 	 */
 	readonly instance: AxiosInstance;
 
+	/**
+	 * The payload for the client
+	 */
 	#payload: Partial<ClientPayload>;
 
+	/**
+	 * The config for the client
+	 */
 	#config: ClientConfig;
 
 	/**
 	 * @param config Options to initialize the BaseClient with
 	 * @param payload The payload for the client if applicable
 	 */
-	public constructor(config: ClientOptions = {}, payload: Partial<ClientPayload> = {}) {
+	protected constructor(
+		config: ClientOptions = {},
+		payload: Partial<ClientPayload> = {}
+	) {
 		super();
 		// Set defaults
 		this.#config = Object.assign(BaseClient.DEFAULT_CONFIG, config);
@@ -63,12 +73,12 @@ export class BaseClient extends EventEmitter {
 	 */
 	public static readonly DEFAULT_CONFIG: ClientConfig = {
 		basic: null,
-		basic_length: 112,
+		basicLength: DefaultBasicTokenLength,
 		bearer: null,
 		headers: DefaultHeaders,
-		client_id: DefaultClientId,
-		client_secret: DefaultClientSecret,
-		cache_config: {
+		clientId: DefaultClientId,
+		clientSecret: DefaultClientSecret,
+		cacheConfig: {
 			ttl: 1000 * 60 * 30,
 			isLazy: true,
 			isCachedForever: false,
@@ -105,6 +115,22 @@ export class BaseClient extends EventEmitter {
 	protected _eval(script: string) {
 		return eval(script);
 	}
-}
 
+	/**
+	 * Converts the Client's payload into JSON like data
+	 * @returns JSON string representation of the Client
+	 */
+	public toJSON(): string {
+		return JSON.stringify(this.payload, null, 2);
+	}
+
+	/**
+	 * When concatenated with a string, this automatically returns the user's nick instead of the User object.
+	 * @example
+	 * console.log(`Hello from ${client}!`); //  Logs: "Hello from iFunnyChef" or "Hello from Guest Client"
+	 */
+	public override toString(): string {
+		return `${this.payload.nick ?? "Guest Client"}`;
+	}
+}
 export default BaseClient;

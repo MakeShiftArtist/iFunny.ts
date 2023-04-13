@@ -1,12 +1,13 @@
 import {
-	APIProfilePhoto,
-	APISimpleUser,
-	APIUserNums,
 	Endpoints,
+	type APICommentAuthor,
+	type APIProfilePhoto,
+	type APISimpleUser,
+	type APIUserNums,
 } from "@ifunny/ifunny-api-types";
-import { Client } from "../client/Client";
 import { Base } from "./Base";
-import { User } from "./User";
+import type { Client } from "../client/Client";
+import type { User } from "./User";
 
 /**
  * Simple user class, typically found in pagination
@@ -22,9 +23,9 @@ export class SimpleUser extends Base<APISimpleUser> {
 	 * @param client Client attached to the SimpleUser
 	 * @param payload Payload for the SimpleUser
 	 */
-	public constructor(client: Client, payload: APISimpleUser) {
+	public constructor(client: Client, payload: APISimpleUser | APICommentAuthor) {
 		super(client, payload);
-		this.endpoint_url = Endpoints.user(this.id);
+		this.endpointUrl = Endpoints.user(this.id);
 	}
 
 	/**
@@ -38,42 +39,42 @@ export class SimpleUser extends Base<APISimpleUser> {
 	/**
 	 * Is the user banned?
 	 */
-	public get is_banned(): boolean {
+	public get isBanned(): boolean {
 		return this.get("is_banned");
 	}
 
 	/**
-	 * Is the user blocked by the Client
+	 * Is the user blocked by the Client?
 	 */
-	public get is_blocked(): boolean {
+	public get isBlocked(): boolean {
 		return this.get("is_blocked");
 	}
 
 	/**
-	 * Is the user deleted
+	 * Is the user deleted?
 	 */
-	public get is_deleted(): boolean {
+	public get isDeleted(): boolean {
 		return this.get("is_deleted");
 	}
 
 	/**
-	 * Is the user subcribed to the Client
+	 * Is the user subcribed to the Client?
 	 */
-	public get is_subscriber(): boolean {
+	public get isSubscriber(): boolean {
 		return this.get("is_in_subscribers");
 	}
 
 	/**
-	 * Is the Cilent subscribed to the user
+	 * Is the Cilent subscribed to the user?
 	 */
-	public get is_subscription(): boolean {
+	public get isSubscription(): boolean {
 		return this.get("is_in_subscriptions");
 	}
 
 	/**
-	 * Is the user verified
+	 * Is the user verified?
 	 */
-	public get is_verified(): boolean {
+	public get isVerified(): boolean {
 		return this.get("is_verified");
 	}
 
@@ -94,6 +95,20 @@ export class SimpleUser extends Base<APISimpleUser> {
 	}
 
 	/**
+	 * Original nick for the user
+	 */
+	public get originalNick(): string {
+		return this.get("original_nick");
+	}
+
+	/**
+	 * Profile photo for the user
+	 */
+	public get photo(): APIProfilePhoto | null {
+		return this.get("photo");
+	}
+
+	/**
 	 * Stats for the user
 	 * @alias num
 	 */
@@ -102,24 +117,24 @@ export class SimpleUser extends Base<APISimpleUser> {
 	}
 
 	/**
+	 * Amount of posts the user has
+	 */
+	public get totalPosts(): number {
+		return this.get("total_posts");
+	}
+
+	/**
 	 * Amount of subscribers the user has
 	 */
-	public get total_subscribers(): number {
+	public get totalSubscribers(): number {
 		return this.num.subscribers;
 	}
 
 	/**
 	 * Amount of subcriptions the user has
 	 */
-	public get total_subscriptions(): number {
+	public get totalSubscriptions(): number {
 		return this.num.subscriptions;
-	}
-
-	/**
-	 * Amount of posts the user has
-	 */
-	public get total_posts(): number {
-		return this.get("total_posts");
 	}
 
 	/**
@@ -131,17 +146,12 @@ export class SimpleUser extends Base<APISimpleUser> {
 	}
 
 	/**
-	 * Original nick for the user
+	 * When concatenated with a string, this automatically returns the user's nick instead of the User object.
+	 * @example
+	 * console.log(`Hello from ${user}!`); //  Logs: Hello from iFunnyChef
 	 */
-	public get original_nick(): string {
-		return this.get("original_nick");
-	}
-
-	/**
-	 * Profile photo for the user
-	 */
-	public get photo(): APIProfilePhoto | null {
-		return this.get("photo");
+	public override toString(): string {
+		return this.nick;
 	}
 }
 

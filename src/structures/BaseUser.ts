@@ -1,17 +1,17 @@
 import {
-	APINickColor,
-	APIProfilePhoto,
-	APIUserAllSocials,
-	APIUserBlockType,
-	APIUserMessagePrivacy,
-	APIUserProfile,
-	APIUserProfileNums,
 	Endpoints,
+	type APINickColor,
+	type APIProfilePhoto,
+	type APIUserAllSocials,
+	type APIUserBlockType,
+	type APIUserMessagePrivacy,
+	type APIUserProfile,
+	type APIUserProfileNums,
 } from "@ifunny/ifunny-api-types";
 import { BanSmall } from "./BanSmall";
 import { Base } from "./Base";
-import { Client } from "../client/Client";
 import { MemeExperience } from "./MemeExperience";
+import type { Client } from "../client/Client";
 
 /**
  * Base User class that user class will inherit from.
@@ -25,7 +25,7 @@ export class BaseUser extends Base<APIUserProfile> {
 	public constructor(client: Client, payload: APIUserProfile) {
 		super(client, payload);
 		this.payload = payload;
-		this.endpoint_url = Endpoints.user(payload.id);
+		this.endpointUrl = Endpoints.user(payload.id);
 	}
 
 	/**
@@ -39,7 +39,7 @@ export class BaseUser extends Base<APIUserProfile> {
 	/**
 	 * Does the user have you blocked?
 	 */
-	public get are_you_blocked(): boolean {
+	public get areYouBlocked(): boolean {
 		return this.get("are_you_blocked");
 	}
 
@@ -48,7 +48,7 @@ export class BaseUser extends Base<APIUserProfile> {
 	 */
 	public get bans(): BanSmall[] {
 		const bans = this.get("bans") ?? [];
-		return bans.map((ban) => new BanSmall(this.client, this, ban));
+		return bans.map((ban) => new BanSmall(this, ban));
 	}
 
 	/**
@@ -62,7 +62,7 @@ export class BaseUser extends Base<APIUserProfile> {
 	/**
 	 * The block type if the user is blocked
 	 */
-	public get block_type(): APIUserBlockType | null {
+	public get blockType(): APIUserBlockType | null {
 		return this.get("block_type");
 	}
 
@@ -71,28 +71,28 @@ export class BaseUser extends Base<APIUserProfile> {
 	 * ? Not checked by the backend
 	 * @alias is_available_for_chat
 	 */
-	public get can_chat(): boolean {
-		return this.is_available_for_chat;
+	public get canChat(): boolean {
+		return this.isAvailableForChat;
 	}
 
 	/**
 	 * The user's chat privacy
 	 */
-	public get chat_privacy(): APIUserMessagePrivacy {
+	public get chatPrivacy(): APIUserMessagePrivacy {
 		return this.get("messaging_privacy_status");
 	}
 
 	/**
 	 * Cover image background color
 	 */
-	public get cover_color(): string | null {
+	public get coverColor(): string | null {
 		return this.get("cover_bg_color");
 	}
 
 	/**
 	 * Cover imamge url
 	 */
-	public get cover_url(): string | null {
+	public get coverUrl(): string | null {
 		return this.get("cover_url");
 	}
 
@@ -101,63 +101,63 @@ export class BaseUser extends Base<APIUserProfile> {
 	 * ? Not checked by the backend
 	 * @alias can_chat
 	 */
-	public get is_available_for_chat(): boolean {
+	public get isAvailableForChat(): boolean {
 		return this.get("is_available_for_chat");
 	}
 
 	/**
 	 * Is the user banned?
 	 */
-	public get is_banned(): boolean {
+	public get isBanned(): boolean {
 		return this.get("is_banned");
 	}
 
 	/**
 	 * Is the user blocked by the Client?
 	 */
-	public get is_blocked(): boolean {
+	public get isBlocked(): boolean {
 		return this.get("is_blocked");
 	}
 
 	/**
 	 * Is the user deleted?
 	 */
-	public get is_deleted(): boolean {
+	public get isDeleted(): boolean {
 		return this.get("is_deleted");
 	}
 
 	/**
 	 * Is the user's account private?
 	 */
-	public get is_private(): boolean {
+	public get isPrivate(): boolean {
 		return this.get("is_private");
 	}
 
 	/**
 	 * Is the user subscribed to updates?
 	 */
-	public get is_subscribed_to_updates(): boolean {
+	public get isSubscribedToUpdates(): boolean {
 		return this.get("is_subscribed_to_updates");
 	}
 
 	/**
 	 * Is the user subscribed to the Client?
 	 */
-	public get is_subscriber(): boolean {
+	public get isSubscriber(): boolean {
 		return this.get("is_in_subscribers");
 	}
 
 	/**
 	 * Is the client subscribed to the user?
 	 */
-	public get is_subscription(): boolean {
+	public get isSubscription(): boolean {
 		return this.get("is_in_subscriptions");
 	}
 
 	/**
 	 * Is the user verified?
 	 */
-	public get is_verified(): boolean {
+	public get isVerified(): boolean {
 		return this.get("is_verified");
 	}
 
@@ -172,21 +172,21 @@ export class BaseUser extends Base<APIUserProfile> {
 	/**
 	 * The user's meme experience
 	 */
-	public get meme_experience(): MemeExperience {
+	public get memeExperience(): MemeExperience {
 		return new MemeExperience(this.get("meme_experience"));
 	}
 
 	/**
 	 * TODO: Add description for messengerActive
 	 */
-	public get messenger_active(): boolean {
+	public get messengerActive(): boolean {
 		return this.get("messenger_active");
 	}
 
 	/**
 	 * TODO: Add description for messenger_token
 	 */
-	public get messenger_token(): string {
+	public get messengerToken(): string {
 		return this.get("messenger_token");
 	}
 
@@ -201,7 +201,7 @@ export class BaseUser extends Base<APIUserProfile> {
 	/**
 	 * The nick color of the user if they have one, else null
 	 */
-	public get nick_color(): APINickColor | null {
+	public get nickColor(): APINickColor | null {
 		return this.get("nick_color");
 	}
 
@@ -216,7 +216,7 @@ export class BaseUser extends Base<APIUserProfile> {
 	/**
 	 * Profile photo of the user
 	 */
-	public get profile_photo(): APIProfilePhoto | null {
+	public get profilePhoto(): APIProfilePhoto | null {
 		return this.get("photo");
 	}
 
@@ -238,14 +238,14 @@ export class BaseUser extends Base<APIUserProfile> {
 	/**
 	 * The users subscription count
 	 */
-	public get total_subscriptions(): number {
+	public get totalSubscriptions(): number {
 		return this.num.subscriptions;
 	}
 
 	/**
 	 * The users subsciber count
 	 */
-	public get total_subscribers(): number {
+	public get totalSubscribers(): number {
 		this.payload;
 		return this.num.subscribers;
 	}
@@ -253,42 +253,42 @@ export class BaseUser extends Base<APIUserProfile> {
 	/**
 	 * How many posts the user has on their profile
 	 */
-	public get total_posts(): number {
+	public get totalPosts(): number {
 		return this.num.total_posts;
 	}
 
 	/**
 	 * How many original posts the user has
 	 */
-	public get total_original_posts(): number {
+	public get totalOriginalPosts(): number {
 		return this.num.created;
 	}
 
 	/**
 	 * How many posts the has that are republishes (***NOT original***)
 	 */
-	public get total_republished_posts(): number {
-		return this.total_posts - this.total_original_posts;
+	public get totalRepublishedPosts(): number {
+		return this.totalPosts - this.totalOriginalPosts;
 	}
 
 	/**
 	 * How many features the user has
 	 */
-	public get total_features(): number {
+	public get totalFeatures(): number {
 		return this.num.featured;
 	}
 
 	/**
 	 * How many smiles the user has on their profile
 	 */
-	public get total_smiles(): number {
+	public get totalSmiles(): number {
 		return this.num.total_smiles;
 	}
 
 	/**
 	 * How many achievements the user has
 	 */
-	public get total_achievements(): number {
+	public get totalAchievements(): number {
 		return this.num.achievements;
 	}
 
@@ -297,6 +297,15 @@ export class BaseUser extends Base<APIUserProfile> {
 	 * @alias nick
 	 */
 	public get username(): string {
+		return this.nick;
+	}
+
+	/**
+	 * When concatenated with a string, this automatically returns the user's nick instead of the User object.
+	 * @example
+	 * console.log(`Hello from ${user}!`); //  Logs: Hello from iFunnyChef
+	 */
+	public override toString(): string {
 		return this.nick;
 	}
 }

@@ -16,6 +16,7 @@ import { UserManager } from "../managers/UserManager";
 import { Util } from "../utils/Util";
 import FormData from "form-data";
 import { AppManager } from "../managers/AppManager";
+import User from "../structures/User";
 
 /**
  * Method params for Client#signUp()
@@ -36,7 +37,7 @@ export interface SignUpOptions {
 	/**
 	 * Should the Client sign up for mail offers? Never set this to true you weirdo
 	 */
-	accept_mailing?: boolean;
+	acceptMailing?: boolean;
 	/**
 	 * Should the Client login to the account after creating it?
 	 */
@@ -62,6 +63,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 */
 	readonly #content: ContentManager;
 	readonly #app: AppManager;
+	#user: User | null = null;
 
 	/**
 	 * Client utility class
@@ -75,8 +77,8 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	public constructor(config?: ClientOptions, payload: Partial<APIClientUser> = {}) {
 		super(config, payload);
 		this.#util = new Util(this);
-		this.#users = new UserManager(this, this.config.cache_config);
-		this.#content = new ContentManager(this, this.config.cache_config);
+		this.#users = new UserManager(this, this.config.cacheConfig);
+		this.#content = new ContentManager(this, this.config.cacheConfig);
 		this.#feeds = new FeedManager(this);
 		this.#app = new AppManager(this);
 
@@ -112,9 +114,9 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 */
 	public get basic(): string {
 		return (this.config.basic ||= this.util.createBasicAuth({
-			client_id: this.config.client_id,
-			client_secret: this.config.client_secret,
-			length: this.config.basic_length,
+			clientId: this.config.clientId,
+			clientSecret: this.config.clientSecret,
+			length: this.config.basicLength,
 		}));
 	}
 
@@ -129,14 +131,14 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * Prime the Client's basic token
 	 * @returns The Client's basic token
 	 */
-	public async prime_basic(): Promise<string>;
+	public async primeBasic(): Promise<string>;
 	/**
 	 * Primes a basic token without updating the Client config. This takes ~15 seconds
 	 * @param basic Basic token to prime
 	 * @returns Basic token being primed
 	 */
-	public async prime_basic(basic: string): Promise<string>;
-	public async prime_basic(basic?: string): Promise<string> {
+	public async primeBasic(basic: string): Promise<string>;
+	public async primeBasic(basic?: string): Promise<string> {
 		await this.instance.get(Endpoints.counters, {
 			headers: { Authorization: `Basic ${(basic ??= this.basic)}` },
 		});
@@ -157,7 +159,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 */
 	public set bearer(value: string | null) {
 		this.config.bearer = value || null;
-		this.instance.defaults.headers.common.Authorization = this.is_authorized()
+		this.instance.defaults.headers.common.Authorization = this.isAuthorized()
 			? `Bearer ${this.bearer}`
 			: `Basic ${this.basic}`;
 	}
@@ -172,7 +174,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	/**
 	 * Is the client using a bearer token to make requests?
 	 */
-	public is_authorized(): this is Client<true> {
+	public isAuthorized(): this is Client<true> {
 		return !!this.bearer;
 	}
 
@@ -181,7 +183,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * @returns The Client instance
 	 */
 	public async fetch(): Promise<this> {
-		if (!this.is_authorized()) {
+		if (!this.isAuthorized()) {
 			throw new Error(
 				"Client is not authorized with a bearer token. Please generate one with Client#login"
 			);
@@ -221,6 +223,18 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		return this.#app;
 	}
 
+	public async user(): Promise<If<Authorized, User, null>> {
+		if (!this.isAuthorized()) {
+			return null as If<Authorized, User, null>;
+		}
+		await this.fetch();
+		return (this.#user ??= await this.users.fetch(this.id)) as If<
+			Authorized,
+			User,
+			null
+		>;
+	}
+
 	/**
 	 * Logs in using the stored bearer token.\
 	 * Does NOT Generate a new bearer token
@@ -234,7 +248,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 */
 	public async login(email: string, password: string): Promise<this>;
 	public async login(email?: string, password?: string): Promise<this> {
-		if (this.is_authorized()) {
+		if (this.isAuthorized()) {
 			return await this.fetch();
 		}
 
@@ -277,13 +291,13 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * @param options.login Should the client login after sign up? (Default: true)
 	 * @returns The instance of the client
 	 */
-	public async sign_up(options: SignUpOptions): Promise<this> {
+	public async signUp(options: SignUpOptions): Promise<this> {
 		const data = new FormData();
 		data.append("reg_type", "pwd");
 		data.append("nick", options.nick);
 		data.append("email", options.email);
 		data.append("password", options.password);
-		data.append("accept_mailing", !!options.accept_mailing ? "1" : "0");
+		data.append("accept_mailing", !!options.acceptMailing ? "1" : "0");
 
 		const response = await this.instance.post<RESTAPISignUpSuccess>(
 			Endpoints.user(),
@@ -295,7 +309,22 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		if (options.login ?? true) {
 			return await this.login(options.email, options.password);
 		}
+
 		return this;
+	}
+
+	protected get<K extends keyof APIClientUser>(
+		key: K
+	): If<Authorized, APIClientUser[K], null> {
+		return (this.payload?.[key] ?? null) as If<Authorized, APIClientUser[K], null>;
+	}
+
+	public get about() {
+		return this.get("about");
+	}
+
+	public get id() {
+		return this.get("id");
 	}
 }
 

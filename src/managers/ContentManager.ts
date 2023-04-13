@@ -31,14 +31,14 @@ export class ContentManager extends CachedManager<typeof Content> {
 	 * @returns Content
 	 */
 	public async fetch(
-		content_or_id: Content | string,
+		contentOrId: Content | string,
 		cached: boolean = true
 	): Promise<Content | null> {
 		try {
-			let content = await this.resolve(content_or_id);
+			let content = await this.resolve(contentOrId);
 			if (content && cached) return content;
 
-			const id = this.resolve_id(content_or_id);
+			const id = this.resolveId(contentOrId);
 
 			const { data } = await this.client.instance.get<RESTAPIContentResponse>(
 				`content/${id}`
@@ -62,7 +62,7 @@ export class ContentManager extends CachedManager<typeof Content> {
 	 * @param content Content to mark as read
 	 * @param from Where the content was marked as read.
 	 */
-	public async mark_as_read(
+	public async markAsRead(
 		content: Content | string | (Content | string)[],
 		from?: APIFeedFrom
 	): Promise<boolean> {

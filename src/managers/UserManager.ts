@@ -18,8 +18,8 @@ export class UserManager extends CachedManager<typeof User> {
 	/**
 	 * @param client Client instance attached to the UserManager
 	 */
-	public constructor(client: Client, cache_config: ICachingOptions) {
-		super(client, User, cache_config);
+	public constructor(client: Client, cacheConfig: ICachingOptions) {
+		super(client, User, cacheConfig);
 	}
 
 	/**
@@ -27,7 +27,7 @@ export class UserManager extends CachedManager<typeof User> {
 	 * It's a good idea to check this before signing up or changing your nick
 	 * @param nick Nick to check availability of
 	 */
-	public async nick_available(nick: string): Promise<boolean> {
+	public async isNickAvailable(nick: string): Promise<boolean> {
 		const { data } = await this.client.instance.get(Endpoints.nicksAvailable, {
 			params: {
 				nick,
@@ -42,7 +42,7 @@ export class UserManager extends CachedManager<typeof User> {
 	 * It's a good idea to check this before signing up or changing your email
 	 * @param email Email to check availability of
 	 */
-	public async email_available(email: string): Promise<boolean> {
+	public async isEmailAvailable(email: string): Promise<boolean> {
 		const { data } = await this.client.instance.get(Endpoints.emailsAvailable, {
 			params: { email },
 		});

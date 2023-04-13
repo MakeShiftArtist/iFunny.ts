@@ -1,10 +1,10 @@
-import { APIBasePayload, Endpoints } from "@ifunny/ifunny-api-types";
-import { Client } from "../client/Client";
-import { Nullify } from "../utils/Types";
+import { type APIBasePayload, Endpoints } from "@ifunny/ifunny-api-types";
+import type { Client } from "../client/Client";
+import type { Nullify } from "../utils/Types";
 
 /**
  * Base class for all structures.
- * @template Payload
+ * @template Payload The payload of the object
  */
 export class Base<Payload extends APIBasePayload> {
 	/**
@@ -20,7 +20,7 @@ export class Base<Payload extends APIBasePayload> {
 	/**
 	 * Endpoint url the object will request to
 	 */
-	#endpoint_url: string = Endpoints.account;
+	#endpointUrl: string = Endpoints.account;
 
 	/**
 	 * @param client The client instance
@@ -57,12 +57,12 @@ export class Base<Payload extends APIBasePayload> {
 	/**
 	 * Endpoint url for requests to update the payload
 	 */
-	protected get endpoint_url(): string {
-		return this.#endpoint_url;
+	protected get endpointUrl(): string {
+		return this.#endpointUrl;
 	}
 
-	protected set endpoint_url(value: string) {
-		this.#endpoint_url = `${value}`;
+	protected set endpointUrl(value: string) {
+		this.#endpointUrl = `${value}`;
 	}
 
 	/**
@@ -70,7 +70,7 @@ export class Base<Payload extends APIBasePayload> {
 	 * @returns The instance of the object
 	 */
 	public async fetch(): Promise<this> {
-		const response = await this.client.instance.get(this.endpoint_url);
+		const response = await this.client.instance.get(this.endpointUrl);
 		return (this.payload = response.data.data);
 	}
 
@@ -112,6 +112,10 @@ export class Base<Payload extends APIBasePayload> {
 	 */
 	public toJSON(): string {
 		return JSON.stringify(this.payload, null, 2);
+	}
+
+	public toString(): string {
+		return `${this.constructor.name} - ${this.id}`;
 	}
 }
 

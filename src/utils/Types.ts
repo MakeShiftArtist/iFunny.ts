@@ -19,14 +19,20 @@ export interface JSONArray extends Array<JSONValue> {}
 export type JSONValue = SafePrimitive | JSONArray | JSONObject;
 
 /**
- * JSON safe plain object
+ * An object that can contain any JSON value, as well as nested JSON objects and arrays.
  */
 export interface JSONObject {
+	/**
+	 * An index signature that allows any string key and either a JSON value, a JSON object, or an array of JSON objects.
+	 */
 	[key: string]: JSONValue | JSONObject | JSONObject[];
 }
 
 /**
- * Conditional type that can be checked at compile time
+ * A type that conditionally selects one of two types based on a boolean value.
+ * @template T - The boolean value to test.
+ * @template A - The type to select if T is true.
+ * @template B - The type to select if T is false.
  */
 export type If<T extends boolean, A, B = null> = T extends true
 	? A
@@ -36,9 +42,21 @@ export type If<T extends boolean, A, B = null> = T extends true
 
 export type BasicAuthLength = 112 | 156;
 
+/**
+ * Configuration options for basic authentication.
+ */
 export type BasicAuthConfig = {
-	client_id: string;
-	client_secret: string;
+	/**
+	 * The client ID to use for authentication.
+	 */
+	clientId: string;
+	/**
+	 * The client secret to use for authentication.
+	 */
+	clientSecret: string;
+	/**
+	 * The length of the authentication token to generate (112 or 156)
+	 */
 	length: BasicAuthLength;
 };
 

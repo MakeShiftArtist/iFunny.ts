@@ -1,16 +1,16 @@
 import {
-	APIContent,
-	APIFeedFrom,
 	Endpoints,
-	RESTAPIContentSmileResponse,
-	RESTAPIContentSmileUsersResponse,
+	type APIContent,
+	type APIFeedFrom,
+	type RESTAPIContentSmileResponse,
+	type RESTAPIContentSmileUsersResponse,
 } from "@ifunny/ifunny-api-types";
 import { BaseContent } from "./BaseContent";
-import { Client } from "../client/Client";
 import { SimpleUser } from "./SimpleUser";
-import { URLSearchParams } from "url";
+import type { Client } from "../client/Client";
+import type { URLSearchParams } from "url";
 
-type ModifyParams = { from?: APIFeedFrom; limit?: number } | URLSearchParams;
+export type ModifyParams = { from?: APIFeedFrom; limit?: number } | URLSearchParams;
 
 /**
  * Represents content from iFunny
@@ -32,7 +32,7 @@ export class Content extends BaseContent {
 	 * @param params Params to pass to the request
 	 * @internal
 	 */
-	async #modify_smiles(
+	async #modifySmiles(
 		method: "PUT" | "DELETE",
 		type: "smiles" | "unsmiles",
 		params?: ModifyParams
@@ -76,7 +76,7 @@ export class Content extends BaseContent {
 	 * @returns Was it success
 	 */
 	public async smile(from?: APIFeedFrom) {
-		return await this.#modify_smiles("PUT", "smiles", { from });
+		return await this.#modifySmiles("PUT", "smiles", { from });
 	}
 
 	/**
@@ -84,8 +84,8 @@ export class Content extends BaseContent {
 	 * @param from Where the action occured
 	 * @returns Was it success
 	 */
-	public async remove_smile(from?: APIFeedFrom) {
-		return await this.#modify_smiles("DELETE", "smiles", { from });
+	public async removeSmile(from?: APIFeedFrom) {
+		return await this.#modifySmiles("DELETE", "smiles", { from });
 	}
 
 	/**
@@ -94,7 +94,7 @@ export class Content extends BaseContent {
 	 * @returns Was it success
 	 */
 	public async unsmile(from?: APIFeedFrom) {
-		return await this.#modify_smiles("PUT", "unsmiles", { from });
+		return await this.#modifySmiles("PUT", "unsmiles", { from });
 	}
 
 	/**
@@ -102,8 +102,8 @@ export class Content extends BaseContent {
 	 * @param from Where the content was smiled
 	 * @returns Was the content marked as smiled
 	 */
-	public async remove_unsmile(from?: APIFeedFrom) {
-		return await this.#modify_smiles("DELETE", "unsmiles", { from });
+	public async removeUnsmile(from?: APIFeedFrom) {
+		return await this.#modifySmiles("DELETE", "unsmiles", { from });
 	}
 }
 

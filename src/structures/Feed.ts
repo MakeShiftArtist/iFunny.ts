@@ -1,7 +1,7 @@
-import { APIContent } from "@ifunny/ifunny-api-types";
 import { BaseFeed, PaginateConfig } from "./BaseFeed";
-import { Client } from "../client/Client";
 import { Content } from "./Content";
+import type { APIContent } from "@ifunny/ifunny-api-types";
+import type { Client } from "../client/Client";
 
 /**
  * Represents a feed on iFunny
@@ -28,7 +28,7 @@ export class Feed extends BaseFeed {
 			Object.assign({ limit: 30 }, params)
 		)) {
 			if (markAsRead) {
-				this.client.content.mark_as_read(api_content.id);
+				this.client.content.markAsRead(api_content.id);
 			}
 			const content = new Content(this.client, api_content);
 

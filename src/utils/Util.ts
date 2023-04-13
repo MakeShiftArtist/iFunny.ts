@@ -1,12 +1,4 @@
-import { BasicAuthConfig } from "./Types";
-import { Client } from "../client/Client";
 import { DefaultBasicAuthConfig } from "./Constants";
-import { PaginateConfig } from "../structures/BaseFeed";
-import {
-	RESTAPIErrorResponse,
-	RESTAPIItems,
-	RESTAPISuccessResponse,
-} from "@ifunny/ifunny-api-types";
 import axios, {
 	AxiosError,
 	AxiosRequestConfig,
@@ -14,6 +6,14 @@ import axios, {
 	AxiosResponse,
 } from "axios";
 import crypto from "crypto";
+import type { BasicAuthConfig } from "./Types";
+import type { Client } from "../client/Client";
+import type { PaginateConfig } from "../structures/BaseFeed";
+import type {
+	RESTAPIErrorResponse,
+	RESTAPIItems,
+	RESTAPISuccessResponse,
+} from "@ifunny/ifunny-api-types";
 
 /**
  * Utility class used by the Client
@@ -51,13 +51,13 @@ export class Util {
 	/**
 	 * Generates a basic token
 	 * @param opts Options to create the token with
-	 * @param opts.client_id The client id to use for the token
-	 * @param opts.client_secret The client secret to use for the token
+	 * @param opts.clientId The client id to use for the token
+	 * @param opts.clientSecret The client secret to use for the token
 	 * @param opts.length The length of the token to create
 	 * @returns A basic auth token
 	 */
 	public createBasicAuth(opts?: BasicAuthConfig) {
-		const { length, client_id, client_secret } = Object.assign(
+		const { length, clientId, clientSecret } = Object.assign(
 			DefaultBasicAuthConfig,
 			opts
 		);
@@ -79,8 +79,8 @@ export class Util {
 				throw TypeError("Invalid token length. Expected 112 | 156");
 		}
 
-		const a = hex + `_${client_id}:`;
-		const b = hex + `:${client_id}:${client_secret}`;
+		const a = hex + `_${clientId}:`;
+		const b = hex + `:${clientId}:${clientSecret}`;
 		const c = crypto.createHash("sha1").update(b).digest("hex");
 
 		return Buffer.from(a + c).toString("base64");
@@ -118,8 +118,9 @@ export class Util {
 	 * Certain requests have a header for 'if-modified-since' which uses the current timestamp
 	 * @param date Custom date
 	 * @returns GMT timestamp of the date
+	 * @internal
 	 */
-	public if_modified_since(date?: Date): string {
+	ifModifiedSince(date?: Date): string {
 		date ??= new Date();
 		return date.toUTCString();
 	}
@@ -129,6 +130,7 @@ export class Util {
 	 * @param url The url to get
 	 * @param key The key to get the array of values from
 	 * @param params The params to pass to the url
+	 * @param full Whether to yield the full data or just the items (default false)
 	 * @yields The value of the key
 	 * @internal
 	 */
@@ -226,6 +228,7 @@ export class Util {
 
 	/**
 	 * Client headers
+	 * @returns AxiosRequestHeaders
 	 */
 	public get headers(): AxiosRequestHeaders {
 		return this.#client.instance.defaults.headers.common;

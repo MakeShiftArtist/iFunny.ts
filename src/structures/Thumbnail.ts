@@ -1,4 +1,4 @@
-import { APIContentThumbnail } from "@ifunny/ifunny-api-types";
+import type { APIContentThumbnail, Size } from "@ifunny/ifunny-api-types";
 
 /**
  * Represents a thumbnail for Content on iFunny
@@ -6,6 +6,9 @@ import { APIContentThumbnail } from "@ifunny/ifunny-api-types";
 export class Thumbnail {
 	#thumb: APIContentThumbnail;
 
+	/**
+	 * The regex used to find the thumbnail ID
+	 */
 	static readonly Thumbnail_ID_Regex =
 		/(?<=^https\:\/\/imageproxy\.ifunny\.co\/[a-z0-9:,-]+\/[a-z]+\/)([a-z0-9_]+)(?=\.[a-z]{3,4}$)/gi;
 
@@ -26,7 +29,9 @@ export class Thumbnail {
 	}
 
 	/**
-	 * Thumbnail Content Id. This is different from the Content Id
+	 * Gets the ID of the thumbnail from its URL.
+	 * @throws An error if the ID cannot be found in the URL.
+	 * @returns The ID string.
 	 */
 	public get id(): string {
 		const id = this.url.match(Thumbnail.Thumbnail_ID_Regex);
@@ -43,55 +48,94 @@ export class Thumbnail {
 	 * @param params Params for the new thumbnail
 	 * @param extension File extension for the thumbnail. (Default: `jpg`)
 	 */
-	public create(params: string, extension: "jpg" | " webp" = "jpg") {
+	public create(params: string, extension: "jpg" | " webp" = "jpg"): string {
 		return `https://imageproxy.ifunny.co/${params}/images/${this.id}.${extension}`;
 	}
 
 	/**
-	 * The thumbnail url after cropping out the iFunny Watermark
+	 * The content url after cropping out the iFunny Watermark
 	 */
-	public get cropped() {
+	public get cropped(): string {
 		return this.create("crop:x-20");
 	}
-
-	public get large_url() {
-		return this.get("large_url");
+	/**
+	 * Gets the large image URL.
+	 * @returns The URL string or null if not available.
+	 */
+	public get largeUrl(): string {
+		return this.get("large_url") ?? null;
 	}
 
-	public get large_webp_url() {
-		return this.get("large_webp_url");
+	/**
+	 * Gets the large WebP image URL.
+	 * @returns The URL string or null if not available.
+	 */
+	public get largeWebpUrl(): string {
+		return this.get("large_webp_url") ?? null;
 	}
 
-	public get proportional_size() {
-		return this.get("proportional_size");
+	/**
+	 * Gets the proportional size of the image.
+	 * @returns The size object or null if not available.
+	 */
+	public get proportionalSize(): Size {
+		return this.get("proportional_size") ?? null;
 	}
 
-	public get proportional_url() {
-		return this.get("proportional_url");
+	/**
+	 * Gets the proportional image URL.
+	 * @returns The URL string or null if not available.
+	 */
+	public get proportionalUrl(): string {
+		return this.get("proportional_url") ?? null;
 	}
 
-	public get proportional_webp_url() {
-		return this.get("proportional_webp_url");
+	/**
+	 * Gets the proportional WebP image URL.
+	 * @returns The URL string or null if not available.
+	 */
+	public get proportionalWebpUrl(): string {
+		return this.get("proportional_webp_url") ?? null;
 	}
 
-	public get small_url() {
-		return this.get("small_url");
+	/**
+	 * Gets the small image URL.
+	 * @returns The URL string or null if not available.
+	 */
+	public get smallUrl(): string | null {
+		return this.get("small_url") ?? null;
 	}
 
-	public get url() {
-		return this.get("url");
+	/**
+	 * Gets the image URL.
+	 * @returns The URL string or null if not available.
+	 */
+	public get url(): string {
+		return this.get("url") ?? null;
 	}
 
-	public get webp_url() {
-		return this.get("webp_url");
+	/**
+	 * Gets the WebP image URL.
+	 * @returns The URL string or null if not available.
+	 */
+	public get webpUrl(): string {
+		return this.get("webp_url") ?? null;
 	}
 
-	public get x640_url() {
-		return this.get("x640_url");
+	/**
+	 * Gets the 640px wide image URL.
+	 * @returns The URL string or null if not available.
+	 */
+	public get x640Url(): string {
+		return this.get("x640_url") ?? null;
 	}
 
-	public get x640_webp_url() {
-		return this.get("x640_webp_url");
+	/**
+	 * Gets the 640px wide WebP image URL.
+	 * @returns The URL string or null if not available.
+	 */
+	public get x640WebpUrl(): string {
+		return this.get("x640_webp_url") ?? null;
 	}
 }
 
