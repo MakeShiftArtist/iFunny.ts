@@ -9,7 +9,7 @@
 		"changelog": "auto-changelog -p  && git add CHANGELOG.md && git commit -m \"Update CHANGELOG.md\"",
 		"changelog:debug": "auto-changelog -p --template json --output changelog-data.json",
 		"clean": "rm -r -f ./dist && rm -r -f ./types",
-		"build": "tsc",
+		"build": "tsc && npx typedoc --out doc src",
 		"rebuild": "npm run clean && npm run build",
 		"version": "npm run changelog",
 		"push": "npm run rebuild && git push && npm publish",
@@ -40,6 +40,7 @@
 		"dotenv": "^16.0.3",
 		"readline-sync": "^1.4.10",
 		"ts-node": "^10.9.1",
+		"typedoc-plugin-missing-exports": "^1.0.0",
 		"typescript": "^4.9.3"
 	},
 	"dependencies": {
