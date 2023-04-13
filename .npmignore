@@ -19,3 +19,6 @@ tsconfig.json
 
 # NPM
 node_modules/
+
+# Docs
+doc/
