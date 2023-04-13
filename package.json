@@ -1,6 +1,6 @@
 {
 	"name": "ifunny.ts",
-	"version": "0.6.1",
+	"version": "0.6.2",
 	"description": "Official ifunny-co ifunny API wrapper written in TypeScript.",
 	"main": "dist",
 	"types": "types",
