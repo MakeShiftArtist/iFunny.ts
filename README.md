@@ -5,6 +5,8 @@
 
 The go-to iFunny API wrapper library written in TypeScript! Reverse engineered from the ground up, taking heavy inspiration from discord.js!
 
+Full documentation can be found [here](https://makeshiftartist.github.io/iFunny.ts/)
+
 ## Authors
 
 -   [@MakeShiftArtist](https://www.github.com/MakeShiftArtist)
@@ -100,6 +102,7 @@ async function main() {
 
 ## Links
 
+-   [Documentation](https://makeshiftartist.github.io/iFunny.ts/)
 -   [npm](https://www.npmjs.com/package/ifunny.ts)
 -   [GitHub](https://github.com/ifunny-co/iFunny.ts)
 -   [iFunny API Discord Server](https://discord.gg/Wvkycj5xGW)
