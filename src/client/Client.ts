@@ -74,7 +74,10 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	 * @param config The config for the Client
 	 * @param payload Payload for the client if applicable
 	 */
-	public constructor(config?: ClientOptions, payload: Partial<APIClientUser> = {}) {
+	public constructor(
+		config?: ClientOptions,
+		payload: Partial<APIClientUser> = {}
+	) {
 		super(config, payload);
 		this.#util = new Util(this);
 		this.#users = new UserManager(this, this.config.cacheConfig);
@@ -219,10 +222,17 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		return this.#content;
 	}
 
+	/**
+	 * Manage the client's application data like settings or features
+	 */
 	public get app(): AppManager {
 		return this.#app;
 	}
 
+	/**
+	 * Asynchronously gets the authorized user or null if not authorized.
+	 * @returns A promise that resolves to the client user or null.
+	 */
 	public async user(): Promise<If<Authorized, User, null>> {
 		if (!this.isAuthorized()) {
 			return null as If<Authorized, User, null>;
@@ -316,7 +326,11 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 	protected get<K extends keyof APIClientUser>(
 		key: K
 	): If<Authorized, APIClientUser[K], null> {
-		return (this.payload?.[key] ?? null) as If<Authorized, APIClientUser[K], null>;
+		return (this.payload?.[key] ?? null) as If<
+			Authorized,
+			APIClientUser[K],
+			null
+		>;
 	}
 
 	public get about() {
