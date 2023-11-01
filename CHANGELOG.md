@@ -2,7 +2,20 @@
 > All notable changes to this project will be documented in this file.
 > This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
-## [v0.6.5](https://github.com/makeshiftartist/iFunny.ts/compare/v0.6.4...v0.6.5) - 2023-04-14
+## [v0.7.0](https://github.com/makeshiftartist/iFunny.ts/compare/v0.6.5...v0.7.0) - 2023-11-01
+
+
+
+
+### Documentation
+
+*  add missing doc comments and format @makeshiftartist ([`85a9b8e`](https://github.com/makeshiftartist/iFunny.ts/commit/85a9b8ebc1fd379ead9be3f3f7533a20918281aa))
+
+
+
+
+
+## [v0.6.5](https://github.com/makeshiftartist/iFunny.ts/compare/v0.6.4...v0.6.5) - 2023-04-13
 
 
 
