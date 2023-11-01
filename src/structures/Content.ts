@@ -4,13 +4,17 @@ import {
 	type APIFeedFrom,
 	type RESTAPIContentSmileResponse,
 	type RESTAPIContentSmileUsersResponse,
+	APIComment,
 } from "@ifunny/ifunny-api-types";
 import { BaseContent } from "./BaseContent";
 import { SimpleUser } from "./SimpleUser";
+import { Comment } from "./Comment";
 import type { Client } from "../client/Client";
 import type { URLSearchParams } from "url";
 
-export type ModifyParams = { from?: APIFeedFrom; limit?: number } | URLSearchParams;
+export type ModifyParams =
+	| { from?: APIFeedFrom; limit?: number }
+	| URLSearchParams;
 
 /**
  * Represents content from iFunny
@@ -37,11 +41,12 @@ export class Content extends BaseContent {
 		type: "smiles" | "unsmiles",
 		params?: ModifyParams
 	): Promise<boolean> {
-		const response = await this.client.instance.request<RESTAPIContentSmileResponse>({
-			method,
-			url: Endpoints[type](this.id),
-			params,
-		});
+		const response =
+			await this.client.instance.request<RESTAPIContentSmileResponse>({
+				method,
+				url: Endpoints[type](this.id),
+				params,
+			});
 
 		// Update payload
 		this.payload.num.smiles = response.data.data.num_smiles;
@@ -104,6 +109,57 @@ export class Content extends BaseContent {
 	 */
 	public async removeUnsmile(from?: APIFeedFrom) {
 		return await this.#modifySmiles("DELETE", "unsmiles", { from });
+	}
+
+	/**
+	 * Attempts to delete the content
+	 * @returns Whether the attempt was successful
+	 */
+	public async delete(): Promise<boolean> {
+		if (!this.author?.id || !this.client.id) {
+			// console.log("Can't validate author or client");
+			return false;
+		}
+
+		if (this.author.id !== this.client.id) {
+			// console.log("Author's don't match");
+			return false;
+		}
+
+		type ContentDeletionResponse = {
+			status: number;
+			data: {
+				retry_after: number;
+				id: string;
+				type: string;
+				state: string;
+			};
+		};
+
+		let response = await this.client.instance.request<ContentDeletionResponse>({
+			method: "DELETE",
+			url: Endpoints.content(this.id),
+		});
+		// console.log(response.data);
+		return response.data.status === 200;
+	}
+
+	/**
+	 * Paginate through the comments of the content
+	 * @param limit How many comments to return per request (Default: `30`)
+	 * @returns AsyncGenerator<Comment>
+	 */
+	async *comments(limit: number = 30): AsyncGenerator<Comment> {
+		for await (const comment of this.client.util.paginate<APIComment>(
+			Endpoints.comments(this.id),
+			"comments",
+			{
+				limit,
+			},
+			false
+		)) {
+			yield new Comment(this, comment);
+		}
 	}
 }
 
