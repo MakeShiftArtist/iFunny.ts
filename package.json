@@ -12,7 +12,7 @@
 		"build": "tsc",
 		"docs": "rm -r -f ./doc && npx typedoc --out doc src",
 		"rebuild": "npm run clean && npm run build",
-		"version": "npm run changelog",
+		"version": "npm run rebuild && npm run changelog",
 		"push": "npm run rebuild && git push && npm publish && npx gh-pages -d doc -t true",
 		"update-deps": "npx npm-check-updates -u && npm install",
 		"login": "npx ts-node login.ts"
