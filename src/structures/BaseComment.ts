@@ -151,6 +151,19 @@ export class BaseComment extends Base<APIComment> {
 	public get creator(): SimpleUser | null {
 		return this.author;
 	}
+
+	/**
+	 * Delete the comment
+	 * @example
+	 * for (const comment of content.comments())
+	 * 	await comment.delete()
+	 */
+	public async delete() {
+		return await this.client.instance.request<any>({
+			url: Endpoints.comments(this.content.id, this.id),
+			method: "DELETE"
+		})
+	}
 }
 
 export default BaseComment;
