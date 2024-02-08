@@ -48,7 +48,7 @@
 	"dependencies": {
 		"@discordjs/collection": "^1.1.0",
 		"@ifunny/ifunny-api-types": "^1.0.3",
-		"axios": "^0.27.2",
+		"axios": "^1.6.0",
 		"eventemitter3": "^4.0.7",
 		"node-ts-cache": "^4.4.0",
 		"node-ts-cache-storage-memory": "^4.4.0"
