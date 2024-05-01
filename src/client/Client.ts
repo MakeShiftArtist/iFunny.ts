@@ -1,5 +1,6 @@
 import {
 	APIClientUser,
+	APIComment,
 	Endpoints,
 	RESTAPIOauth2LoginSuccess,
 	RESTAPISignUpSuccess,
@@ -17,6 +18,7 @@ import { Util } from "../utils/Util";
 import FormData from "form-data";
 import { AppManager } from "../managers/AppManager";
 import User from "../structures/User";
+import Comment from "../structures/Comment";
 
 /**
  * Method params for Client#signUp()
@@ -321,6 +323,16 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		}
 
 		return this;
+	}
+
+	async *comments(limit: number = 30): AsyncGenerator<Comment> {
+		for await (const comment of this.#util.paginate<APIComment>(
+			Endpoints.myComments, "comments", { limit }, false
+		)) {
+			const content = await this.#content.fetch(comment.cid, true)
+			if (!content) throw `orphan content! cid: ${comment.cid}, comment id: ${comment.id}` // TODO handle this for real?
+			yield new Comment(content, comment)
+		}
 	}
 
 	protected get<K extends keyof APIClientUser>(
