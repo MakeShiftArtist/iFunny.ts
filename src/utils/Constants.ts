@@ -1,3 +1,4 @@
+import { AxiosHeaders } from "axios";
 import { BasicAuthConfig, BasicAuthLength } from "./Types";
 
 // * User Agent
@@ -36,10 +37,10 @@ export const DefaultAcceptLang = "en";
 export const DefaultAcceptEncoding = "gzip";
 export const DefaultApplicationState = 1;
 
-export const DefaultHeaders = {
+export const DefaultHeaders: AxiosHeaders = new AxiosHeaders({
 	"ifunny-project-id": iFunnyProjectId,
 	accept: DefaultAccept,
 	"accept-encoding": DefaultAcceptEncoding,
 	"accept-language": DefaultAcceptLang,
 	"user-agent": DefaultUserAgent,
-};
+});

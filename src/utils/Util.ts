@@ -2,7 +2,6 @@ import { DefaultBasicAuthConfig } from "./Constants";
 import axios, {
 	AxiosError,
 	AxiosRequestConfig,
-	AxiosRequestHeaders,
 	AxiosResponse,
 } from "axios";
 import crypto from "crypto";
@@ -224,21 +223,6 @@ export class Util {
 		prop: Prop
 	): obj is Obj & Record<Prop, unknown> {
 		return Object.prototype.hasOwnProperty.call(obj, prop);
-	}
-
-	/**
-	 * Client headers
-	 * @returns AxiosRequestHeaders
-	 */
-	public get headers(): AxiosRequestHeaders {
-		return this.#client.instance.defaults.headers.common;
-	}
-
-	/**
-	 * Updates client headers
-	 */
-	public set headers(headers: AxiosRequestHeaders) {
-		Object.assign(this.#client.instance.defaults.headers.common, headers);
 	}
 }
 

@@ -10,13 +10,13 @@ import {
 import { APIClientUser as ClientPayload } from "@ifunny/ifunny-api-types";
 import { EventEmitter } from "eventemitter3";
 import { ICachingOptions } from "node-ts-cache";
-import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
+import axios, { AxiosHeaders, AxiosInstance } from "axios";
 
 export interface ClientConfig {
 	basic: string | null;
 	basicLength: 156 | 112;
 	bearer: string | null;
-	headers: AxiosRequestHeaders;
+	headers: AxiosHeaders;
 	clientId: string;
 	clientSecret: string;
 	cacheConfig: ICachingOptions;

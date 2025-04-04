@@ -86,7 +86,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
 		this.#app = new AppManager(this);
 
 		this.instance.interceptors.request.use((config) => {
-			config.headers ??= this.config.headers;
+			config.headers.set(this.config.headers);
 			config.headers.Authorization ??= this.authorization;
 			return config;
 		});
