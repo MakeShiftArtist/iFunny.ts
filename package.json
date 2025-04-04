@@ -6,7 +6,7 @@
 	"types": "types",
 	"scripts": {
 		"test": "tsc --noEmit",
-		"changelog": "auto-changelog -p  && git add CHANGELOG.md && git commit -m \"Update CHANGELOG.md\"",
+		"changelog": "auto-changelog -p  && git add CHANGELOG.md",
 		"changelog:debug": "auto-changelog -p --template json --output changelog-data.json",
 		"clean": "rm -r -f ./dist && rm -r -f ./types",
 		"build": "tsc",
