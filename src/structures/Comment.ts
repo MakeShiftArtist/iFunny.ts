@@ -1,5 +1,5 @@
 import { BaseComment } from "./BaseComment";
-import type { APIComment } from "@ifunny/ifunny-api-types";
+import type { Endpoints, APIComment } from "@ifunny/ifunny-api-types";
 import type { Content } from "./Content";
 
 // TODO: Add Comment methods
@@ -15,6 +15,20 @@ export class Comment extends BaseComment {
 	 */
 	public constructor(content: Content, payload: APIComment) {
 		super(content, payload);
+	}
+
+
+	/**
+	 * Delete the comment
+	 * @example
+	 * for (const comment of content.comments())
+	 * 	await comment.delete()
+	 */
+	public async delete() {
+		return await this.client.instance.request<any>({
+			url: Endpoints.comments(this.content.id, this.id),
+			method: "DELETE"
+		})
 	}
 }
 
