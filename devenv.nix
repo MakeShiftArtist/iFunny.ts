@@ -12,16 +12,21 @@
   # env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = [ pkgs.git ];
+  packages = [
+    pkgs.git
+    pkgs.nixfmt-rfc-style
+  ];
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
-  languages.deno.enable = true;
+  # languages.deno.enable = true;
+  languages.nix.enable = true;
 
   languages.javascript = {
     enable = true;
     npm.enable = true;
-    package = pkgs.nodejs_24;
+    package = pkgs.nodejs_25;
+    bun.enable = true;
   };
 
   # https://devenv.sh/processes/
