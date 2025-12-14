@@ -11,6 +11,7 @@ test.ts
 dist/
 doc/
 types/
+tsconfig.tsbuildinfo
 
 # NPM
 node_modules/

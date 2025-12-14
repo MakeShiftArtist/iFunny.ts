@@ -1,24 +1,31 @@
 {
-	"compileOnSave": true,
-	"compilerOptions": {
-		"declaration": true,
-		"declarationDir": "types",
-		"declarationMap": true,
-		"forceConsistentCasingInFileNames": true,
-		"module": "CommonJS",
-		"noImplicitOverride": true,
-		"noUnusedLocals": true,
-		"outDir": "dist",
-		"removeComments": false,
-		"sourceMap": true,
-		"strict": true,
-		"target": "ES2020",
-		"pretty": true,
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"stripInternal": true,
-		"skipDefaultLibCheck": true,
-		"skipLibCheck": true
-	},
-	"include": ["src/**/*.ts"]
+    "compileOnSave": true,
+    "compilerOptions": {
+        "outDir": "./types",
+        "declarationDir": "./dist",
+        "rootDir": "./src",
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+        "lib": ["ESNext"],
+        "module": "esnext",
+        "target": "esnext",
+        "moduleResolution": "bundler",
+        "moduleDetection": "force",
+        "allowImportingTsExtensions": true,
+        "removeComments": false,
+        "noEmit": false,
+        "emitDeclarationOnly": true,
+        "declaration": true,
+        "strict": true,
+        "downlevelIteration": true,
+        "skipLibCheck": true,
+        "jsx": "react-jsx",
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowJs": true,
+        "types": ["bun-types"]
+    },
+    "include": ["src/**/*.ts"]
 }
