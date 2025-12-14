@@ -23,6 +23,7 @@
         "build": "npm run build:dist &&  npm run build:docs && npm run build:types",
         "build:declaration": "tsc",
         "lint": "eslint",
+        "format": "prettier ./src/ -w",
         "rebuild": "npm run clean && npm run build",
         "version": "npm run rebuild && npm run changelog",
         "push": "npm run rebuild && git push && npm publish && npx gh-pages -d doc -t true",
