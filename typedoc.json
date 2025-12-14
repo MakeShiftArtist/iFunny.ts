@@ -1,0 +1,7 @@
+{
+    "entryPoints": ["./src/"],
+    "entryPointStrategy": "expand",
+    "out": "./docs",
+    "lang": "en",
+    "useTsLinkResolution": true
+}
