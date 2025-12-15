@@ -9,7 +9,7 @@ Full documentation can be found [here](https://makeshiftartist.github.io/iFunny.
 
 ## Authors
 
--   [@MakeShiftArtist](https://www.github.com/MakeShiftArtist)
+- [@MakeShiftArtist](https://www.github.com/MakeShiftArtist)
 
 ## Quick Start Guide
 
@@ -87,22 +87,22 @@ Install iFunny.ts
 import iFunnyClient from "ifunny.ts";
 
 const client = new iFunnyClient({
-	basic: process.env.BASIC,
-	bearer: process.env.BEARER,
+    basic: process.env.BASIC,
+    bearer: process.env.BEARER,
 });
 
 async function main() {
-	const user = client.users.byNick("iFunnyChef");
-	if (user) {
-		console.log(user.id);
-		await user.suscribe();
-	}
+    const user = client.users.byNick("iFunnyChef");
+    if (user) {
+        console.log(user.id);
+        await user.suscribe();
+    }
 }
 ```
 
 ## Links
 
--   [Documentation](https://makeshiftartist.github.io/iFunny.ts/)
--   [npm](https://www.npmjs.com/package/ifunny.ts)
--   [GitHub](https://github.com/ifunny-co/iFunny.ts)
--   [iFunny API Discord Server](https://discord.gg/Wvkycj5xGW)
+- [Documentation](https://makeshiftartist.github.io/iFunny.ts/)
+- [npm](https://www.npmjs.com/package/ifunny.ts)
+- [GitHub](https://github.com/ifunny-co/iFunny.ts)
+- [iFunny API Discord Server](https://discord.gg/Wvkycj5xGW)
