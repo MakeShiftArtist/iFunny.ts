@@ -2,10 +2,6 @@
 export { BaseClient } from "./client/BaseClient";
 export { Client, default } from "./client/Client";
 
-// ! Errors
-export { CaptchaError } from "./errors/CaptchaError";
-export { iFunnyError } from "./errors/iFunnyError";
-
 // ? Structs
 export { Ban } from "./structures/Ban";
 export { BanSmall } from "./structures/BanSmall";
@@ -18,4 +14,10 @@ export { News } from "./structures/News";
 export { SimpleUser } from "./structures/SimpleUser";
 export { Thumbnail } from "./structures/Thumbnail";
 export { User } from "./structures/User";
-export { Util } from "./utils/Util";
+
+// ? Sub Modules
+export * as Managers from "./managers/mod";
+export { Util, Types, Constants } from "./utils/mod";
+
+// ! Errors
+export * as Errors from "./errors/mod";
