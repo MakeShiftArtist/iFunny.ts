@@ -18,6 +18,7 @@
         "noEmit": false,
         "emitDeclarationOnly": true,
         "declaration": true,
+        "declarationMap": true,
         "strict": true,
         "downlevelIteration": true,
         "skipLibCheck": true,
