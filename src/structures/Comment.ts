@@ -9,13 +9,13 @@ import type { Content } from "./Content";
  * @extends BaseComment
  */
 export class Comment extends BaseComment {
-	/**
-	 * @param content Content attached to the Comment
-	 * @param payload Payload of the Comment
-	 */
-	public constructor(content: Content, payload: APIComment) {
-		super(content, payload);
-	}
+    /**
+     * @param content Content attached to the Comment
+     * @param payload Payload of the Comment
+     */
+    public constructor(content: Content, payload: APIComment) {
+        super(content, payload);
+    }
 }
 
 export default Comment;
