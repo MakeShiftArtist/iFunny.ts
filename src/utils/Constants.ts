@@ -1,4 +1,3 @@
-import { AxiosHeaders } from "axios";
 import { BasicAuthConfig, BasicAuthLength } from "./Types";
 
 // * User Agent
@@ -14,9 +13,9 @@ export const DefaultClientId: string = "MsOIJ39Q28";
 export const DefaultClientSecret: string = "PTDc3H8a)Vi=UYap";
 export const DefaultBasicTokenLength: BasicAuthLength = 112;
 export const DefaultBasicAuthConfig: BasicAuthConfig = {
-	clientId: DefaultClientId,
-	clientSecret: DefaultClientSecret,
-	length: DefaultBasicTokenLength,
+    clientId: DefaultClientId,
+    clientSecret: DefaultClientSecret,
+    length: DefaultBasicTokenLength,
 };
 
 // Device Agent (Android)
@@ -37,10 +36,10 @@ export const DefaultAcceptLang = "en";
 export const DefaultAcceptEncoding = "gzip";
 export const DefaultApplicationState = 1;
 
-export const DefaultHeaders: AxiosHeaders = new AxiosHeaders({
-	"ifunny-project-id": iFunnyProjectId,
-	accept: DefaultAccept,
-	"accept-encoding": DefaultAcceptEncoding,
-	"accept-language": DefaultAcceptLang,
-	"user-agent": DefaultUserAgent,
-});
+export const DefaultHeaders = {
+    "ifunny-project-id": iFunnyProjectId,
+    accept: DefaultAccept,
+    "accept-encoding": DefaultAcceptEncoding,
+    "accept-language": DefaultAcceptLang,
+    "user-agent": DefaultUserAgent,
+};
