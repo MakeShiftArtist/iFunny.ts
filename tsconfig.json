@@ -2,7 +2,7 @@
     "compileOnSave": true,
     "compilerOptions": {
         "outDir": "./dist",
-        "declarationDir": "./types",
+        "declarationDir": "./dist",
         "rootDir": "./src",
         "baseUrl": "./",
         "paths": {
