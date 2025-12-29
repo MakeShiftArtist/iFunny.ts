@@ -1,6 +1,6 @@
-import { Base } from "./Base";
-import type { Client } from "../client/Client";
-import type { User } from "./User";
+import { Base } from "./Base.ts";
+import type { Client } from "../client/Client.ts";
+import type { User } from "./User.ts";
 import type {
     APIContentCreator,
     APINickColor,

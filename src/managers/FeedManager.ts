@@ -1,5 +1,5 @@
-import { Client } from "../client/Client";
-import { Feed } from "../structures/Feed";
+import { Client } from "../client/Client.ts";
+import { Feed } from "../structures/Feed.ts";
 
 /**
  * Handles different feeds for the Client

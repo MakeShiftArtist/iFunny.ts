@@ -1,4 +1,4 @@
-import { BasicAuthConfig, BasicAuthLength } from "./Types";
+import { BasicAuthConfig, BasicAuthLength } from "./Types.ts";
 
 // * User Agent
 // ? As of 7/24/22 on Android 7.1.2
@@ -8,7 +8,8 @@ import { BasicAuthConfig, BasicAuthLength } from "./Types";
 export type SemanticVersion = `${number}.${number}.${number}`;
 export const DefaultAppVersion: SemanticVersion = "8.15.1";
 export const DefaultAppBuild: number = 1130736;
-export const DefaultAppAgent = `iFunny/${DefaultAppVersion}(${DefaultAppBuild})`;
+export const DefaultAppAgent =
+    `iFunny/${DefaultAppVersion}(${DefaultAppBuild})`;
 export const DefaultClientId: string = "MsOIJ39Q28";
 export const DefaultClientSecret: string = "PTDc3H8a)Vi=UYap";
 export const DefaultBasicTokenLength: BasicAuthLength = 112;
@@ -23,7 +24,8 @@ export const DefaultDeviceOS = "Android";
 export const DefaultOSVersion = "7.1.2";
 export const DefaultDeviceBrand = "samsung";
 export const DefaultDeviceModel = "SM-G973N";
-export const DefaultDeviceAgent = `${DefaultDeviceOS}/${DefaultOSVersion} (${DefaultDeviceBrand}; ${DefaultDeviceModel}; ${DefaultDeviceBrand})`;
+export const DefaultDeviceAgent =
+    `${DefaultDeviceOS}/${DefaultOSVersion} (${DefaultDeviceBrand}; ${DefaultDeviceModel}; ${DefaultDeviceBrand})`;
 export const DefaultUserAgent = `${DefaultAppAgent} ${DefaultDeviceAgent}`;
 
 // * Headers

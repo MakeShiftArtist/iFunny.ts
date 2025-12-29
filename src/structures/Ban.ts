@@ -1,13 +1,13 @@
 import {
-    Endpoints,
     type APIBan,
     type APIBanReason,
     type APIBanType,
+    Endpoints,
 } from "@ifunny/ifunny-api-types";
-import { Base } from "./Base";
-import { Comment } from "./Comment";
-import { Content } from "./Content";
-import type { User } from "./User";
+import { Base } from "./Base.ts";
+import { Comment } from "./Comment.ts";
+import { Content } from "./Content.ts";
+import type { User } from "./User.ts";
 
 /**
  * Represents a complete Ban Object on iFunny

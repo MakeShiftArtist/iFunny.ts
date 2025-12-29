@@ -3,10 +3,10 @@ import {
     Endpoints,
     IFUNNY_ERRORS,
 } from "@ifunny/ifunny-api-types";
-import { BaseUser } from "./BaseUser";
-import { iFunnyError } from "../errors/iFunnyError";
-import Feed from "./Feed";
-import type { Client } from "../client/Client";
+import { BaseUser } from "./BaseUser.ts";
+import { iFunnyError } from "../errors/iFunnyError.ts";
+import Feed from "./Feed.ts";
+import type { Client } from "../client/Client.ts";
 
 /**
  * Represents a user on iFunny

@@ -15,6 +15,7 @@ tsconfig.tsbuildinfo
 
 # NPM
 node_modules/
+npm/
 
 # Devenv
 .devenv*

@@ -1,14 +1,17 @@
-import { DefaultBasicAuthConfig } from "./Constants";
+import { DefaultBasicAuthConfig } from "./Constants.ts";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import crypto from "crypto";
-import type { BasicAuthConfig } from "./Types";
-import type { Client } from "../client/Client";
-import type { PaginateConfig } from "../structures/BaseFeed";
+import type { BasicAuthConfig } from "./Types.ts";
+import type { Client } from "../client/Client.ts";
+import type { PaginateConfig } from "../structures/BaseFeed.ts";
 import type {
     RESTAPIErrorResponse,
     RESTAPIItems,
     RESTAPISuccessResponse,
 } from "@ifunny/ifunny-api-types";
+import { Buffer } from "node:buffer";
+import { URLSearchParams } from "node:url";
+import { setTimeout } from "node:timers";
 
 /**
  * Utility class used by the Client
@@ -154,23 +157,22 @@ export class Util {
         }
 
         // Request config
-        const config: AxiosRequestConfig =
-            method === "GET"
-                ? { method, url, params: data }
-                : { method, url, data };
+        const config: AxiosRequestConfig = method === "GET"
+            ? { method, url, params: data }
+            : { method, url, data };
 
         do {
             interface Items {
                 [key: string]: RESTAPIItems<T>;
             }
-            const response =
-                await this.#client.instance.request<
-                    RESTAPISuccessResponse<Items>
-                >(config);
+            const response = await this.#client.instance.request<
+                RESTAPISuccessResponse<Items>
+            >(config);
 
             const items = response.data?.data?.[key]?.items;
-            if (!Array.isArray(items))
+            if (!Array.isArray(items)) {
                 throw new Error(`paginate: items is not an array`);
+            }
 
             // Set next param
             hasNext = response.data?.data?.[key]?.paging?.hasNext ?? false;
@@ -199,7 +201,7 @@ export class Util {
      * @returns A promise that resolves after the given amount of time
      */
     public async sleep(ms: number): Promise<void> {
-        return new Promise((resolve) => setTimeout(resolve, ms));
+        return await new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     /**

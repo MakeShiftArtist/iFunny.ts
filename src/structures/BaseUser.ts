@@ -1,5 +1,4 @@
 import {
-    Endpoints,
     type APINickColor,
     type APIProfilePhoto,
     type APIUserAllSocials,
@@ -7,11 +6,12 @@ import {
     type APIUserMessagePrivacy,
     type APIUserProfile,
     type APIUserProfileNums,
+    Endpoints,
 } from "@ifunny/ifunny-api-types";
-import { BanSmall } from "./BanSmall";
-import { Base } from "./Base";
-import { MemeExperience } from "./MemeExperience";
-import type { Client } from "../client/Client";
+import { BanSmall } from "./BanSmall.ts";
+import { Base } from "./Base.ts";
+import { MemeExperience } from "./MemeExperience.ts";
+import type { Client } from "../client/Client.ts";
 
 /**
  * Base User class that user class will inherit from.

@@ -34,11 +34,9 @@ export interface JSONObject {
  * @template A - The type to select if T is true.
  * @template B - The type to select if T is false.
  */
-export type If<T extends boolean, A, B = null> = T extends true
-    ? A
-    : T extends false
-      ? B
-      : A | B;
+export type If<T extends boolean, A, B = null> = T extends true ? A
+    : T extends false ? B
+    : A | B;
 
 export type BasicAuthLength = 112 | 156;
 

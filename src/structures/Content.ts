@@ -1,15 +1,15 @@
 import {
-    Endpoints,
+    APIComment,
     type APIContent,
     type APIFeedFrom,
+    Endpoints,
     type RESTAPIContentSmileResponse,
     type RESTAPIContentSmileUsersResponse,
-    APIComment,
 } from "@ifunny/ifunny-api-types";
-import { BaseContent } from "./BaseContent";
-import { SimpleUser } from "./SimpleUser";
-import { Comment } from "./Comment";
-import type { Client } from "../client/Client";
+import { BaseContent } from "./BaseContent.ts";
+import { SimpleUser } from "./SimpleUser.ts";
+import { Comment } from "./Comment.ts";
+import type { Client } from "../client/Client.ts";
 import type { URLSearchParams } from "url";
 
 export type ModifyParams =
@@ -41,12 +41,13 @@ export class Content extends BaseContent {
         type: "smiles" | "unsmiles",
         params?: ModifyParams,
     ): Promise<boolean> {
-        const response =
-            await this.client.instance.request<RESTAPIContentSmileResponse>({
-                method,
-                url: Endpoints[type](this.id),
-                params,
-            });
+        const response = await this.client.instance.request<
+            RESTAPIContentSmileResponse
+        >({
+            method,
+            url: Endpoints[type](this.id),
+            params,
+        });
 
         // Update payload
         this.payload.num.smiles = response.data.data.num_smiles;
@@ -61,12 +62,16 @@ export class Content extends BaseContent {
      * @param limit How many users to return per request (Default: `30`)
      */
     public async *smiles(limit: number = 30) {
-        for await (const data of this.client.util.paginate<RESTAPIContentSmileUsersResponse>(
-            Endpoints.smiles(this.id),
-            "users",
-            { limit },
-            true,
-        )) {
+        for await (
+            const data of this.client.util.paginate<
+                RESTAPIContentSmileUsersResponse
+            >(
+                Endpoints.smiles(this.id),
+                "users",
+                { limit },
+                true,
+            )
+        ) {
             for (const user of data.data.users.items) {
                 this.payload.num.smiles = data.data.smiles_count;
                 this.payload.num.guest_smiles = data.data.guest_smiles_count;
@@ -136,11 +141,12 @@ export class Content extends BaseContent {
             };
         };
 
-        const response =
-            await this.client.instance.request<ContentDeletionResponse>({
-                method: "DELETE",
-                url: Endpoints.content(this.id),
-            });
+        const response = await this.client.instance.request<
+            ContentDeletionResponse
+        >({
+            method: "DELETE",
+            url: Endpoints.content(this.id),
+        });
         // console.log(response.data);
         return response.data.status === 200;
     }
@@ -151,14 +157,16 @@ export class Content extends BaseContent {
      * @returns AsyncGenerator<Comment>
      */
     async *comments(limit: number = 30): AsyncGenerator<Comment> {
-        for await (const comment of this.client.util.paginate<APIComment>(
-            Endpoints.comments(this.id),
-            "comments",
-            {
-                limit,
-            },
-            false,
-        )) {
+        for await (
+            const comment of this.client.util.paginate<APIComment>(
+                Endpoints.comments(this.id),
+                "comments",
+                {
+                    limit,
+                },
+                false,
+            )
+        ) {
             yield new Comment(this, comment);
         }
     }

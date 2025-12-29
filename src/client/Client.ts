@@ -5,18 +5,18 @@ import {
     RESTAPISignUpSuccess,
     RESTAPISuccessResponse as Success,
 } from "@ifunny/ifunny-api-types";
-import { BaseClient } from "./BaseClient";
-import { CaptchaError } from "../errors/CaptchaError";
-import { ClientOptions } from "./BaseClient";
-import { ContentManager } from "../managers/ContentManager";
-import { FeedManager } from "../managers/FeedManager";
-import { If } from "../utils/Types";
-import { iFunnyError } from "../errors/iFunnyError";
-import { UserManager } from "../managers/UserManager";
-import { Util } from "../utils/Util";
+import { BaseClient } from "./BaseClient.ts";
+import { CaptchaError } from "../errors/CaptchaError.ts";
+import { ClientOptions } from "./BaseClient.ts";
+import { ContentManager } from "../managers/ContentManager.ts";
+import { FeedManager } from "../managers/FeedManager.ts";
+import { If } from "../utils/Types.ts";
+import { iFunnyError } from "../errors/iFunnyError.ts";
+import { UserManager } from "../managers/UserManager.ts";
+import { Util } from "../utils/Util.ts";
 import FormData from "form-data";
-import { AppManager } from "../managers/AppManager";
-import User from "../structures/User";
+import { AppManager } from "../managers/AppManager.ts";
+import User from "../structures/User.ts";
 
 /**
  * Method params for Client#signUp()
@@ -94,8 +94,9 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
         this.instance.interceptors.response.use(
             (onSuccess) => onSuccess,
             (onFail) => {
-                if (!this.util.isAxiosError(onFail) || !onFail.response)
+                if (!this.util.isAxiosError(onFail) || !onFail.response) {
                     throw onFail;
+                }
                 if (!this.util.isAPIError(onFail.response.data)) throw onFail;
                 if (iFunnyError.isRawCaptchaError(this, onFail.response.data)) {
                     throw new CaptchaError(this, onFail.response.data);

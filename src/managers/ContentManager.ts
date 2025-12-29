@@ -5,10 +5,10 @@ import {
     RESTAPIContentResponse,
     RESTAPIStatusCode,
 } from "@ifunny/ifunny-api-types";
-import { CachedManager } from "./CachedManager";
-import { Client } from "../client/Client";
-import { Content } from "../structures/Content";
-import { iFunnyError } from "../errors/iFunnyError";
+import { CachedManager } from "./CachedManager.ts";
+import { Client } from "../client/Client.ts";
+import { Content } from "../structures/Content.ts";
+import { iFunnyError } from "../errors/iFunnyError.ts";
 import { ICachingOptions } from "node-ts-cache";
 
 /**
@@ -42,10 +42,11 @@ export class ContentManager extends CachedManager<typeof Content> {
 
             const id = this.resolveId(contentOrId);
 
-            const { data } =
-                await this.client.instance.get<RESTAPIContentResponse>(
-                    `content/${id}`,
-                );
+            const { data } = await this.client.instance.get<
+                RESTAPIContentResponse
+            >(
+                `content/${id}`,
+            );
 
             const content = new Content(this.client, data.data);
             this.cache.set(content.id, content, this.cache.config);
@@ -71,14 +72,14 @@ export class ContentManager extends CachedManager<typeof Content> {
     ): Promise<boolean> {
         const items = Array.isArray(content)
             ? content
-                  .map((c) => {
-                      if (typeof c === "string") return c;
-                      return c.id;
-                  })
-                  .join(",")
+                .map((c) => {
+                    if (typeof c === "string") return c;
+                    return c.id;
+                })
+                .join(",")
             : content instanceof Content
-              ? content.id
-              : content;
+            ? content.id
+            : content;
 
         const response = await this.client.instance.request<RESTAPIStatusCode>({
             method: "PUT",

@@ -6,7 +6,7 @@ import {
     RESTAPICountersResponse,
     RESTAPISuccessResponse,
 } from "@ifunny/ifunny-api-types";
-import Client from "../client/Client";
+import Client from "../client/Client.ts";
 
 /**
  * Manages misc data from the app.

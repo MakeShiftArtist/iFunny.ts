@@ -1,23 +1,23 @@
 // * "Root" classes (starting points)
-export { BaseClient } from "./client/BaseClient";
-export { Client, default } from "./client/Client";
+export { BaseClient } from "./client/BaseClient.ts";
+export { Client, default } from "./client/Client.ts";
 
 // ? Structs
-export { Ban } from "./structures/Ban";
-export { BanSmall } from "./structures/BanSmall";
-export { Comment } from "./structures/Comment";
-export { Content } from "./structures/Content";
-export { Creator } from "./structures/Creator";
-export { Feed } from "./structures/Feed";
-export { MemeExperience } from "./structures/MemeExperience";
-export { News } from "./structures/News";
-export { SimpleUser } from "./structures/SimpleUser";
-export { Thumbnail } from "./structures/Thumbnail";
-export { User } from "./structures/User";
+export { Ban } from "./structures/Ban.ts";
+export { BanSmall } from "./structures/BanSmall.ts";
+export { Comment } from "./structures/Comment.ts";
+export { Content } from "./structures/Content.ts";
+export { Creator } from "./structures/Creator.ts";
+export { Feed } from "./structures/Feed.ts";
+export { MemeExperience } from "./structures/MemeExperience.ts";
+export { News } from "./structures/News.ts";
+export { SimpleUser } from "./structures/SimpleUser.ts";
+export { Thumbnail } from "./structures/Thumbnail.ts";
+export { User } from "./structures/User.ts";
 
 // ? Sub Modules
-export * as Managers from "./managers/mod";
-export { Util, Types, Constants } from "./utils/mod";
+export * as Managers from "./managers/mod.ts";
+export { Constants, Types, Util } from "./utils/mod.ts";
 
 // ! Errors
-export * as Errors from "./errors/mod";
+export * as Errors from "./errors/mod.ts";

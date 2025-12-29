@@ -1,13 +1,13 @@
 import {
-    Endpoints,
     type APICommentAuthor,
     type APIProfilePhoto,
     type APISimpleUser,
     type APIUserNums,
+    Endpoints,
 } from "@ifunny/ifunny-api-types";
-import { Base } from "./Base";
-import type { Client } from "../client/Client";
-import type { User } from "./User";
+import { Base } from "./Base.ts";
+import type { Client } from "../client/Client.ts";
+import type { User } from "./User.ts";
 
 /**
  * Simple user class, typically found in pagination

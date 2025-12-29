@@ -1,7 +1,7 @@
-import { Base } from "./Base";
+import { Base } from "./Base.ts";
 import { CacheContainer, ICachingOptions } from "node-ts-cache";
 import { MemoryStorage } from "node-ts-cache-storage-memory";
-import type { Client } from "../client/Client";
+import type { Client } from "../client/Client.ts";
 
 export type DataStructure = new (
     client: Client,

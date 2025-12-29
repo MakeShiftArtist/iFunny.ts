@@ -4,8 +4,8 @@ import {
     RESTAPIErrorResponse,
     RESTAPIiFunnyError,
 } from "@ifunny/ifunny-api-types";
-import { CaptchaError } from "./CaptchaError";
-import { Client } from "../client/Client";
+import { CaptchaError } from "./CaptchaError.ts";
+import { Client } from "../client/Client.ts";
 
 /**
  * A class representing an error thrown by iFunny.ts.
@@ -17,7 +17,7 @@ export class iFunnyError<
 > extends Error {
     #error: APIError;
     readonly #client: Client;
-
+    readonly #message?: string;
     /**
      * @param client Client instance attached to the Error
      * @param error The error thrown by the API
@@ -26,11 +26,11 @@ export class iFunnyError<
         super(error.error_description);
         this.#client = client;
         if (iFunnyError.isRawCaptchaError(client, error)) {
-            this.message += ": " + error.data.captcha_url;
+            this.#message += ": " + error.data.captcha_url;
         }
         this.#error = error;
-
-        Error.captureStackTrace?.(this, iFunnyError);
+        Error;
+        // Error.captureStackTrace?.(this, iFunnyError);
     }
 
     /**
@@ -52,6 +52,10 @@ export class iFunnyError<
      */
     public get status() {
         return this.raw.status;
+    }
+
+    public override get message() {
+        return this.#message || super.message;
     }
 
     /**

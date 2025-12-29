@@ -1,8 +1,8 @@
 {
   pkgs,
-  lib,
-  config,
-  inputs,
+  # lib,
+  # config,
+  # inputs,
   ...
 }:
 
@@ -14,7 +14,7 @@
   # https://devenv.sh/packages/
   packages = [
     pkgs.git
-    pkgs.nixfmt-rfc-style
+    pkgs.nixfmt-tree
   ];
 
   # https://devenv.sh/languages/
@@ -26,7 +26,11 @@
     enable = true;
     npm.enable = true;
     package = pkgs.nodejs_25;
-    bun.enable = true;
+    # bun.enable = true;
+  };
+
+  languages.deno = {
+    enable = true;
   };
 
   # https://devenv.sh/processes/

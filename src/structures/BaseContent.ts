@@ -1,6 +1,4 @@
 import {
-    ContentType,
-    Endpoints,
     type APIContent,
     type APIContentCopyright,
     type APIContentData,
@@ -12,11 +10,13 @@ import {
     type APIContentType,
     type APIContentVisibility,
     type APIFeedFrom,
+    ContentType,
+    Endpoints,
     type Size,
 } from "@ifunny/ifunny-api-types";
-import { Base } from "./Base";
-import { Creator } from "./Creator";
-import type { Client } from "../client/Client";
+import { Base } from "./Base.ts";
+import { Creator } from "./Creator.ts";
+import type { Client } from "../client/Client.ts";
 
 /**
  * The Base Content that all Content Types will extend

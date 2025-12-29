@@ -3,9 +3,11 @@
 ![License](https://img.shields.io/npm/l/ifunny.ts)
 ![npm](https://img.shields.io/npm/v/ifunny.ts)
 
-The go-to iFunny API wrapper library written in TypeScript! Reverse engineered from the ground up, taking heavy inspiration from discord.js!
+The go-to iFunny API wrapper library written in TypeScript! Reverse engineered
+from the ground up, taking heavy inspiration from discord.js!
 
-Full documentation can be found [here](https://makeshiftartist.github.io/iFunny.ts/)
+Full documentation can be found
+[here](https://makeshiftartist.github.io/iFunny.ts/)
 
 ## Authors
 
@@ -13,18 +15,21 @@ Full documentation can be found [here](https://makeshiftartist.github.io/iFunny.
 
 ## Quick Start Guide
 
-While the iFunny client is able to do quite a bit without logging in, to use the full feature set you'll want to get authorization.
+While the iFunny client is able to do quite a bit without logging in, to use the
+full feature set you'll want to get authorization.
 
 There are 2 ways to get a basic token and a bearer token
 
 1. Use a packet sniffer while already logged in to iFunny.
 2. Use the iFunny.ts client to login and generate new basic and bearer tokens
 
-I won't be walking you through the first option as that is a lengthy process of setting up and configuring.
+I won't be walking you through the first option as that is a lengthy process of
+setting up and configuring.
 
 Instead, I'll walk you through using the custom Client.
 
-If you don't want to write any code, you can clone the repo, and run the "login" script
+If you don't want to write any code, you can clone the repo, and run the "login"
+script
 
 ```sh
 git clone https://github.com/MakeShiftArtist/iFunny.ts.git
@@ -51,10 +56,10 @@ Human verification is required: https://ifunny.co/captcha/c272fd81558bcf.2486125
 Open the link above in a browser, solve the captcha, and run the script again.
 ```
 
-Priming the basic token takes 15 seconds to complete.
-The long string of characters after "Basic Primed!" is your Basic Token.
-Save that and set it for the `BASIC` variable in `./login.ts`
-Once that's done, solve the captcha and run the script again.
+Priming the basic token takes 15 seconds to complete. The long string of
+characters after "Basic Primed!" is your Basic Token. Save that and set it for
+the `BASIC` variable in `./login.ts` Once that's done, solve the captcha and run
+the script again.
 
 ```sh
 npm run login
@@ -72,15 +77,15 @@ Basic Token: RTJCM0FENzlCMkNCNDgyOEFBNTc2QjIyNEEyREQ4MDFfTXNPSUozOVEyODpmOTMyMjE
 Bearer Token: 0d8527df847cb15b1c808422a7b150951fe7452bdb0a04d0c2bf920d2a302466
 ```
 
-Once you see these, you'll want to save these somewhere secure.
-NEVER SHARE THESE WITH ANYONE. A bearer token grants full control over your account.
+Once you see these, you'll want to save these somewhere secure. NEVER SHARE
+THESE WITH ANYONE. A bearer token grants full control over your account.
 
 ## Example Usage
 
 Install iFunny.ts
 
 ```powershell
-  npm install ifunny.ts
+npm install ifunny.ts
 ```
 
 ```ts

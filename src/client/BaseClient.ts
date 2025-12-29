@@ -2,11 +2,11 @@ import { Agent } from "https";
 import {
     APIBase,
     APIVersion,
-    DefaultHeaders,
+    DefaultBasicTokenLength,
     DefaultClientId,
     DefaultClientSecret,
-    DefaultBasicTokenLength,
-} from "../utils/Constants";
+    DefaultHeaders,
+} from "../utils/Constants.ts";
 import { APIClientUser as ClientPayload } from "@ifunny/ifunny-api-types";
 import { EventEmitter } from "eventemitter3";
 import { ICachingOptions } from "node-ts-cache";

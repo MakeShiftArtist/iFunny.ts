@@ -1,11 +1,11 @@
 import {
-    Endpoints,
     type APIBanSmall,
     type APIBanType,
+    Endpoints,
 } from "@ifunny/ifunny-api-types";
-import { Base } from "./Base";
-import { User } from "./User";
-import type { BaseUser } from "./BaseUser";
+import { Base } from "./Base.ts";
+import { User } from "./User.ts";
+import type { BaseUser } from "./BaseUser.ts";
 
 /**
  * Represents a Ban on iFunny
@@ -23,8 +23,9 @@ export class BanSmall extends Base<APIBanSmall> {
      */
     public constructor(user: User | BaseUser, payload: APIBanSmall) {
         super(user.client, payload);
-        this.#user =
-            user instanceof User ? user : new User(user.client, user.payload);
+        this.#user = user instanceof User
+            ? user
+            : new User(user.client, user.payload);
         this.payload = payload;
         this.endpointUrl = Endpoints.bans(this.#user.id, this.id);
     }

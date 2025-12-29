@@ -1,4 +1,4 @@
-import type { Client } from "../client/Client";
+import type { Client } from "../client/Client.ts";
 
 /**
  * The type of iFunny feed.

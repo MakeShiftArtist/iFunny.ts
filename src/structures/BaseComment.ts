@@ -1,14 +1,14 @@
 import {
-    Endpoints,
     type APIComment,
     type APICommentNum,
     type APICommentState,
+    Endpoints,
 } from "@ifunny/ifunny-api-types";
-import { Base } from "./Base";
-import { Comment } from "./Comment";
-import { SimpleUser } from "./SimpleUser";
-import { Thumbnail } from "./Thumbnail";
-import type { Content } from "./Content";
+import { Base } from "./Base.ts";
+import { Comment } from "./Comment.ts";
+import { SimpleUser } from "./SimpleUser.ts";
+import { Thumbnail } from "./Thumbnail.ts";
+import type { Content } from "./Content.ts";
 
 /**
  * Represents a BaseComment on iFunny

@@ -4,11 +4,11 @@ import {
     IFUNNY_ERRORS,
     RESTAPISuccessResponse as Success,
 } from "@ifunny/ifunny-api-types";
-import { CachedManager } from "./CachedManager";
-import { Client } from "../client/Client";
+import { CachedManager } from "./CachedManager.ts";
+import { Client } from "../client/Client.ts";
 import { ICachingOptions } from "node-ts-cache";
-import { iFunnyError } from "../errors/iFunnyError";
-import { User } from "../structures/User";
+import { iFunnyError } from "../errors/iFunnyError.ts";
+import { User } from "../structures/User.ts";
 
 /**
  * Manages iFunny Users
@@ -73,12 +73,13 @@ export class UserManager extends CachedManager<typeof User> {
             let user = await this.resolve(idOrNick);
             if (cached && user) return user;
 
-            const { data } =
-                await this.client.instance.request<Success<APIUserProfile> | null>(
-                    {
-                        url: Endpoints.user(idOrNick, byNick),
-                    },
-                );
+            const { data } = await this.client.instance.request<
+                Success<APIUserProfile> | null
+            >(
+                {
+                    url: Endpoints.user(idOrNick, byNick),
+                },
+            );
 
             if (!data) return data;
 
