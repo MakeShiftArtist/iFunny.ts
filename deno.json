@@ -1,4 +1,5 @@
 {
+    "name": "@Open-iFunny/iFunny.ts",
     "version": "0.10.0",
     "exclude": ["dist/", "npm/", ".devenv/", "docs/"],
     "tasks": {
