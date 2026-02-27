@@ -3,17 +3,17 @@
   "specifiers": {
     "jsr:@david/code-block-writer@^13.0.3": "13.0.3",
     "jsr:@deno/dnt@~0.42.3": "0.42.3",
-    "jsr:@std/assert@^1.0.16": "1.0.16",
-    "jsr:@std/fmt@1": "1.0.8",
-    "jsr:@std/fs@1": "1.0.21",
+    "jsr:@std/assert@^1.0.19": "1.0.19",
+    "jsr:@std/fmt@1": "1.0.9",
+    "jsr:@std/fs@1": "1.0.23",
     "jsr:@std/internal@^1.0.12": "1.0.12",
     "jsr:@std/path@1": "1.1.4",
     "jsr:@std/path@^1.1.4": "1.1.4",
     "jsr:@ts-morph/bootstrap@0.27": "0.27.0",
     "jsr:@ts-morph/common@0.27": "0.27.0",
     "npm:@ifunny/ifunny-api-types@^1.0.4": "1.0.4",
-    "npm:axios@^1.13.2": "1.13.2",
-    "npm:eventemitter3@^5.0.1": "5.0.1",
+    "npm:axios@^1.13.5": "1.13.5",
+    "npm:eventemitter3@^5.0.4": "5.0.4",
     "npm:form-data@^4.0.5": "4.0.5",
     "npm:node-ts-cache-storage-memory@^4.4.0": "4.4.0",
     "npm:node-ts-cache@^4.4.0": "4.4.0",
@@ -33,17 +33,17 @@
         "jsr:@ts-morph/bootstrap"
       ]
     },
-    "@std/assert@1.0.16": {
-      "integrity": "6a7272ed1eaa77defe76e5ff63ca705d9c495077e2d5fd0126d2b53fc5bd6532",
+    "@std/assert@1.0.19": {
+      "integrity": "eaada96ee120cb980bc47e040f82814d786fe8162ecc53c91d8df60b8755991e",
       "dependencies": [
         "jsr:@std/internal"
       ]
     },
-    "@std/fmt@1.0.8": {
-      "integrity": "71e1fc498787e4434d213647a6e43e794af4fd393ef8f52062246e06f7e372b7"
+    "@std/fmt@1.0.9": {
+      "integrity": "2487343e8899fb2be5d0e3d35013e54477ada198854e52dd05ed0422eddcabe0"
     },
-    "@std/fs@1.0.21": {
-      "integrity": "d720fe1056d78d43065a4d6e0eeb2b19f34adb8a0bc7caf3a4dbf1d4178252cd",
+    "@std/fs@1.0.23": {
+      "integrity": "3ecbae4ce4fee03b180fa710caff36bb5adb66631c46a6460aaad49515565a37",
       "dependencies": [
         "jsr:@std/internal",
         "jsr:@std/path@^1.1.4"
@@ -79,8 +79,8 @@
     "asynckit@0.4.0": {
       "integrity": "sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q=="
     },
-    "axios@1.13.2": {
-      "integrity": "sha512-VPk9ebNqPcy5lRGuSlKx752IlDatOjT9paPlm8A7yOuW2Fbvp4X3JznJtT4f0GzGLLiWE9W8onz51SqLYwzGaA==",
+    "axios@1.13.5": {
+      "integrity": "sha512-cz4ur7Vb0xS4/KUN0tPWe44eqxrIu31me+fbang3ijiNscE129POzipJJA6zniq2C/Z6sJCjMimjS8Lc/GAs8Q==",
       "dependencies": [
         "follow-redirects",
         "form-data",
@@ -144,8 +144,8 @@
         "hasown"
       ]
     },
-    "eventemitter3@5.0.1": {
-      "integrity": "sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA=="
+    "eventemitter3@5.0.4": {
+      "integrity": "sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw=="
     },
     "follow-redirects@1.15.11": {
       "integrity": "sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ=="
@@ -264,10 +264,10 @@
   "workspace": {
     "dependencies": [
       "jsr:@deno/dnt@~0.42.3",
-      "jsr:@std/assert@^1.0.16",
+      "jsr:@std/assert@^1.0.19",
       "npm:@ifunny/ifunny-api-types@^1.0.4",
-      "npm:axios@^1.13.2",
-      "npm:eventemitter3@^5.0.1",
+      "npm:axios@^1.13.5",
+      "npm:eventemitter3@^5.0.4",
       "npm:form-data@^4.0.5",
       "npm:node-ts-cache-storage-memory@^4.4.0",
       "npm:node-ts-cache@^4.4.0",
