@@ -16,7 +16,7 @@ await build({
     },
     package: {
         // package.json properties
-        name: "iFunny.ts",
+        name: "ifunny.ts",
         version: pkg.version,
         description: "An iFunny API wrapper written in TypeScript",
         license: "CC0-1.0",
