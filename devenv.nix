@@ -20,6 +20,11 @@
   languages.javascript.npm.enable = true;
   languages.javascript.enable = true;
 
+  scripts."build:npm".exec = ''
+    deno clean
+    deno run -A ./scripts/build_npm.ts
+  '';
+
   enterTest = ''
     echo "Running tests"
     git --version | grep --color=auto "${pkgs.git.version}"
