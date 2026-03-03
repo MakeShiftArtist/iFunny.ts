@@ -3,7 +3,6 @@
   "specifiers": {
     "jsr:@david/code-block-writer@^13.0.3": "13.0.3",
     "jsr:@deno/dnt@~0.42.3": "0.42.3",
-    "jsr:@std/assert@^1.0.19": "1.0.19",
     "jsr:@std/fmt@1": "1.0.9",
     "jsr:@std/fs@1": "1.0.23",
     "jsr:@std/internal@^1.0.12": "1.0.12",
@@ -12,12 +11,11 @@
     "jsr:@ts-morph/bootstrap@0.27": "0.27.0",
     "jsr:@ts-morph/common@0.27": "0.27.0",
     "npm:@ifunny/ifunny-api-types@^1.0.4": "1.0.4",
-    "npm:axios@^1.13.5": "1.13.5",
+    "npm:axios@^1.13.6": "1.13.6",
     "npm:eventemitter3@^5.0.4": "5.0.4",
     "npm:form-data@^4.0.5": "4.0.5",
     "npm:node-ts-cache-storage-memory@^4.4.0": "4.4.0",
-    "npm:node-ts-cache@^4.4.0": "4.4.0",
-    "npm:readline-sync@^1.4.10": "1.4.10"
+    "npm:node-ts-cache@^4.4.0": "4.4.0"
   },
   "jsr": {
     "@david/code-block-writer@13.0.3": {
@@ -31,12 +29,6 @@
         "jsr:@std/fs",
         "jsr:@std/path@1",
         "jsr:@ts-morph/bootstrap"
-      ]
-    },
-    "@std/assert@1.0.19": {
-      "integrity": "eaada96ee120cb980bc47e040f82814d786fe8162ecc53c91d8df60b8755991e",
-      "dependencies": [
-        "jsr:@std/internal"
       ]
     },
     "@std/fmt@1.0.9": {
@@ -79,8 +71,8 @@
     "asynckit@0.4.0": {
       "integrity": "sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q=="
     },
-    "axios@1.13.5": {
-      "integrity": "sha512-cz4ur7Vb0xS4/KUN0tPWe44eqxrIu31me+fbang3ijiNscE129POzipJJA6zniq2C/Z6sJCjMimjS8Lc/GAs8Q==",
+    "axios@1.13.6": {
+      "integrity": "sha512-ChTCHMouEe2kn713WHbQGcuYrr6fXTBiu460OTwWrWob16g1bXn4vtz07Ope7ewMozJAnEquLk5lWQWtBig9DQ==",
       "dependencies": [
         "follow-redirects",
         "form-data",
@@ -236,9 +228,6 @@
     "proxy-from-env@1.1.0": {
       "integrity": "sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg=="
     },
-    "readline-sync@1.4.10": {
-      "integrity": "sha512-gNva8/6UAe8QYepIQH/jQ2qn91Qj0B9sYjMBBs3QOB8F2CXcKgLxQaJRP76sWVRQt+QU+8fAkCbCvjjMFu7Ycw=="
-    },
     "redis-commands@1.7.0": {
       "integrity": "sha512-nJWqw3bTFy21hX/CPKHth6sfhZbdiHP6bTawSgQBlKOVRG7EZkfHbbHwQJnrE4vsQf0CMNE+3gJ4Fmm16vdVlQ=="
     },
@@ -264,14 +253,12 @@
   "workspace": {
     "dependencies": [
       "jsr:@deno/dnt@~0.42.3",
-      "jsr:@std/assert@^1.0.19",
       "npm:@ifunny/ifunny-api-types@^1.0.4",
-      "npm:axios@^1.13.5",
+      "npm:axios@^1.13.6",
       "npm:eventemitter3@^5.0.4",
       "npm:form-data@^4.0.5",
       "npm:node-ts-cache-storage-memory@^4.4.0",
-      "npm:node-ts-cache@^4.4.0",
-      "npm:readline-sync@^1.4.10"
+      "npm:node-ts-cache@^4.4.0"
     ]
   }
 }

@@ -2,20 +2,18 @@
     "name": "@Open-iFunny/iFunny.ts",
     "version": "0.10.0",
     "exports": "./src/index.ts",
-    "exclude": ["dist/", "npm/", ".devenv/", "docs/"],
+    "exclude": ["npm/", "./.devenv/", "docs/", "./scripts/"],
     "tasks": {
         "dev": "deno run --watch src/index.ts"
     },
     "imports": {
         "@deno/dnt": "jsr:@deno/dnt@^0.42.3",
         "@ifunny/ifunny-api-types": "npm:@ifunny/ifunny-api-types@^1.0.4",
-        "@std/assert": "jsr:@std/assert@^1.0.19",
-        "axios": "npm:axios@^1.13.5",
+        "axios": "npm:axios@^1.13.6",
         "eventemitter3": "npm:eventemitter3@^5.0.4",
         "form-data": "npm:form-data@^4.0.5",
         "node-ts-cache": "npm:node-ts-cache@^4.4.0",
-        "node-ts-cache-storage-memory": "npm:node-ts-cache-storage-memory@^4.4.0",
-        "readline-sync": "npm:readline-sync@^1.4.10"
+        "node-ts-cache-storage-memory": "npm:node-ts-cache-storage-memory@^4.4.0"
     },
     "fmt": {
         "useTabs": false,
