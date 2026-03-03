@@ -1,61 +1,25 @@
 {
   pkgs,
-  # lib,
-  # config,
-  # inputs,
+  lib,
+  config,
+  inputs,
   ...
 }:
 
 {
-  # Set environment variables here
-  # https://devenv.sh/basics/
-  # env.GREET = "devenv";
 
   # https://devenv.sh/packages/
   packages = [
     pkgs.git
+    pkgs.nixfmt
     pkgs.nixfmt-tree
   ];
 
-  # https://devenv.sh/languages/
-  # languages.rust.enable = true;
-  # languages.deno.enable = true;
   languages.nix.enable = true;
+  languages.deno.enable = true;
+  languages.javascript.npm.enable = true;
+  languages.javascript.enable = true;
 
-  languages.javascript = {
-    enable = true;
-    npm.enable = true;
-    package = pkgs.nodejs_25;
-    # bun.enable = true;
-  };
-
-  languages.deno = {
-    enable = true;
-  };
-
-  # https://devenv.sh/processes/
-  # processes.dev.exec = "${lib.getExe pkgs.watchexec} -n -- ls -la";
-
-  # https://devenv.sh/services/
-  # services.postgres.enable = true;
-
-  # https://devenv.sh/scripts/
-  # scripts.hello.exec = ''
-  #   echo hello from $GREET
-  # '';
-
-  # https://devenv.sh/basics/
-  enterShell = ''
-    git --version # Use packages
-  '';
-
-  # https://devenv.sh/tasks/
-  # tasks = {
-  #   "myproj:setup".exec = "mytool build";
-  #   "devenv:enterShell".after = [ "myproj:setup" ];
-  # };
-
-  # https://devenv.sh/tests/
   enterTest = ''
     echo "Running tests"
     git --version | grep --color=auto "${pkgs.git.version}"
