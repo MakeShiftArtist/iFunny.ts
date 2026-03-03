@@ -41,9 +41,7 @@ git clone https://github.com/MakeShiftArtist/iFunny.ts.git
 
 cd iFunny.ts
 
-npm i
-
-npm run login
+deno run -A ./scripts/login.ts
 ```
 
 This will prompt you to enter your username and password
