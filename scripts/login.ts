@@ -1,16 +1,19 @@
-import Client, { Errors } from "./src/index.ts"; // or import from "ifunny.ts";
-import rl from "readline-sync";
-import process from "node:process";
+import Client, { Errors } from "../src/index.ts"; // or import from "ifunny.ts";
+import readline from "node:readline";
+const { stdin: input, stdout: output } = await import("node:process");
+
+const rl = readline.promises.createInterface({ input, output });
 
 // * After solving the captcha, replace null with your basic token
-const BASIC: string | null = null; // ! Failing to replace this value will result in another captcha error
+const BASIC: string | null = Deno.args[1] || Deno.env.get("IFUNNY_BASIC") ||
+    null; // ! Failing to replace this value will result in another captcha error
 
 /**
  * Prompts the user for their username
  * @returns The username
  */
-function getUsername(): string {
-    return rl.question("Enter your iFunny username (email address): ");
+async function getUsername(): Promise<string> {
+    return await rl.question("Enter your iFunny username (email address): ");
 }
 
 /**
@@ -18,18 +21,14 @@ function getUsername(): string {
  * This function is called recursively until the user enters the same password twice
  * @returns The password
  */
-function getPassword() {
-    const pass1 = rl.question("Enter your iFunny password: ", {
-        hideEchoBack: true,
-    });
+async function getPassword() {
+    const pass1 = await rl.question("Enter your iFunny password: ");
 
-    const pass2 = rl.question("Re-enter your iFunny password: ", {
-        hideEchoBack: true,
-    });
+    const pass2 = await rl.question("Re-enter your iFunny password: ");
 
     if (pass1 !== pass2) {
         console.log("Passwords do not match!");
-        getPassword();
+        await getPassword();
     }
     return pass1;
 }
@@ -37,8 +36,8 @@ function getPassword() {
 async function main() {
     const client = new Client({ basic: BASIC });
 
-    const username = getUsername();
-    const password = getPassword();
+    const username = await getUsername();
+    const password = await getPassword();
 
     // This primes a basic token before attempting to login
     if (BASIC === null) {
@@ -56,10 +55,11 @@ async function main() {
         if (error instanceof Errors.CaptchaError) {
             console.log("Captcha error!");
             console.log(error.message);
+            console.log(error.captchaUrl);
             console.log(
                 "Open the link above in a browser, solve the captcha, replace null with your basic token, and run the script again.",
             );
-            process.exit(1);
+            Deno.exit(1);
         } else throw error;
     }
 
@@ -67,9 +67,10 @@ async function main() {
         console.log("Logged in successfully!");
         console.log("Basic Token: " + client.basic);
         console.log("Bearer Token: " + client.bearer);
+        Deno.exit(0);
     } else {
         console.log("Login failed!");
-        process.exit(1);
+        Deno.exit(1);
     }
 }
 

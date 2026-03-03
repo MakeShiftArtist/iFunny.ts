@@ -31,6 +31,11 @@ Instead, I'll walk you through using the custom Client.
 If you don't want to write any code, you can clone the repo, and run the "login"
 script
 
+> [!IMPORTANT]
+> The login script that comes with this is likely to be replaced by
+> [ifunny-auth](https://github.com/Open-iFunny/ifunny-auth) in the future, and
+> we recommend using that instead
+
 ```sh
 git clone https://github.com/MakeShiftArtist/iFunny.ts.git
 
@@ -84,7 +89,7 @@ THESE WITH ANYONE. A bearer token grants full control over your account.
 
 Install iFunny.ts
 
-```powershell
+```sh
 npm install ifunny.ts
 ```
 
