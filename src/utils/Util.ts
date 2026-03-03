@@ -1,6 +1,10 @@
 import { DefaultBasicAuthConfig } from "./Constants.ts";
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import crypto from "crypto";
+import axios, {
+    type AxiosError,
+    type AxiosRequestConfig,
+    type AxiosResponse,
+} from "axios";
+import crypto from "node:crypto";
 import type { BasicAuthConfig } from "./Types.ts";
 import type { Client } from "../client/Client.ts";
 import type { PaginateConfig } from "../structures/BaseFeed.ts";

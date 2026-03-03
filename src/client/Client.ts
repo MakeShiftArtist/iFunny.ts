@@ -1,22 +1,22 @@
-import {
+import type {
     APIClientUser,
-    Endpoints,
     RESTAPIOauth2LoginSuccess,
     RESTAPISignUpSuccess,
     RESTAPISuccessResponse as Success,
 } from "@ifunny/ifunny-api-types";
+import { Endpoints } from "@ifunny/ifunny-api-types";
 import { BaseClient } from "./BaseClient.ts";
 import { CaptchaError } from "../errors/CaptchaError.ts";
-import { ClientOptions } from "./BaseClient.ts";
+import type { ClientOptions } from "./BaseClient.ts";
 import { ContentManager } from "../managers/ContentManager.ts";
 import { FeedManager } from "../managers/FeedManager.ts";
-import { If } from "../utils/Types.ts";
+import type { If } from "../utils/Types.ts";
 import { iFunnyError } from "../errors/iFunnyError.ts";
 import { UserManager } from "../managers/UserManager.ts";
 import { Util } from "../utils/Util.ts";
 import FormData from "form-data";
 import { AppManager } from "../managers/AppManager.ts";
-import User from "../structures/User.ts";
+import type User from "../structures/User.ts";
 
 /**
  * Method params for Client#signUp()
