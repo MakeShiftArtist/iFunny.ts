@@ -4,7 +4,7 @@ import type { Topic } from "@ifunny/ifunny-api-types";
 /**
  * Event handler type for subscribe callbacks
  */
-type SubscriptionHandler<T = Record<string, any>> = (eventType: number, event: T) => void;
+export type SubscriptionHandler<T = Record<string, any>> = (eventType: number, event: T) => void;
 
 /**
  * WAMP WebSocket connection wrapper for chat operations
