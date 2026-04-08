@@ -89,12 +89,12 @@ export class Chat {
     /**
      * Call a WAMP RPC procedure
      */
-    public async call(
+    public async call<T = Record<string, any>>(
         procedure: string,
         kwargs: Record<string, any>,
-    ): Promise<Record<string, any>> {
+    ): Promise<T> {
         await this.#ensureConnected();
-        return this.#ws.call(procedure, [], kwargs);
+        return this.#ws.call(procedure, [], kwargs) as T;
     }
 
     /**

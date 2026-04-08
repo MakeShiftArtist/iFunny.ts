@@ -1,6 +1,6 @@
 import type { Client } from "../client/Client";
 import { Chat } from "../structures/Chat";
-import type { APIPaginatedResponse, ChannelType } from "@ifunny/ifunny-api-types";
+import type { ChannelType, APIChannelsResponse } from "@ifunny/ifunny-api-types";
 import { RESTAPISuccessResponse as Success } from "@ifunny/ifunny-api-types";
 import { eventsIn, userJoinedChats, dmChannelTopic } from "@ifunny/ifunny-api-types";
 
@@ -28,7 +28,7 @@ export class ChatManager {
         cursor?: string,
     ): Promise<{ channels: Chat[]; cursor?: string }> {
         const response = await this.client.instance.get<
-            Success<APIPaginatedResponse<any>>
+            Success<APIChannelsResponse>
         >("/channels", {
             params: {
                 limit,
@@ -36,13 +36,13 @@ export class ChatManager {
             },
         });
 
-        const channels = response.data.data.data.map(
+        const channels = response.data.data.channels.items.map(
             (data: any) => new Chat(this.client, data),
         );
 
         return {
             channels,
-            cursor: response.data.data.cursor,
+            cursor: response.data.data.channels.paging?.cursors?.next,
         };
     }
 
@@ -72,7 +72,7 @@ export class ChatManager {
 
         while (true) {
             const response = await this.client.instance.get<
-                Success<APIPaginatedResponse<any>>
+                Success<APIChannelsResponse>
             >("/channels/search", {
                 params: {
                     q: query,
@@ -81,7 +81,7 @@ export class ChatManager {
                 },
             });
 
-            const channels = response.data.data.data.map(
+            const channels = response.data.data.channels.items.map(
                 (data: any) => new Chat(this.client, data),
             );
 
@@ -89,7 +89,7 @@ export class ChatManager {
                 yield channel;
             }
 
-            cursor = response.data.data.cursor;
+            cursor = response.data.data.channels.paging?.cursors?.next;
             if (!cursor) {
                 break;
             }

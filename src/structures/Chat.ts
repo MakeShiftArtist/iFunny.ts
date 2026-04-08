@@ -1,5 +1,5 @@
 import type { Client } from "../client/Client";
-import type { APIChatChannel, Topic } from "@ifunny/ifunny-api-types";
+import type { APIChatChannel, APIChatMessage, Topic, APIGetMessagesResponse } from "@ifunny/ifunny-api-types";
 import { eventsIn } from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
 import { ChatMessage } from "./ChatMessage";
@@ -90,7 +90,7 @@ export class Chat extends Base<APIChatChannel> {
      */
     public async join(): Promise<void> {
         const chat = await this.client.chat();
-        await chat.call("com.ifunny.channel.join", {
+        await chat.call<void>("com.ifunny.channel.join", {
             channel: this.name,
         });
     }
@@ -100,7 +100,7 @@ export class Chat extends Base<APIChatChannel> {
      */
     public async leave(): Promise<void> {
         const chat = await this.client.chat();
-        await chat.call("com.ifunny.channel.exit", {
+        await chat.call<void>("com.ifunny.channel.exit", {
             channel: this.name,
         });
     }
@@ -110,7 +110,7 @@ export class Chat extends Base<APIChatChannel> {
      */
     public async sendMessage(text: string): Promise<ChatMessage> {
         const chat = await this.client.chat();
-        const result = await chat.call("com.ifunny.channel.send_message", {
+        const result = await chat.call<APIChatMessage>("com.ifunny.channel.send_message", {
             channel: this.name,
             text,
         });
@@ -125,7 +125,7 @@ export class Chat extends Base<APIChatChannel> {
         let cursor = after;
 
         while (true) {
-            const result = await chat.call("com.ifunny.channel.get_messages", {
+            const result = await chat.call<APIGetMessagesResponse>("com.ifunny.channel.get_messages", {
                 channel: this.name,
                 limit: limit ?? 50,
                 ...(cursor && { after: cursor }),
