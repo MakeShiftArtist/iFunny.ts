@@ -24,28 +24,28 @@ const chat = await client.chat();
 
 ---
 
-### Channel Management (via `client.chatManager`)
+### Channel Management (via `client.chats`)
 
 ```ts
-// List your channels (paginated)
-const { channels, cursor } = await client.chatManager.getChannels(50);
+// List your joined channels (paginated)
+const { channels, cursor } = await client.chats.getChannels(50);
 // next page:
-const { channels: page2 } = await client.chatManager.getChannels(50, cursor);
+const { channels: page2 } = await client.chats.getChannels(50, cursor);
 
 // Get a channel by name
-const channel = await client.chatManager.getChannel("my-channel");
+const channel = await client.chats.getChannel("my-channel");
 
 // Search public channels
-for await (const ch of client.chatManager.queryChannels("gaming", 25)) {
+for await (const ch of client.chats.queryChannels("gaming", 25)) {
     console.log(ch.name, ch.membersTotal);
 }
 
 // Get or create a DM
-const dm = await client.chatManager.getDMChannel(userId1, userId2);
+const dm = await client.chats.getDMChannel(userId1, userId2);
 
 // Create a new channel
 import { ChannelType } from "@ifunny/ifunny-api-types";
-const newChannel = await client.chatManager.createChannel(
+const newChannel = await client.chats.createChannel(
     ChannelType.Public,
     "My Channel Title",
     "my-channel-name",
@@ -59,7 +59,7 @@ const newChannel = await client.chatManager.createChannel(
 ### Sending and Receiving Messages
 
 ```ts
-const channel = await client.chatManager.getChannel("my-channel");
+const channel = await client.chats.getChannel("my-channel");
 if (!channel) throw new Error("Channel not found");
 
 // Join the channel
@@ -95,7 +95,7 @@ await channel.leave();
 ### Channel Membership Management
 
 ```ts
-const channel = await client.chatManager.getChannel("my-channel");
+const channel = await client.chats.getChannel("my-channel");
 if (!channel) throw new Error("Channel not found");
 
 // Invite users to the channel
@@ -111,8 +111,8 @@ await channel.acceptInvite();
 await channel.declineInvite();
 
 // Via ChatManager (resolves channel internally)
-await client.chatManager.inviteUserToChannel("my-channel", ["userId1", "userId2"]);
-await client.chatManager.kickUserFromChannel("my-channel", "userId");
+await client.chats.inviteUserToChannel("my-channel", ["userId1", "userId2"]);
+await client.chats.kickUserFromChannel("my-channel", "userId");
 ```
 
 ---
@@ -131,7 +131,7 @@ for await (const msg of feed.scroll(50)) {
 }
 
 // 2. Chat.getMessages() — generator on the channel struct
-const channel = await client.chatManager.getChannel("my-channel");
+const channel = await client.chats.getChannel("my-channel");
 for await (const msg of channel.getMessages()) {
     console.log(msg.text);
 }
@@ -141,7 +141,7 @@ const { messages, cursor } = await channel.getHistoryPage(50);
 const { messages: page2 } = await channel.getHistoryPage(50, cursor);
 
 // 4. Via ChatManager (resolves channel internally)
-for await (const msg of client.chatManager.getHistory("my-channel")) {
+for await (const msg of client.chats.getHistory("my-channel")) {
     console.log(msg.text);
 }
 ```
@@ -155,7 +155,7 @@ const myUserId = (await client.users.fetchSelf()).id;
 
 // Get notified when you join/leave a channel
 const unsub = await chat.subscribe(
-    client.chatManager.userJoinedChats(myUserId),
+    client.chats.userJoinedChats(myUserId),
     (eventType, event) => {
         console.log("Channel event", eventType, event);
     },
@@ -233,7 +233,7 @@ user-agent: <app-user-agent>
 
 #### Channels
 
-##### `GET /channels`
+##### `GET /users/my/chats`
 List the authenticated user's channels (paginated).
 
 Query params:

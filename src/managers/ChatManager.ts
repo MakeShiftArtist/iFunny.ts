@@ -30,7 +30,7 @@ export class ChatManager {
     ): Promise<{ channels: Chat[]; cursor?: string }> {
         const response = await this.client.instance.get<
             Success<APIChannelsResponse>
-        >("/channels", {
+        >("/users/my/chats", {
             params: {
                 limit,
                 ...(cursor && { cursor }),
