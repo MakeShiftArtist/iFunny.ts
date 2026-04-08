@@ -74,11 +74,11 @@ export class ChatManager {
         while (true) {
             const response = await this.client.instance.get<
                 Success<APIChannelsResponse>
-            >("/channels/search", {
+            >("/chats/open_channels", {
                 params: {
                     q: query,
                     limit,
-                    ...(cursor && { cursor }),
+                    ...(cursor && { next: cursor }),
                 },
             });
 
