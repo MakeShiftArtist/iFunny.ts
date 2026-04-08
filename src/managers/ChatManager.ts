@@ -2,6 +2,7 @@ import type { Client } from "../client/Client";
 import { Chat } from "../structures/Chat";
 import type { APIPaginatedResponse, ChannelType } from "@ifunny/ifunny-api-types";
 import { RESTAPISuccessResponse as Success } from "@ifunny/ifunny-api-types";
+import { eventsIn, userJoinedChats, dmChannelTopic } from "@ifunny/ifunny-api-types";
 
 /**
  * Manages chat channels and chat operations via REST API
@@ -129,6 +130,27 @@ export class ChatManager {
             },
         );
         return new Chat(this.client, response.data.data);
+    }
+
+    /**
+     * Get topic for events in a channel
+     */
+    public eventsIn(channelName: string) {
+        return eventsIn(channelName);
+    }
+
+    /**
+     * Get topic for user joined chats
+     */
+    public userJoinedChats(userId: string) {
+        return userJoinedChats(userId);
+    }
+
+    /**
+     * Get topic for DM channel
+     */
+    public dmChannelTopic(channelName: string) {
+        return dmChannelTopic(channelName);
     }
 }
 

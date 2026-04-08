@@ -1,4 +1,5 @@
 import type { Client } from "./Client";
+import type { Topic } from "@ifunny/ifunny-api-types";
 
 /**
  * Event handler type for subscribe callbacks
@@ -112,13 +113,13 @@ export class Chat {
      * Returns an unsubscribe function
      */
     public async subscribe(
-        topic: string,
+        topic: Topic,
         handler: SubscriptionHandler,
     ): Promise<() => void> {
         await this.#ensureConnected();
 
         const subscription = await this.#ws.subscribe(
-            topic,
+            topic.topic,
             (args: any[], kwargs: any) => {
                 handler(args[0], kwargs);
             },
@@ -126,10 +127,10 @@ export class Chat {
 
         const unsubscribe = () => {
             this.#ws.unsubscribe(subscription);
-            this.#subscriptions.delete(topic);
+            this.#subscriptions.delete(topic.topic);
         };
 
-        this.#subscriptions.set(topic, unsubscribe);
+        this.#subscriptions.set(topic.topic, unsubscribe);
         return unsubscribe;
     }
 

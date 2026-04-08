@@ -1,5 +1,6 @@
 import type { Client } from "../client/Client";
-import type { APIChatChannel } from "@ifunny/ifunny-api-types";
+import type { APIChatChannel, Topic } from "@ifunny/ifunny-api-types";
+import { eventsIn } from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
 import { ChatMessage } from "./ChatMessage";
 
@@ -8,8 +9,6 @@ import { ChatMessage } from "./ChatMessage";
  * @extends Base<APIChatChannel>
  */
 export class Chat extends Base<APIChatChannel> {
-    #eventListeners: Set<(event: ChatMessage) => void> = new Set();
-
     /**
      * @param client Client instance associated with the Chat
      * @param payload Payload of the Chat
@@ -149,27 +148,10 @@ export class Chat extends Base<APIChatChannel> {
     }
 
     /**
-     * Register a callback for chat events in this channel
+     * Returns the topic for subscribing to this channel's events
      */
-    public onEvent(callback: (event: ChatMessage) => void): void {
-        this.#eventListeners.add(callback);
-    }
-
-    /**
-     * Unregister a callback for chat events in this channel
-     */
-    public offEvent(callback: (event: ChatMessage) => void): void {
-        this.#eventListeners.delete(callback);
-    }
-
-    /**
-     * Internal method to dispatch a chat event to listeners
-     * @internal
-     */
-    public _dispatchEvent(event: ChatMessage): void {
-        for (const listener of this.#eventListeners) {
-            listener(event);
-        }
+    public topic(): Topic {
+        return eventsIn(this.name);
     }
 }
 
