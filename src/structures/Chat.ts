@@ -1,6 +1,6 @@
 import type { Client } from "../client/Client";
 import type { APIChatChannel, APIChatMessage, Topic, APIGetMessagesResponse } from "@ifunny/ifunny-api-types";
-import { eventsIn } from "@ifunny/ifunny-api-types";
+import { eventsIn, inviteUsers, acceptInvite, declineInvite, kickMember } from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
 import { ChatMessage } from "./ChatMessage";
 
@@ -115,6 +115,42 @@ export class Chat extends Base<APIChatChannel> {
             text,
         });
         return new ChatMessage(this.client, result);
+    }
+
+    /**
+     * Invite users to the chat channel
+     */
+    public async invite(userIds: string[]): Promise<void> {
+        const chat = await this.client.chat();
+        const rpc = inviteUsers(this.name, userIds);
+        await chat.call<void>(rpc.procedure, rpc.kwargs);
+    }
+
+    /**
+     * Kick a user from the chat channel
+     */
+    public async kick(userId: string): Promise<void> {
+        const chat = await this.client.chat();
+        const rpc = kickMember(this.name, userId);
+        await chat.call<void>(rpc.procedure, rpc.kwargs);
+    }
+
+    /**
+     * Accept an invite to a chat channel
+     */
+    public async acceptInvite(): Promise<void> {
+        const chat = await this.client.chat();
+        const rpc = acceptInvite(this.name);
+        await chat.call<void>(rpc.procedure, rpc.kwargs);
+    }
+
+    /**
+     * Decline an invite to a chat channel
+     */
+    public async declineInvite(): Promise<void> {
+        const chat = await this.client.chat();
+        const rpc = declineInvite(this.name);
+        await chat.call<void>(rpc.procedure, rpc.kwargs);
     }
 
     /**

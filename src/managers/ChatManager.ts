@@ -179,6 +179,28 @@ export class ChatManager {
         }
         yield* channel.getMessages(limit);
     }
+
+    /**
+     * Invite users to a chat channel
+     */
+    public async inviteUserToChannel(channelName: string, userIds: string[]): Promise<void> {
+        const channel = await this.getChannel(channelName);
+        if (!channel) {
+            throw new Error(`Channel not found: ${channelName}`);
+        }
+        return channel.invite(userIds);
+    }
+
+    /**
+     * Kick a user from a chat channel
+     */
+    public async kickUserFromChannel(channelName: string, userId: string): Promise<void> {
+        const channel = await this.getChannel(channelName);
+        if (!channel) {
+            throw new Error(`Channel not found: ${channelName}`);
+        }
+        return channel.kick(userId);
+    }
 }
 
 export default ChatManager;
