@@ -71,7 +71,7 @@
         "typescript-eslint": "^8.49.0"
     },
     "dependencies": {
-        "@ifunny/ifunny-api-types": "1.1.2",
+        "@ifunny/ifunny-api-types": "file:../ifunny-api-types",
         "axios": "1.13.2",
         "eventemitter3": "5.0.1",
         "node-ts-cache": "^4.4.0",
