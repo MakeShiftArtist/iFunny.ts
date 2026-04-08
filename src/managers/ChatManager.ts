@@ -1,5 +1,6 @@
 import type { Client } from "../client/Client";
 import { Chat } from "../structures/Chat";
+import { ChatMessage } from "../structures/ChatMessage";
 import type { ChannelType, APIChannelsResponse } from "@ifunny/ifunny-api-types";
 import { RESTAPISuccessResponse as Success } from "@ifunny/ifunny-api-types";
 import { eventsIn, userJoinedChats, dmChannelTopic } from "@ifunny/ifunny-api-types";
@@ -151,6 +152,32 @@ export class ChatManager {
      */
     public dmChannelTopic(channelName: string) {
         return dmChannelTopic(channelName);
+    }
+
+    /**
+     * Get a single page of message history from a channel
+     */
+    public async getHistoryPage(
+        channelName: string,
+        limit: number = 50,
+        cursor?: string,
+    ): Promise<{ messages: ChatMessage[]; cursor?: string }> {
+        const channel = await this.getChannel(channelName);
+        if (!channel) {
+            return { messages: [], cursor: undefined };
+        }
+        return channel.getHistoryPage(limit, cursor);
+    }
+
+    /**
+     * Async generator to iterate all message history from a channel
+     */
+    public async *getHistory(channelName: string, limit?: number) {
+        const channel = await this.getChannel(channelName);
+        if (!channel) {
+            return;
+        }
+        yield* channel.getMessages(limit);
     }
 }
 

@@ -118,6 +118,26 @@ export class Chat extends Base<APIChatChannel> {
     }
 
     /**
+     * Fetch a single page of message history
+     */
+    public async getHistoryPage(
+        limit: number = 50,
+        cursor?: string,
+    ): Promise<{ messages: ChatMessage[]; cursor?: string }> {
+        const chat = await this.client.chat();
+        const result = await chat.call<APIGetMessagesResponse>("com.ifunny.channel.get_messages", {
+            channel: this.name,
+            limit,
+            ...(cursor && { after: cursor }),
+        });
+
+        return {
+            messages: (result.messages ?? []).map(m => new ChatMessage(this.client, m)),
+            cursor: result.cursor,
+        };
+    }
+
+    /**
      * Async generator to fetch messages from the channel
      */
     public async *getMessages(limit?: number, after?: string) {
