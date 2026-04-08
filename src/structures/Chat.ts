@@ -28,7 +28,7 @@ interface APIChatChannel {
  * @extends Base<APIChatChannel>
  */
 export class Chat extends Base<APIChatChannel> {
-    #messageListeners: Set<(message: ChatMessage) => void> = new Set();
+    #eventListeners: Set<(event: ChatMessage) => void> = new Set();
 
     /**
      * @param client Client instance associated with the Chat
@@ -169,26 +169,26 @@ export class Chat extends Base<APIChatChannel> {
     }
 
     /**
-     * Register a callback for new messages in this channel
+     * Register a callback for chat events in this channel
      */
-    public onMessage(callback: (message: ChatMessage) => void): void {
-        this.#messageListeners.add(callback);
+    public onEvent(callback: (event: ChatMessage) => void): void {
+        this.#eventListeners.add(callback);
     }
 
     /**
-     * Unregister a callback for new messages in this channel
+     * Unregister a callback for chat events in this channel
      */
-    public offMessage(callback: (message: ChatMessage) => void): void {
-        this.#messageListeners.delete(callback);
+    public offEvent(callback: (event: ChatMessage) => void): void {
+        this.#eventListeners.delete(callback);
     }
 
     /**
-     * Internal method to dispatch a message to listeners
+     * Internal method to dispatch a chat event to listeners
      * @internal
      */
-    public _dispatchMessage(message: ChatMessage): void {
-        for (const listener of this.#messageListeners) {
-            listener(message);
+    public _dispatchEvent(event: ChatMessage): void {
+        for (const listener of this.#eventListeners) {
+            listener(event);
         }
     }
 }

@@ -19,7 +19,7 @@ interface APIChatMessage {
 }
 
 /**
- * Represents a message in a chat channel
+ * Represents an event in a chat channel (message, join, leave, etc.)
  * @extends Base<APIChatMessage>
  */
 export class ChatMessage extends Base<APIChatMessage> {
