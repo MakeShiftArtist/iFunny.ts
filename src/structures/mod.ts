@@ -6,6 +6,8 @@ export * as BaseContent from "./BaseContent";
 export * as BaseFeed from "./BaseFeed";
 export * as BaseUser from "./BaseUser";
 export * as Cache from "./Cache";
+export * as Chat from "./Chat";
+export * as ChatMessage from "./ChatMessage";
 export * as Comment from "./Comment";
 export * as Content from "./Content";
 export * as Creator from "./Creator";

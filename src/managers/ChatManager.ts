@@ -1,0 +1,147 @@
+import type { Client } from "../client/Client";
+import { Chat } from "../structures/Chat";
+import { RESTAPISuccessResponse as Success } from "@ifunny/ifunny-api-types";
+
+/**
+ * TODO: Move this to @ifunny/ifunny-api-types after testing
+ */
+interface APIPaginatedResponse<T> {
+    data: T[];
+    cursor?: string;
+}
+
+/**
+ * TODO: Move this to @ifunny/ifunny-api-types after testing
+ */
+type ChannelType = "DM" | "Private" | "Public";
+
+/**
+ * Manages chat channels and chat operations via REST API
+ */
+export class ChatManager {
+    /**
+     * The client this manager is attached to
+     */
+    public readonly client: Client;
+
+    /**
+     * @param client Client instance
+     */
+    public constructor(client: Client) {
+        this.client = client;
+    }
+
+    /**
+     * Get paginated list of chat channels
+     */
+    public async getChannels(
+        limit: number = 50,
+        cursor?: string,
+    ): Promise<{ channels: Chat[]; cursor?: string }> {
+        const response = await this.client.instance.get<
+            Success<APIPaginatedResponse<any>>
+        >("/channels", {
+            params: {
+                limit,
+                ...(cursor && { cursor }),
+            },
+        });
+
+        const channels = response.data.data.data.map(
+            (data: any) => new Chat(this.client, data),
+        );
+
+        return {
+            channels,
+            cursor: response.data.data.cursor,
+        };
+    }
+
+    /**
+     * Get a specific chat channel by name
+     */
+    public async getChannel(name: string): Promise<Chat | null> {
+        try {
+            const response = await this.client.instance.get<Success<any>>(
+                `/channels/${name}`,
+            );
+            return new Chat(this.client, response.data.data);
+        } catch (error) {
+            return null;
+        }
+    }
+
+    /**
+     * Query chat channels by search term
+     * Returns an async generator for pagination
+     */
+    public async *queryChannels(
+        query: string,
+        limit: number = 50,
+    ): AsyncGenerator<Chat> {
+        let cursor: string | undefined;
+
+        while (true) {
+            const response = await this.client.instance.get<
+                Success<APIPaginatedResponse<any>>
+            >("/channels/search", {
+                params: {
+                    q: query,
+                    limit,
+                    ...(cursor && { cursor }),
+                },
+            });
+
+            const channels = response.data.data.data.map(
+                (data: any) => new Chat(this.client, data),
+            );
+
+            for (const channel of channels) {
+                yield channel;
+            }
+
+            cursor = response.data.data.cursor;
+            if (!cursor) {
+                break;
+            }
+        }
+    }
+
+    /**
+     * Get or create a DM channel with one or more users
+     */
+    public async getDMChannel(...userIds: string[]): Promise<Chat> {
+        const response = await this.client.instance.post<Success<any>>(
+            "/channels/dm",
+            {
+                user_ids: userIds,
+            },
+        );
+        return new Chat(this.client, response.data.data);
+    }
+
+    /**
+     * Create a new chat channel
+     */
+    public async createChannel(
+        type: ChannelType,
+        title: string,
+        name: string,
+        description?: string,
+        inviteIds?: string[],
+    ): Promise<Chat> {
+        const response = await this.client.instance.post<Success<any>>(
+            "/channels",
+            {
+                type,
+                title,
+                name,
+                description,
+                invite_ids: inviteIds,
+            },
+        );
+        return new Chat(this.client, response.data.data);
+    }
+}
+
+export default ChatManager;
