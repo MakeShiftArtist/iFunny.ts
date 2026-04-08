@@ -4,7 +4,7 @@ import type { Topic } from "@ifunny/ifunny-api-types";
 /**
  * Event handler type for subscribe callbacks
  */
-type SubscriptionHandler = (eventType: number, kwargs: any) => void;
+type SubscriptionHandler<T = Record<string, any>> = (eventType: number, event: T) => void;
 
 /**
  * WAMP WebSocket connection wrapper for chat operations
@@ -100,28 +100,28 @@ export class Chat {
     /**
      * Publish to a WAMP topic
      */
-    public async publish(
+    public async publish<T = Record<string, any>>(
         topic: string,
-        kwargs: Record<string, any>,
+        event: T,
     ): Promise<void> {
         await this.#ensureConnected();
-        await this.#ws.publish(topic, [], kwargs);
+        await this.#ws.publish(topic, [], event);
     }
 
     /**
      * Subscribe to a WAMP topic
      * Returns an unsubscribe function
      */
-    public async subscribe(
+    public async subscribe<T = Record<string, any>>(
         topic: Topic,
-        handler: SubscriptionHandler,
+        handler: SubscriptionHandler<T>,
     ): Promise<() => void> {
         await this.#ensureConnected();
 
         const subscription = await this.#ws.subscribe(
             topic.topic,
             (args: any[], kwargs: any) => {
-                handler(args[0], kwargs);
+                handler(args[0], kwargs as T);
             },
         );
 
