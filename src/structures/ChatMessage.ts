@@ -1,22 +1,6 @@
 import type { Client } from "../client/Client";
+import type { APIChatMessage } from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
-
-/**
- * TODO: Move this to @ifunny/ifunny-api-types after testing
- */
-interface APIChatMessage {
-    id: string;
-    text: string;
-    type: "TEXT_MESSAGE" | "JOIN_CHANNEL" | "EXIT_CHANNEL";
-    status?: string;
-    pubAt: number;
-    user: {
-        id: string;
-        nick: string;
-        isVerified: boolean;
-        lastSeenAt?: number;
-    };
-}
 
 /**
  * Represents an event in a chat channel (message, join, leave, etc.)

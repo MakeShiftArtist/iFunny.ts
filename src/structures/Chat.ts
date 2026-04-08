@@ -1,27 +1,7 @@
 import type { Client } from "../client/Client";
+import type { APIChatChannel } from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
 import { ChatMessage } from "./ChatMessage";
-
-/**
- * TODO: Move this to @ifunny/ifunny-api-types after testing
- */
-interface APIChatChannel {
-    id: string;
-    name: string;
-    title: string;
-    membersOnline: number;
-    membersTotal: number;
-    type: "DM" | "Private" | "Public";
-    joinState: "NotJoined" | "Invited" | "Joined";
-    role?: string;
-    touchDt: number;
-    user: {
-        id: string;
-        nick: string;
-        lastSeenAt?: number;
-        isVerified: boolean;
-    };
-}
 
 /**
  * Represents a chat channel

@@ -1,19 +1,7 @@
 import type { Client } from "../client/Client";
 import { Chat } from "../structures/Chat";
+import type { APIPaginatedResponse, ChannelType } from "@ifunny/ifunny-api-types";
 import { RESTAPISuccessResponse as Success } from "@ifunny/ifunny-api-types";
-
-/**
- * TODO: Move this to @ifunny/ifunny-api-types after testing
- */
-interface APIPaginatedResponse<T> {
-    data: T[];
-    cursor?: string;
-}
-
-/**
- * TODO: Move this to @ifunny/ifunny-api-types after testing
- */
-type ChannelType = "DM" | "Private" | "Public";
 
 /**
  * Manages chat channels and chat operations via REST API
