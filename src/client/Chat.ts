@@ -1,5 +1,6 @@
 import type { Client } from "./Client";
 import type { Topic } from "@ifunny/ifunny-api-types";
+import { Connection } from "autobahn";
 
 /**
  * Event handler type for subscribe callbacks
@@ -52,17 +53,6 @@ export class Chat {
     async #ensureConnected(): Promise<void> {
         if (this.#connected) {
             return;
-        }
-
-        // Dynamically import autobahn
-        let Connection;
-        try {
-            const autobahn = await import("autobahn");
-            Connection = autobahn.Connection;
-        } catch (error) {
-            throw new Error(
-                "Failed to load autobahn library. Make sure 'autobahn' is installed: npm install autobahn"
-            );
         }
 
         this.#ws = new Connection({
