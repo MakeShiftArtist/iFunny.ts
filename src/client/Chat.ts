@@ -60,11 +60,13 @@ export class Chat {
             realm: "ifunny",
             authmethods: ["ticket"],
             authid: "client",
-            // iFunny server accepts wamp.2.json (standard) despite advertising wamp.json
-            // The server actually sends WAMP v2 messages, so use standard v2 protocol
-            protocols: ["wamp.2.json"],
+            // Include custom headers like REST API does
+            headers: {
+                "ifunny-project-id": "iFunny",
+            },
             onchallenge: (session: any, method: string, extra: any) => {
                 if (method === "ticket") {
+                    console.log("Returning bearer token for ticket auth");
                     return this.#bearer;
                 }
                 throw new Error(`Unsupported auth method: ${method}`);
