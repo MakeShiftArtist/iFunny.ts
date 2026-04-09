@@ -60,13 +60,12 @@ export class Chat {
             realm: "ifunny",
             authmethods: ["ticket"],
             authid: "client",
-            // Include custom headers like REST API does
+            // CRITICAL: iFunny server requires this header for WebSocket routing/identification
             headers: {
                 "ifunny-project-id": "iFunny",
             },
             onchallenge: (session: any, method: string, extra: any) => {
                 if (method === "ticket") {
-                    console.log("Returning bearer token for ticket auth");
                     return this.#bearer;
                 }
                 throw new Error(`Unsupported auth method: ${method}`);
