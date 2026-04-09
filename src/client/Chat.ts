@@ -55,12 +55,14 @@ export class Chat {
             return;
         }
 
+        // CRITICAL: iFunny server requires ifunny-project-id header for WebSocket routing
+        // The autobahn TypeScript definitions don't expose the headers option,
+        // but the underlying library supports it in Node.js environments
         this.#ws = new Connection({
             url: "wss://chat.ifunny.co/chat",
             realm: "ifunny",
             authmethods: ["ticket"],
             authid: "client",
-            // CRITICAL: iFunny server requires this header for WebSocket routing/identification
             headers: {
                 "ifunny-project-id": "iFunny",
             },
@@ -70,7 +72,7 @@ export class Chat {
                 }
                 throw new Error(`Unsupported auth method: ${method}`);
             },
-        });
+        } as any);
 
         return new Promise((resolve, reject) => {
             let connected = false;
