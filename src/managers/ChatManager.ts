@@ -52,14 +52,20 @@ export class ChatManager {
     }
 
     /**
-     * Get a specific chat channel by name
+     * Get a specific chat channel by name via WAMP RPC
      */
     public async getChannel(name: string): Promise<Chat | null> {
         try {
-            const response = await this.client.instance.get<Success<any>>(
-                `/channels/${name}`,
-            );
-            return new Chat(this.client, response.data.data);
+            if (!this.client.isAuthorized()) {
+                throw new Error("Client must be authorized to get channels");
+            }
+
+            const chat = await this.client.chat();
+            const result = await chat.call<any>("co.fun.chat.get_chat", {
+                chat_name: name,
+            });
+
+            return new Chat(this.client, result.chat ?? result);
         } catch (error) {
             return null;
         }
@@ -102,20 +108,25 @@ export class ChatManager {
     }
 
     /**
-     * Get or create a DM channel with one or more users
+     * Get or create a DM channel with one or more users via WAMP RPC
      */
     public async getDMChannel(...userIds: string[]): Promise<Chat> {
-        const response = await this.client.instance.post<Success<any>>(
-            "/channels/dm",
-            {
-                user_ids: userIds,
-            },
-        );
-        return new Chat(this.client, response.data.data);
+        if (!this.client.isAuthorized()) {
+            throw new Error("Client must be authorized to get DM channels");
+        }
+
+        const chat = await this.client.chat();
+        const result = await chat.call<any>("co.fun.chat.get_or_create_chat", {
+            type: 1, // DM channel type
+            users: userIds,
+            name: "", // Server will compute the name
+        });
+
+        return new Chat(this.client, result);
     }
 
     /**
-     * Create a new chat channel
+     * Create a new chat channel via WAMP RPC
      */
     public async createChannel(
         type: ChannelType,
@@ -124,17 +135,20 @@ export class ChatManager {
         description?: string,
         inviteIds?: string[],
     ): Promise<Chat> {
-        const response = await this.client.instance.post<Success<any>>(
-            "/channels",
-            {
-                type,
-                title,
-                name,
-                description,
-                invite_ids: inviteIds,
-            },
-        );
-        return new Chat(this.client, response.data.data);
+        if (!this.client.isAuthorized()) {
+            throw new Error("Client must be authorized to create channels");
+        }
+
+        const chat = await this.client.chat();
+        const result = await chat.call<any>("co.fun.chat.new_chat", {
+            users: inviteIds ?? [],
+            title,
+            name,
+            description: description ?? "",
+            type,
+        });
+
+        return new Chat(this.client, result);
     }
 
     /**
