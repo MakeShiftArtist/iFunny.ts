@@ -28,9 +28,13 @@ export class ChatManager {
         limit: number = 50,
         cursor?: string,
     ): Promise<{ channels: Chat[]; cursor?: string }> {
+        if (!this.client.isAuthorized()) {
+            throw new Error("Client must be authorized to fetch channels");
+        }
+
         const response = await this.client.instance.get<
             Success<APIChannelsResponse>
-        >("/users/my/chats", {
+        >(`/users/${this.client.id}/chats`, {
             params: {
                 limit,
                 ...(cursor && { cursor }),

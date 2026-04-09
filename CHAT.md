@@ -233,8 +233,8 @@ user-agent: <app-user-agent>
 
 #### Channels
 
-##### `GET /users/my/chats`
-List the authenticated user's channels (paginated).
+##### `GET /users/{id}/chats`
+List a user's joined channels (paginated).
 
 Query params:
 | Param | Type | Description |
