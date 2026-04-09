@@ -60,6 +60,8 @@ export class Chat {
             realm: "ifunny",
             authmethods: ["ticket"],
             authid: "client",
+            // iFunny uses non-standard wamp.json subprotocol instead of wamp.2.json
+            protocols: ["wamp.json"],
             onchallenge: (session: any, method: string, extra: any) => {
                 if (method === "ticket") {
                     return this.#bearer;
