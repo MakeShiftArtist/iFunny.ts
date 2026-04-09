@@ -54,8 +54,16 @@ export class Chat {
             return;
         }
 
-        // Dynamically import autobahn to avoid hard dependency
-        const { Connection } = await import("autobahn");
+        // Dynamically import autobahn
+        let Connection;
+        try {
+            const autobahn = await import("autobahn");
+            Connection = autobahn.Connection;
+        } catch (error) {
+            throw new Error(
+                "Failed to load autobahn library. Make sure 'autobahn' is installed: npm install autobahn"
+            );
+        }
 
         this.#ws = new Connection({
             url: "wss://chat.ifunny.co/chat",
@@ -71,15 +79,35 @@ export class Chat {
         });
 
         return new Promise((resolve, reject) => {
+            let connected = false;
+
+            // Set a timeout for the connection attempt
+            const timeout = setTimeout(() => {
+                if (!connected && this.#ws) {
+                    this.#ws.close();
+                    reject(new Error("Chat WebSocket connection timeout after 10 seconds"));
+                }
+            }, 10000);
+
             this.#ws.onopen = (session: any) => {
+                clearTimeout(timeout);
+                connected = true;
                 this.#connected = true;
                 this.#client.emit("chat:connected");
                 resolve();
             };
 
             this.#ws.onclose = (reason: string, details: any) => {
+                clearTimeout(timeout);
                 this.#connected = false;
                 this.#client.emit("chat:disconnected", reason, details);
+
+                // If we haven't successfully opened yet, reject the promise
+                if (!connected) {
+                    reject(new Error(
+                        `Failed to connect to chat WebSocket. Reason: ${details?.message || reason || "Unknown"}`
+                    ));
+                }
             };
 
             this.#ws.open();
