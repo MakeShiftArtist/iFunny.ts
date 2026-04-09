@@ -32,6 +32,11 @@ export class ChatManager {
             throw new Error("Client must be authorized to fetch channels");
         }
 
+        // Ensure we have the user's ID by fetching their data if needed
+        if (!this.client.id) {
+            await this.client.fetch();
+        }
+
         const response = await this.client.instance.get<
             Success<APIChannelsResponse>
         >(`/users/${this.client.id}/chats`, {
