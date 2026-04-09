@@ -100,6 +100,14 @@ export class Chat {
                 }
             };
 
+            // Handle unexpected responses during handshake
+            (this.#ws as any).onerror = (error: any) => {
+                this.#client.emit("chat:error", error);
+                if (!connected) {
+                    reject(error);
+                }
+            };
+
             this.#ws.open();
         });
     }
@@ -150,6 +158,14 @@ export class Chat {
 
         this.#subscriptions.set(topic.topic, unsubscribe);
         return unsubscribe;
+    }
+
+    /**
+     * Get the underlying autobahn Connection for advanced WAMP operations
+     * (must be connected first via ensureConnected or other operations)
+     */
+    public getConnection(): Connection {
+        return this.#ws;
     }
 
     /**
