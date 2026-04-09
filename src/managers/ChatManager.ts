@@ -6,7 +6,7 @@ import { RESTAPISuccessResponse as Success } from "@ifunny/ifunny-api-types";
 import { eventsIn, userJoinedChats, dmChannelTopic } from "@ifunny/ifunny-api-types";
 
 /**
- * Manages chat channels and chat operations via REST API
+ * Manages chat channels and chat operations via REST API and WAMP RPC
  */
 export class ChatManager {
     /**
@@ -22,38 +22,62 @@ export class ChatManager {
     }
 
     /**
-     * Get paginated list of chat channels
+     * Async generator for user's joined chat channels via WAMP subscription
+     * Yields each channel as events arrive
      */
-    public async getChannels(
-        limit: number = 50,
-        cursor?: string,
-    ): Promise<{ channels: Chat[]; cursor?: string }> {
+    public async *getChannels(): AsyncGenerator<Chat> {
         if (!this.client.isAuthorized()) {
             throw new Error("Client must be authorized to fetch channels");
         }
 
-        // Ensure we have the user's ID by fetching their data if needed
+        // Ensure we have the user's ID
         if (!this.client.id) {
             await this.client.fetch();
         }
 
-        const response = await this.client.instance.get<
-            Success<APIChannelsResponse>
-        >(`/users/${this.client.id}/chats`, {
-            params: {
-                limit,
-                ...(cursor && { cursor }),
+        const chat = await this.client.chat();
+        const queue: Chat[] = [];
+        let resolved = false;
+        let subscribeError: Error | null = null;
+
+        const unsubscribe = await chat.subscribe(
+            this.userJoinedChats(this.client.id!),
+            (eventType: number, event: any) => {
+                // Event contains user's joined channels
+                const channels = (event.chats || []).map(
+                    (data: any) => new Chat(this.client, data),
+                );
+
+                queue.push(...channels);
+                resolved = true;
             },
+        ).catch((error) => {
+            subscribeError = error;
+            return () => {}; // Return no-op unsubscribe if subscription fails
         });
 
-        const channels = response.data.data.channels.items.map(
-            (data: any) => new Chat(this.client, data),
-        );
+        try {
+            // Wait for events to arrive from the subscription
+            await new Promise<void>((resolve) => {
+                const checkQueue = setInterval(() => {
+                    if (resolved || subscribeError) {
+                        clearInterval(checkQueue);
+                        resolve();
+                    }
+                }, 50);
+            });
 
-        return {
-            channels,
-            cursor: response.data.data.channels.paging?.cursors?.next,
-        };
+            if (subscribeError) {
+                throw subscribeError;
+            }
+
+            // Yield all channels from the queue
+            for (const ch of queue) {
+                yield ch;
+            }
+        } finally {
+            unsubscribe();
+        }
     }
 
     /**

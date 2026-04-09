@@ -81,16 +81,7 @@ export class Chat {
         return new Promise((resolve, reject) => {
             let connected = false;
 
-            // Set a timeout for the connection attempt
-            const timeout = setTimeout(() => {
-                if (!connected && this.#ws) {
-                    this.#ws.close();
-                    reject(new Error("Chat WebSocket connection timeout after 10 seconds"));
-                }
-            }, 10000);
-
             this.#ws.onopen = (session: any) => {
-                clearTimeout(timeout);
                 connected = true;
                 this.#connected = true;
                 this.#client.emit("chat:connected");
@@ -98,7 +89,6 @@ export class Chat {
             };
 
             this.#ws.onclose = (reason: string, details: any) => {
-                clearTimeout(timeout);
                 this.#connected = false;
                 this.#client.emit("chat:disconnected", reason, details);
 
