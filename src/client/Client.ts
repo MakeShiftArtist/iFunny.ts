@@ -252,6 +252,13 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
      * @throws Error if the client is not authorized
      * @returns A promise that resolves to the Chat connection instance
      */
+    /**
+     * Whether a chat WebSocket connection has been initialized
+     */
+    public get hasChatConnection(): boolean {
+        return this.#chatWs !== null;
+    }
+
     public async chat(): Promise<Chat> {
         if (!this.isAuthorized()) {
             throw new Error(
@@ -259,6 +266,15 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
             );
         }
         return (this.#chatWs ??= new Chat(this as Client<true>, this.bearer));
+    }
+
+    /**
+     * Disconnect the chat WebSocket if one was opened
+     */
+    public disconnectChat(): void {
+        if (!this.hasChatConnection) return;
+        this.#chatWs!.disconnect();
+        this.#chatWs = null;
     }
 
     /**
