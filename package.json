@@ -1,6 +1,6 @@
 {
     "name": "ifunny.ts",
-    "version": "0.9.0",
+    "version": "0.10.0",
     "description": "An iFunny API wrapper written in TypeScript",
     "module": "src/index.ts",
     "type": "module",
@@ -71,7 +71,8 @@
         "typescript-eslint": "^8.49.0"
     },
     "dependencies": {
-        "@ifunny/ifunny-api-types": "1.0.4",
+        "@ifunny/ifunny-api-types": "^1.2.0",
+        "autobahn": "^21.3.1",
         "axios": "1.13.5",
         "eventemitter3": "5.0.1",
         "node-ts-cache": "^4.4.0",

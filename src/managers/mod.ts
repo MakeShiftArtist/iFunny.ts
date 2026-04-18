@@ -3,3 +3,4 @@ export * from "./AppManager";
 export * from "./CachedManager";
 export * from "./UserManager";
 export * from "./ContentManager";
+export * from "./ChatManager";

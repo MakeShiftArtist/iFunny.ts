@@ -1,10 +1,14 @@
 // * "Root" classes (starting points)
 export { BaseClient } from "./client/BaseClient";
 export { Client, default } from "./client/Client";
+export type { SubscriptionHandler } from "./client/Chat";
 
 // ? Structs
 export { Ban } from "./structures/Ban";
 export { BanSmall } from "./structures/BanSmall";
+export { Chat } from "./structures/Chat";
+export { ChatFeed } from "./structures/ChatFeed";
+export { ChatMessage } from "./structures/ChatMessage";
 export { Comment } from "./structures/Comment";
 export { Content } from "./structures/Content";
 export { Creator } from "./structures/Creator";

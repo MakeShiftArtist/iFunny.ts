@@ -16,7 +16,9 @@ import { UserManager } from "../managers/UserManager";
 import { Util } from "../utils/Util";
 import FormData from "form-data";
 import { AppManager } from "../managers/AppManager";
+import { ChatManager } from "../managers/ChatManager";
 import User from "../structures/User";
+import Chat from "./Chat";
 
 /**
  * Method params for Client#signUp()
@@ -63,7 +65,12 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
      */
     readonly #content: ContentManager;
     readonly #app: AppManager;
+    /**
+     * Chat manager object
+     */
+    readonly #chats: ChatManager;
     #user: User | null = null;
+    #chatWs: Chat | null = null;
 
     /**
      * Client utility class
@@ -84,6 +91,7 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
         this.#content = new ContentManager(this, this.config.cacheConfig);
         this.#feeds = new FeedManager(this);
         this.#app = new AppManager(this);
+        this.#chats = new ChatManager(this);
 
         this.instance.interceptors.request.use((config) => {
             config.headers.set(this.config.headers);
@@ -229,6 +237,43 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
      */
     public get app(): AppManager {
         return this.#app;
+    }
+
+    /**
+     * The Client's Chat manager for REST-based chat operations
+     */
+    public get chats(): ChatManager {
+        return this.#chats;
+    }
+
+    /**
+     * Whether a chat WebSocket connection has been initialized
+     */
+    public get hasChatConnection(): boolean {
+        return this.#chatWs !== null;
+    }
+
+    /**
+     * Get the WebSocket chat connection for real-time operations.
+     * Lazily initializes the connection on first call.
+     * @throws {Error} If the client is not authorized
+     */
+    public async chat(): Promise<Chat> {
+        if (!this.isAuthorized()) {
+            throw new Error(
+                "WebSocket chat connection requires authorization. Please login first.",
+            );
+        }
+        return (this.#chatWs ??= new Chat(this as Client<true>, this.bearer));
+    }
+
+    /**
+     * Disconnect the chat WebSocket if one was opened
+     */
+    public disconnectChat(): void {
+        if (!this.hasChatConnection) return;
+        this.#chatWs!.disconnect();
+        this.#chatWs = null;
     }
 
     /**
