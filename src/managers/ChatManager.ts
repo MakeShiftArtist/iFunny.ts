@@ -181,27 +181,6 @@ export class ChatManager {
     }
 
     /**
-     * Get topic for events in a channel
-     */
-    public eventsIn(channelName: string) {
-        return eventsIn(channelName);
-    }
-
-    /**
-     * Get topic for user joined chats
-     */
-    public userJoinedChats(userId: string) {
-        return userJoinedChats(userId);
-    }
-
-    /**
-     * Get topic for DM channel
-     */
-    public dmChannelTopic(channelName: string) {
-        return dmChannelTopic(channelName);
-    }
-
-    /**
      * Get a single page of message history from a channel
      */
     public async getHistoryPage(

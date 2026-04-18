@@ -247,12 +247,6 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
     }
 
     /**
-     * Get the WebSocket chat connection for real-time operations
-     * Lazily initializes the connection on first call
-     * @throws Error if the client is not authorized
-     * @returns A promise that resolves to the Chat connection instance
-     */
-    /**
      * Whether a chat WebSocket connection has been initialized
      */
     public get hasChatConnection(): boolean {
