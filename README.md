@@ -100,14 +100,6 @@ async function main() {
 }
 ```
 
-## Documentation
-
-- [Chat API](./CHAT.md) — Real-time messaging, channels, WAMP WebSocket interface
-- [User Interaction](./USER_INTERACTION.md) — Following, blocking, profiles, relationship queries
-- [Content Consumption](./CONTENT_CONSUMPTION.md) — Smiling, commenting, deleting, content data model
-- [Feeds](./FEEDS.md) — Feed system deep dive, collective POST quirk, pagination internals
-- [Chat Exploits](./CHAT_EXPLOITS.md) — Known exploits from iFunny's over-permissive WAMP implementation
-
 ## Links
 
 - [Documentation](https://makeshiftartist.github.io/iFunny.ts/)
