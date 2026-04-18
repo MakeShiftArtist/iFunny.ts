@@ -2,18 +2,12 @@ import type { Client } from "../client/Client";
 import { Chat } from "../structures/Chat";
 import { ChatFeed } from "../structures/ChatFeed";
 import {
-    type ChannelType,
+    ChannelType,
     type APIChannelsResponse,
     type APIGetChatResponse,
     RESTAPISuccessResponse as Success,
     userJoinedChats,
 } from "@ifunny/ifunny-api-types";
-
-const CHANNEL_TYPE_MAP: Record<ChannelType, number> = {
-    DM: 1,
-    Private: 2,
-    Public: 3,
-};
 
 /**
  * Manages chat channels and chat operations via REST API and WAMP RPC
@@ -146,7 +140,7 @@ export class ChatManager {
 
         const chat = await this.client.chat();
         const result = await chat.call<APIGetChatResponse>("co.fun.chat.get_or_create_chat", {
-            type: CHANNEL_TYPE_MAP.DM,
+            type: ChannelType.DM,
             users: userIds,
             name,
         });
@@ -174,7 +168,7 @@ export class ChatManager {
             title,
             name,
             description: description ?? "",
-            type: CHANNEL_TYPE_MAP[type],
+            type,
         });
 
         return new Chat(this.client, result.chat);

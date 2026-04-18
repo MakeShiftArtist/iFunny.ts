@@ -3,6 +3,8 @@ import {
     type APIChatChannel,
     type APIGetMessagesResponse,
     type Topic,
+    type ChannelType,
+    type JoinState,
     eventsIn,
     inviteUsers,
     acceptInvite,
@@ -44,34 +46,34 @@ export class Chat extends Base<APIChatChannel> {
      * The number of members currently online in this channel
      */
     public get membersOnline(): number {
-        return this.get("membersOnline");
+        return this.get("members_online");
     }
 
     /**
      * The total number of members in this channel
      */
     public get membersTotal(): number {
-        return this.get("membersTotal");
+        return this.get("members_total");
     }
 
     /**
      * The type of chat channel
      */
-    public get type(): "DM" | "Private" | "Public" {
+    public get type(): ChannelType {
         return this.get("type");
     }
 
     /**
      * The current user's join state for this channel
      */
-    public get joinState(): "NotJoined" | "Invited" | "Joined" {
-        return this.get("joinState");
+    public get joinState(): JoinState {
+        return this.get("join_state");
     }
 
     /**
      * The role of the current user in this channel
      */
-    public get role(): string | null {
+    public get role(): number | null {
         return this.get("role");
     }
 
@@ -79,7 +81,7 @@ export class Chat extends Base<APIChatChannel> {
      * The timestamp of the last touch/activity
      */
     public get touchDt(): number {
-        return this.get("touchDt");
+        return this.get("touch_dt");
     }
 
     /**
@@ -88,8 +90,8 @@ export class Chat extends Base<APIChatChannel> {
     public get user(): {
         id: string;
         nick: string;
-        lastSeenAt?: number;
-        isVerified: boolean;
+        last_seen_at?: number;
+        is_verified: boolean;
     } {
         return this.payload.user;
     }

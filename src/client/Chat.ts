@@ -162,8 +162,12 @@ export class Chat {
 
         const subscription = await this.#session!.subscribe(
             topic.topic,
-            (args?: any[], kwargs?: any) => {
-                handler(args?.[0], kwargs as T);
+            (_args?: any[], kwargs?: any) => {
+                const eventType = kwargs?.type;
+                if (typeof eventType !== "number") {
+                    throw new Error("WAMP event missing numeric type field");
+                }
+                handler(eventType, kwargs as T);
             },
         );
 

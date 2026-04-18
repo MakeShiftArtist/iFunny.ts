@@ -1,5 +1,5 @@
 import type { Client } from "../client/Client";
-import type { APIChatMessage } from "@ifunny/ifunny-api-types";
+import { type APIChatMessage, type MessageType } from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
 
 /**
@@ -25,14 +25,14 @@ export class ChatMessage extends Base<APIChatMessage> {
     /**
      * The type of message
      */
-    public get type(): "TEXT_MESSAGE" | "JOIN_CHANNEL" | "EXIT_CHANNEL" {
+    public get type(): MessageType {
         return this.get("type");
     }
 
     /**
      * The status of the message
      */
-    public get status(): string | null {
+    public get status(): number | null {
         return this.get("status");
     }
 
@@ -40,17 +40,18 @@ export class ChatMessage extends Base<APIChatMessage> {
      * The timestamp when the message was published
      */
     public get pubAt(): number {
-        return this.get("pubAt");
+        return this.get("pub_at");
     }
 
     /**
-     * The user who sent the message
+     * The user who sent the message.
+     * Note: the user ID is at the "user" key (not "id") in message payloads.
      */
     public get user(): {
-        id: string;
+        user: string;
         nick: string;
-        isVerified: boolean;
-        lastSeenAt?: number;
+        is_verified: boolean;
+        last_seen_at?: number;
     } {
         return this.payload.user;
     }
