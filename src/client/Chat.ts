@@ -128,7 +128,8 @@ export class Chat {
         kwargs: Record<string, any>,
     ): Promise<T> {
         await this.#ensureConnected();
-        return this.#ws.call(procedure, [], kwargs) as T;
+        const result = await this.#session!.call(procedure, [], kwargs) as { kwargs: T };
+        return result.kwargs;
     }
 
     /**
