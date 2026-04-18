@@ -42,38 +42,29 @@ export class ChatManager {
 
         const chat = await this.client.chat();
         const queue: Chat[] = [];
-        let resolved = false;
-        let subscribeError: Error | null = null;
+        let resolve!: () => void;
+        let reject!: (e: Error) => void;
+        const ready = new Promise<void>((res, rej) => {
+            resolve = res;
+            reject = rej;
+        });
 
         const unsubscribe = await chat.subscribe(
-            this.userJoinedChats(this.client.id!),
-            (eventType: number, event: any) => {
-                const channels = (event.chats || []).map(
+            userJoinedChats(this.client.id!),
+            (_eventType: number, event: any) => {
+                const channels = (event.chats ?? []).map(
                     (data: any) => new Chat(this.client, data),
                 );
-
                 queue.push(...channels);
-                resolved = true;
+                resolve();
             },
-        ).catch((error) => {
-            subscribeError = error;
+        ).catch((error: Error) => {
+            reject(error);
             return () => {};
         });
 
         try {
-            await new Promise<void>((resolve) => {
-                const checkQueue = setInterval(() => {
-                    if (resolved || subscribeError) {
-                        clearInterval(checkQueue);
-                        resolve();
-                    }
-                }, 50);
-            });
-
-            if (subscribeError) {
-                throw subscribeError;
-            }
-
+            await ready;
             for (const ch of queue) {
                 yield ch;
             }
