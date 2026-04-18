@@ -1,7 +1,8 @@
 import type { Client } from "./Client";
-import type { Topic } from "@ifunny/ifunny-api-types";
+import { type Topic } from "@ifunny/ifunny-api-types";
 import { Connection, Session } from "autobahn";
 import { setupWAMPCompatTransport } from "../utils/Transport";
+import { ChatWSUrl, ChatRealm, iFunnyProjectId } from "../utils/Constants";
 
 /**
  * Event handler type for subscribe callbacks
@@ -78,13 +79,13 @@ export class Chat {
             transports: [
                 {
                     type: "websocket",
-                    url: "wss://chat.ifunny.co/chat",
+                    url: ChatWSUrl,
                     headers: {
-                        "ifunny-project-id": "iFunny",
+                        "ifunny-project-id": iFunnyProjectId,
                     },
                 } as any,
             ],
-            realm: "co.fun.chat.ifunny",
+            realm: ChatRealm,
             use_es6_promises: true, // when.js (autobahn default) does not work in Bun
             authmethods: ["ticket"],
             authid: "client",
