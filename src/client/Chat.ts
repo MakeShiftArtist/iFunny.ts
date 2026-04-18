@@ -47,11 +47,6 @@ export class Chat {
     #connecting: Promise<void> | null = null;
 
     /**
-     * Subscriptions map to manage unsubscribe functions
-     */
-    #subscriptions: Map<string, () => void> = new Map();
-
-    /**
      * @param client Client instance (must be authorized)
      * @param bearer Bearer token for authentication
      */
@@ -174,10 +169,8 @@ export class Chat {
 
         const unsubscribe = () => {
             this.#session?.unsubscribe(subscription);
-            this.#subscriptions.delete(topic.topic);
         };
 
-        this.#subscriptions.set(topic.topic, unsubscribe);
         return unsubscribe;
     }
 
@@ -200,7 +193,6 @@ export class Chat {
             this.#ws.close();
             this.#connected = false;
             this.#session = null;
-            this.#subscriptions.clear();
         }
     }
 

@@ -10,6 +10,7 @@ import {
     kickMember,
 } from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
+import { ChatFeed } from "./ChatFeed";
 import { ChatMessage } from "./ChatMessage";
 
 /**
@@ -183,33 +184,10 @@ export class Chat extends Base<APIChatChannel> {
     }
 
     /**
-     * Async generator to fetch messages from the channel
+     * Returns a ChatFeed for scrolling through this channel's message history
      */
-    public async *getMessages(limit?: number) {
-        const chat = await this.client.chat();
-        let next: number | undefined;
-
-        while (true) {
-            const result = await chat.call<APIGetMessagesResponse>("co.fun.chat.list_messages", {
-                chat_name: this.name,
-                limit: limit ?? 50,
-                ...(next && { next }),
-            });
-
-            if (!result.messages || result.messages.length === 0) {
-                break;
-            }
-
-            for (const msg of result.messages) {
-                yield new ChatMessage(this.client, msg);
-            }
-
-            if (!result.next) {
-                break;
-            }
-
-            next = result.next;
-        }
+    public feed(): ChatFeed {
+        return new ChatFeed(this.client, this.name);
     }
 
     /**

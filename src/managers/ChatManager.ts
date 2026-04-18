@@ -1,6 +1,6 @@
 import type { Client } from "../client/Client";
 import { Chat } from "../structures/Chat";
-import { ChatMessage } from "../structures/ChatMessage";
+import { ChatFeed } from "../structures/ChatFeed";
 import {
     type ChannelType,
     type APIChannelsResponse,
@@ -80,21 +80,17 @@ export class ChatManager {
     /**
      * Get a specific chat channel by name via WAMP RPC
      */
-    public async getChannel(name: string): Promise<Chat | null> {
-        try {
-            if (!this.client.isAuthorized()) {
-                throw new Error("Client must be authorized to get channels");
-            }
-
-            const chat = await this.client.chat();
-            const result = await chat.call<APIGetChatResponse>("co.fun.chat.get_chat", {
-                chat_name: name,
-            });
-
-            return new Chat(this.client, result.chat);
-        } catch (error) {
-            return null;
+    public async getChannel(name: string): Promise<Chat> {
+        if (!this.client.isAuthorized()) {
+            throw new Error("Client must be authorized to get channels");
         }
+
+        const chat = await this.client.chat();
+        const result = await chat.call<APIGetChatResponse>("co.fun.chat.get_chat", {
+            chat_name: name,
+        });
+
+        return new Chat(this.client, result.chat);
     }
 
     /**
@@ -185,51 +181,24 @@ export class ChatManager {
     }
 
     /**
-     * Get a single page of message history from a channel
+     * Returns a ChatFeed for scrolling through a channel's message history
      */
-    public async getHistoryPage(
-        channelName: string,
-        limit: number = 50,
-        next?: number,
-    ): Promise<{ messages: ChatMessage[]; next: number; prev: number }> {
-        const channel = await this.getChannel(channelName);
-        if (!channel) {
-            return { messages: [], next: 0, prev: 0 };
-        }
-        return channel.getHistoryPage(limit, next);
-    }
-
-    /**
-     * Async generator to iterate all message history from a channel
-     */
-    public async *getHistory(channelName: string, limit?: number) {
-        const channel = await this.getChannel(channelName);
-        if (!channel) {
-            return;
-        }
-        yield* channel.getMessages(limit);
+    public messages(channelName: string): ChatFeed {
+        return new ChatFeed(this.client, channelName);
     }
 
     /**
      * Invite users to a chat channel
      */
     public async inviteUserToChannel(channelName: string, userIds: string[]): Promise<void> {
-        const channel = await this.getChannel(channelName);
-        if (!channel) {
-            throw new Error(`Channel not found: ${channelName}`);
-        }
-        return channel.invite(userIds);
+        return (await this.getChannel(channelName)).invite(userIds);
     }
 
     /**
      * Kick a user from a chat channel
      */
     public async kickUserFromChannel(channelName: string, userId: string): Promise<void> {
-        const channel = await this.getChannel(channelName);
-        if (!channel) {
-            throw new Error(`Channel not found: ${channelName}`);
-        }
-        return channel.kick(userId);
+        return (await this.getChannel(channelName)).kick(userId);
     }
 }
 

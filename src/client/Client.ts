@@ -253,6 +253,11 @@ export class Client<Authorized extends boolean = boolean> extends BaseClient {
         return this.#chatWs !== null;
     }
 
+    /**
+     * Get the WebSocket chat connection for real-time operations.
+     * Lazily initializes the connection on first call.
+     * @throws {Error} If the client is not authorized
+     */
     public async chat(): Promise<Chat> {
         if (!this.isAuthorized()) {
             throw new Error(
