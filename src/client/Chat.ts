@@ -41,6 +41,11 @@ export class Chat {
     #connected: boolean = false;
 
     /**
+     * In-flight connection promise — prevents concurrent #connect() calls
+     */
+    #connecting: Promise<void> | null = null;
+
+    /**
      * Subscriptions map to manage unsubscribe functions
      */
     #subscriptions: Map<string, () => void> = new Map();
@@ -55,13 +60,18 @@ export class Chat {
     }
 
     /**
-     * Ensures the WebSocket connection is established
+     * Ensures the WebSocket connection is established.
+     * Concurrent callers share the same in-flight promise.
      */
     async #ensureConnected(): Promise<void> {
-        if (this.#connected) {
-            return;
-        }
+        if (this.#connected) return;
+        this.#connecting ??= this.#connect().finally(() => {
+            this.#connecting = null;
+        });
+        return this.#connecting;
+    }
 
+    async #connect(): Promise<void> {
         setupWAMPCompatTransport();
 
         const ws = new Connection({
@@ -78,7 +88,7 @@ export class Chat {
             use_es6_promises: true, // when.js (autobahn default) does not work in Bun
             authmethods: ["ticket"],
             authid: "client",
-            onchallenge: (session: any, method: string, extra: any) => {
+            onchallenge: (session: any, method: string, _extra: any) => {
                 if (method === "ticket") {
                     return this.#bearer;
                 }
@@ -88,10 +98,10 @@ export class Chat {
         this.#ws = ws;
 
         return new Promise((resolve, reject) => {
-            let connected = false;
+            let opened = false;
 
             ws.onopen = (session: Session) => {
-                connected = true;
+                opened = true;
                 this.#connected = true;
                 this.#session = session;
                 this.#client.emit("chat:connected");
@@ -103,7 +113,7 @@ export class Chat {
                 this.#session = null;
                 this.#client.emit("chat:disconnected", reason, details);
 
-                if (!connected)
+                if (!opened)
                     reject(new Error(`Failed to connect to chat WebSocket. Reason: ${details?.message || reason || "Unknown"}`));
 
                 return false;
@@ -111,7 +121,7 @@ export class Chat {
 
             (ws as any).onerror = (error: any) => {
                 this.#client.emit("chat:error", error);
-                if (!connected) {
+                if (!opened) {
                     reject(error);
                 }
             };
