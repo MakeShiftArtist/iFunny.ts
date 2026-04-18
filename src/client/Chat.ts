@@ -75,6 +75,7 @@ export class Chat {
                 } as any,
             ],
             realm: "co.fun.chat.ifunny",
+            use_es6_promises: true, // when.js (autobahn default) does not work in Bun
             authmethods: ["ticket"],
             authid: "client",
             onchallenge: (session: any, method: string, extra: any) => {
