@@ -1,9 +1,13 @@
 import type { Client } from "../client/Client";
 import { Chat } from "../structures/Chat";
 import { ChatMessage } from "../structures/ChatMessage";
-import type { ChannelType, APIChannelsResponse, APIGetChatResponse } from "@ifunny/ifunny-api-types";
-import { RESTAPISuccessResponse as Success } from "@ifunny/ifunny-api-types";
-import { eventsIn, userJoinedChats, dmChannelTopic } from "@ifunny/ifunny-api-types";
+import {
+    type ChannelType,
+    type APIChannelsResponse,
+    type APIGetChatResponse,
+    RESTAPISuccessResponse as Success,
+    userJoinedChats,
+} from "@ifunny/ifunny-api-types";
 
 const CHANNEL_TYPE_MAP: Record<ChannelType, number> = {
     DM: 1,

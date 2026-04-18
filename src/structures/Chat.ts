@@ -1,6 +1,14 @@
 import type { Client } from "../client/Client";
-import type { APIChatChannel, APIGetMessagesResponse, Topic } from "@ifunny/ifunny-api-types";
-import { eventsIn, inviteUsers, acceptInvite, declineInvite, kickMember } from "@ifunny/ifunny-api-types";
+import {
+    type APIChatChannel,
+    type APIGetMessagesResponse,
+    type Topic,
+    eventsIn,
+    inviteUsers,
+    acceptInvite,
+    declineInvite,
+    kickMember,
+} from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
 import { ChatMessage } from "./ChatMessage";
 
