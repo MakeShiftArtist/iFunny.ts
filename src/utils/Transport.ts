@@ -69,26 +69,8 @@ export function setupWAMPCompatTransport() {
         };
 
         websocket.onopen = function () {
-          const serializer_part = websocket.protocol.split(".")[2];
-          for (const index in self._options.serializers) {
-            const serializer = self._options.serializers[index];
-            if (serializer.SERIALIZER_ID === serializer_part) {
-              transport.serializer = serializer;
-              break;
-            }
-          }
-
-          if (!transport.serializer) {
-            const jsonSerializer = self._options.serializers.find(
-              (s: any) => s.SERIALIZER_ID === "json"
-            );
-            if (jsonSerializer) {
-              transport.serializer = jsonSerializer;
-            } else if (self._options.serializers.length > 0) {
-              transport.serializer = self._options.serializers[0];
-            }
-          }
-
+          // We only ever register a single JSONSerializer, use it directly.
+          transport.serializer = self._options.serializers[0];
           transport.info.protocol = websocket.protocol;
           transport.onopen();
         };
@@ -102,8 +84,8 @@ export function setupWAMPCompatTransport() {
           transport.onclose(details);
         };
 
-        transport.send = async function (msg: any) {
-          const payload = await transport.serializer.serialize(msg);
+        transport.send = function (msg: any) {
+          const payload = transport.serializer.serialize(msg);
           log.debug("WebSocket transport send", payload);
           websocket.send(payload);
         };
