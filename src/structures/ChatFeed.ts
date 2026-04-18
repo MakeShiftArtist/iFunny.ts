@@ -28,20 +28,20 @@ export class ChatFeed extends BaseFeed {
      */
     public async *scroll(limit: number = 50): AsyncGenerator<ChatMessage> {
         const chat = await this.client.chat();
-        let cursor: string | undefined;
+        let next: number | undefined;
 
         do {
             const result = await chat.call<APIGetMessagesResponse>(
-                "com.ifunny.channel.get_messages",
-                { channel: this.channelName, limit, ...(cursor && { after: cursor }) },
+                "co.fun.chat.list_messages",
+                { chat_name: this.channelName, limit, ...(next && { next }) },
             );
 
             for (const message of result.messages ?? []) {
                 yield new ChatMessage(this.client, message);
             }
 
-            cursor = result.cursor;
-        } while (cursor);
+            next = result.next || undefined;
+        } while (next);
     }
 }
 

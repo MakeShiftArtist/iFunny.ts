@@ -5,6 +5,12 @@ import type { ChannelType, APIChannelsResponse } from "@ifunny/ifunny-api-types"
 import { RESTAPISuccessResponse as Success } from "@ifunny/ifunny-api-types";
 import { eventsIn, userJoinedChats, dmChannelTopic } from "@ifunny/ifunny-api-types";
 
+const CHANNEL_TYPE_MAP: Record<ChannelType, number> = {
+    DM: 1,
+    Private: 2,
+    Public: 3,
+};
+
 /**
  * Manages chat channels and chat operations via REST API and WAMP RPC
  */
@@ -30,7 +36,6 @@ export class ChatManager {
             throw new Error("Client must be authorized to fetch channels");
         }
 
-        // Ensure we have the user's ID
         if (!this.client.id) {
             await this.client.fetch();
         }
@@ -43,7 +48,6 @@ export class ChatManager {
         const unsubscribe = await chat.subscribe(
             this.userJoinedChats(this.client.id!),
             (eventType: number, event: any) => {
-                // Event contains user's joined channels
                 const channels = (event.chats || []).map(
                     (data: any) => new Chat(this.client, data),
                 );
@@ -53,11 +57,10 @@ export class ChatManager {
             },
         ).catch((error) => {
             subscribeError = error;
-            return () => {}; // Return no-op unsubscribe if subscription fails
+            return () => {};
         });
 
         try {
-            // Wait for events to arrive from the subscription
             await new Promise<void>((resolve) => {
                 const checkQueue = setInterval(() => {
                     if (resolved || subscribeError) {
@@ -71,7 +74,6 @@ export class ChatManager {
                 throw subscribeError;
             }
 
-            // Yield all channels from the queue
             for (const ch of queue) {
                 yield ch;
             }
@@ -144,11 +146,18 @@ export class ChatManager {
             throw new Error("Client must be authorized to get DM channels");
         }
 
+        if (!this.client.id) {
+            await this.client.fetch();
+        }
+
+        const selfId = this.client.id!;
+        const name = [...userIds, selfId].sort().reverse().join("_");
+
         const chat = await this.client.chat();
         const result = await chat.call<any>("co.fun.chat.get_or_create_chat", {
-            type: 1, // DM channel type
+            type: CHANNEL_TYPE_MAP.DM,
             users: userIds,
-            name: "", // Server will compute the name
+            name,
         });
 
         return new Chat(this.client, result);
@@ -174,7 +183,7 @@ export class ChatManager {
             title,
             name,
             description: description ?? "",
-            type,
+            type: CHANNEL_TYPE_MAP[type],
         });
 
         return new Chat(this.client, result);
@@ -207,13 +216,13 @@ export class ChatManager {
     public async getHistoryPage(
         channelName: string,
         limit: number = 50,
-        cursor?: string,
-    ): Promise<{ messages: ChatMessage[]; cursor?: string }> {
+        next?: number,
+    ): Promise<{ messages: ChatMessage[]; next: number; prev: number }> {
         const channel = await this.getChannel(channelName);
         if (!channel) {
-            return { messages: [], cursor: undefined };
+            return { messages: [], next: 0, prev: 0 };
         }
-        return channel.getHistoryPage(limit, cursor);
+        return channel.getHistoryPage(limit, next);
     }
 
     /**

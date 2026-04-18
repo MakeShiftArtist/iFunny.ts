@@ -67,7 +67,7 @@ export class Chat {
                     },
                 } as any,
             ],
-            realm: "ifunny",
+            realm: "co.fun.chat.ifunny",
             authmethods: ["ticket"],
             authid: "client",
             onchallenge: (session: any, method: string, extra: any) => {

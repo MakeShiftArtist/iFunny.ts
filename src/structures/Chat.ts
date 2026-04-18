@@ -1,5 +1,5 @@
 import type { Client } from "../client/Client";
-import type { APIChatChannel, APIChatMessage, Topic, APIGetMessagesResponse } from "@ifunny/ifunny-api-types";
+import type { APIChatChannel, APIGetMessagesResponse, Topic } from "@ifunny/ifunny-api-types";
 import { eventsIn, inviteUsers, acceptInvite, declineInvite, kickMember } from "@ifunny/ifunny-api-types";
 import { Base } from "./Base";
 import { ChatMessage } from "./ChatMessage";
@@ -90,8 +90,8 @@ export class Chat extends Base<APIChatChannel> {
      */
     public async join(): Promise<void> {
         const chat = await this.client.chat();
-        await chat.call<void>("com.ifunny.channel.join", {
-            channel: this.name,
+        await chat.call<void>("co.fun.chat.join_chat", {
+            chat_name: this.name,
         });
     }
 
@@ -100,21 +100,21 @@ export class Chat extends Base<APIChatChannel> {
      */
     public async leave(): Promise<void> {
         const chat = await this.client.chat();
-        await chat.call<void>("com.ifunny.channel.exit", {
-            channel: this.name,
+        await chat.call<void>("co.fun.chat.leave_chat", {
+            chat_name: this.name,
         });
     }
 
     /**
      * Send a message to the chat channel
      */
-    public async sendMessage(text: string): Promise<ChatMessage> {
+    public async sendMessage(text: string): Promise<void> {
         const chat = await this.client.chat();
-        const result = await chat.call<APIChatMessage>("com.ifunny.channel.send_message", {
-            channel: this.name,
-            text,
-        });
-        return new ChatMessage(this.client, result);
+        await chat.publish(
+            eventsIn(this.name).topic,
+            { message_type: 1, type: 200, text },
+            { acknowledge: true, exclude_me: true },
+        );
     }
 
     /**
@@ -158,33 +158,34 @@ export class Chat extends Base<APIChatChannel> {
      */
     public async getHistoryPage(
         limit: number = 50,
-        cursor?: string,
-    ): Promise<{ messages: ChatMessage[]; cursor?: string }> {
+        next?: number,
+    ): Promise<{ messages: ChatMessage[]; next: number; prev: number }> {
         const chat = await this.client.chat();
-        const result = await chat.call<APIGetMessagesResponse>("com.ifunny.channel.get_messages", {
-            channel: this.name,
+        const result = await chat.call<APIGetMessagesResponse>("co.fun.chat.list_messages", {
+            chat_name: this.name,
             limit,
-            ...(cursor && { after: cursor }),
+            ...(next && { next }),
         });
 
         return {
             messages: (result.messages ?? []).map(m => new ChatMessage(this.client, m)),
-            cursor: result.cursor,
+            next: result.next,
+            prev: result.prev,
         };
     }
 
     /**
      * Async generator to fetch messages from the channel
      */
-    public async *getMessages(limit?: number, after?: string) {
+    public async *getMessages(limit?: number) {
         const chat = await this.client.chat();
-        let cursor = after;
+        let next: number | undefined;
 
         while (true) {
-            const result = await chat.call<APIGetMessagesResponse>("com.ifunny.channel.get_messages", {
-                channel: this.name,
+            const result = await chat.call<APIGetMessagesResponse>("co.fun.chat.list_messages", {
+                chat_name: this.name,
                 limit: limit ?? 50,
-                ...(cursor && { after: cursor }),
+                ...(next && { next }),
             });
 
             if (!result.messages || result.messages.length === 0) {
@@ -195,11 +196,11 @@ export class Chat extends Base<APIChatChannel> {
                 yield new ChatMessage(this.client, msg);
             }
 
-            if (!result.cursor) {
+            if (!result.next) {
                 break;
             }
 
-            cursor = result.cursor;
+            next = result.next;
         }
     }
 
