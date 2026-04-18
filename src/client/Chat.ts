@@ -1,6 +1,7 @@
 import type { Client } from "./Client";
 import type { Topic } from "@ifunny/ifunny-api-types";
-import { Connection } from "autobahn";
+import { Connection, Session } from "autobahn";
+import { setupWAMPCompatTransport } from "../utils/Transport";
 
 /**
  * Event handler type for subscribe callbacks
@@ -16,7 +17,13 @@ export class Chat {
      * WAMP client instance (autobahn Connection)
      * @internal
      */
-    #ws: any = null;
+    #ws: Connection | null = null;
+
+    /**
+     * Autobahn session — available after onopen fires
+     * @internal
+     */
+    #session: Session | null = null;
 
     /**
      * The client instance
@@ -55,9 +62,9 @@ export class Chat {
             return;
         }
 
-        // CRITICAL: iFunny server requires ifunny-project-id header for WebSocket routing
-        // Headers must be set at the transport level (not Connection level) in autobahn-js
-        this.#ws = new Connection({
+        setupWAMPCompatTransport();
+
+        const ws = new Connection({
             transports: [
                 {
                     type: "websocket",
@@ -77,38 +84,38 @@ export class Chat {
                 throw new Error(`Unsupported auth method: ${method}`);
             },
         });
+        this.#ws = ws;
 
         return new Promise((resolve, reject) => {
             let connected = false;
 
-            this.#ws.onopen = (session: any) => {
+            ws.onopen = (session: Session) => {
                 connected = true;
                 this.#connected = true;
+                this.#session = session;
                 this.#client.emit("chat:connected");
                 resolve();
             };
 
-            this.#ws.onclose = (reason: string, details: any) => {
+            ws.onclose = (reason: string, details: any): boolean => {
                 this.#connected = false;
+                this.#session = null;
                 this.#client.emit("chat:disconnected", reason, details);
 
-                // If we haven't successfully opened yet, reject the promise
-                if (!connected) {
-                    reject(new Error(
-                        `Failed to connect to chat WebSocket. Reason: ${details?.message || reason || "Unknown"}`
-                    ));
-                }
+                if (!connected)
+                    reject(new Error(`Failed to connect to chat WebSocket. Reason: ${details?.message || reason || "Unknown"}`));
+
+                return false;
             };
 
-            // Handle unexpected responses during handshake
-            (this.#ws as any).onerror = (error: any) => {
+            (ws as any).onerror = (error: any) => {
                 this.#client.emit("chat:error", error);
                 if (!connected) {
                     reject(error);
                 }
             };
 
-            this.#ws.open();
+            ws.open();
         });
     }
 
@@ -129,9 +136,10 @@ export class Chat {
     public async publish<T = Record<string, any>>(
         topic: string,
         event: T,
+        options?: { acknowledge?: boolean; exclude_me?: boolean },
     ): Promise<void> {
         await this.#ensureConnected();
-        await this.#ws.publish(topic, [], event);
+        await this.#session!.publish(topic, [], event, options);
     }
 
     /**
@@ -144,15 +152,15 @@ export class Chat {
     ): Promise<() => void> {
         await this.#ensureConnected();
 
-        const subscription = await this.#ws.subscribe(
+        const subscription = await this.#session!.subscribe(
             topic.topic,
-            (args: any[], kwargs: any) => {
-                handler(args[0], kwargs as T);
+            (args?: any[], kwargs?: any) => {
+                handler(args?.[0], kwargs as T);
             },
         );
 
         const unsubscribe = () => {
-            this.#ws.unsubscribe(subscription);
+            this.#session?.unsubscribe(subscription);
             this.#subscriptions.delete(topic.topic);
         };
 
@@ -165,6 +173,9 @@ export class Chat {
      * (must be connected first via ensureConnected or other operations)
      */
     public getConnection(): Connection {
+        if (!this.#ws) {
+            throw new Error("Not connected");
+        }
         return this.#ws;
     }
 
@@ -175,6 +186,7 @@ export class Chat {
         if (this.#ws) {
             this.#ws.close();
             this.#connected = false;
+            this.#session = null;
             this.#subscriptions.clear();
         }
     }
