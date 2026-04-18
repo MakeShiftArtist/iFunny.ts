@@ -1,7 +1,7 @@
 import type { Client } from "../client/Client";
 import { Chat } from "../structures/Chat";
 import { ChatMessage } from "../structures/ChatMessage";
-import type { ChannelType, APIChannelsResponse } from "@ifunny/ifunny-api-types";
+import type { ChannelType, APIChannelsResponse, APIGetChatResponse } from "@ifunny/ifunny-api-types";
 import { RESTAPISuccessResponse as Success } from "@ifunny/ifunny-api-types";
 import { eventsIn, userJoinedChats, dmChannelTopic } from "@ifunny/ifunny-api-types";
 
@@ -92,11 +92,11 @@ export class ChatManager {
             }
 
             const chat = await this.client.chat();
-            const result = await chat.call<any>("co.fun.chat.get_chat", {
+            const result = await chat.call<APIGetChatResponse>("co.fun.chat.get_chat", {
                 chat_name: name,
             });
 
-            return new Chat(this.client, result.chat ?? result);
+            return new Chat(this.client, result.chat);
         } catch (error) {
             return null;
         }
@@ -154,13 +154,13 @@ export class ChatManager {
         const name = [...userIds, selfId].sort().reverse().join("_");
 
         const chat = await this.client.chat();
-        const result = await chat.call<any>("co.fun.chat.get_or_create_chat", {
+        const result = await chat.call<APIGetChatResponse>("co.fun.chat.get_or_create_chat", {
             type: CHANNEL_TYPE_MAP.DM,
             users: userIds,
             name,
         });
 
-        return new Chat(this.client, result);
+        return new Chat(this.client, result.chat);
     }
 
     /**
@@ -178,7 +178,7 @@ export class ChatManager {
         }
 
         const chat = await this.client.chat();
-        const result = await chat.call<any>("co.fun.chat.new_chat", {
+        const result = await chat.call<APIGetChatResponse>("co.fun.chat.new_chat", {
             users: inviteIds ?? [],
             title,
             name,
@@ -186,7 +186,7 @@ export class ChatManager {
             type: CHANNEL_TYPE_MAP[type],
         });
 
-        return new Chat(this.client, result);
+        return new Chat(this.client, result.chat);
     }
 
     /**
