@@ -7,6 +7,8 @@ import {
     type APIGetChatResponse,
     RESTAPISuccessResponse as Success,
     userJoinedChats,
+    inviteUsers,
+    kickMember,
 } from "@ifunny/ifunny-api-types";
 
 /**
@@ -38,7 +40,7 @@ export class ChatManager {
             await this.client.fetch();
         }
 
-        const chat = await this.client.chat();
+        const ws = await this.client.chat();
         const queue: Chat[] = [];
         let resolve!: () => void;
         let reject!: (e: Error) => void;
@@ -47,7 +49,7 @@ export class ChatManager {
             reject = rej;
         });
 
-        const unsubscribe = await chat.subscribe(
+        const unsubscribe = await ws.subscribe(
             userJoinedChats(this.client.id!),
             (_eventType: number, event: any) => {
                 const channels = (event.chats ?? []).map(
@@ -79,8 +81,8 @@ export class ChatManager {
             throw new Error("Client must be authorized to get channels");
         }
 
-        const chat = await this.client.chat();
-        const result = await chat.call<APIGetChatResponse>("co.fun.chat.get_chat", {
+        const ws = await this.client.chat();
+        const result = await ws.call<APIGetChatResponse>("co.fun.chat.get_chat", {
             chat_name: name,
         });
 
@@ -138,8 +140,8 @@ export class ChatManager {
         const selfId = this.client.id!;
         const name = [...userIds, selfId].sort().reverse().join("_");
 
-        const chat = await this.client.chat();
-        const result = await chat.call<APIGetChatResponse>("co.fun.chat.get_or_create_chat", {
+        const ws = await this.client.chat();
+        const result = await ws.call<APIGetChatResponse>("co.fun.chat.get_or_create_chat", {
             type: ChannelType.DM,
             users: userIds,
             name,
@@ -162,8 +164,8 @@ export class ChatManager {
             throw new Error("Client must be authorized to create channels");
         }
 
-        const chat = await this.client.chat();
-        const result = await chat.call<APIGetChatResponse>("co.fun.chat.new_chat", {
+        const ws = await this.client.chat();
+        const result = await ws.call<APIGetChatResponse>("co.fun.chat.new_chat", {
             users: inviteIds ?? [],
             title,
             name,
@@ -185,14 +187,18 @@ export class ChatManager {
      * Invite users to a chat channel
      */
     public async inviteUserToChannel(channelName: string, userIds: string[]): Promise<void> {
-        return (await this.getChannel(channelName)).invite(userIds);
+        const ws = await this.client.chat();
+        const rpc = inviteUsers(channelName, userIds);
+        await ws.call<void>(rpc.procedure, rpc.kwargs);
     }
 
     /**
      * Kick a user from a chat channel
      */
     public async kickUserFromChannel(channelName: string, userId: string): Promise<void> {
-        return (await this.getChannel(channelName)).kick(userId);
+        const ws = await this.client.chat();
+        const rpc = kickMember(channelName, userId);
+        await ws.call<void>(rpc.procedure, rpc.kwargs);
     }
 }
 

@@ -5,6 +5,8 @@ import {
     type Topic,
     type ChannelType,
     type JoinState,
+    MessageType,
+    EventType,
     eventsIn,
     inviteUsers,
     acceptInvite,
@@ -100,8 +102,8 @@ export class Chat extends Base<APIChatChannel> {
      * Join the chat channel
      */
     public async join(): Promise<void> {
-        const chat = await this.client.chat();
-        await chat.call<void>("co.fun.chat.join_chat", {
+        const ws = await this.client.chat();
+        await ws.call<void>("co.fun.chat.join_chat", {
             chat_name: this.name,
         });
     }
@@ -110,8 +112,8 @@ export class Chat extends Base<APIChatChannel> {
      * Leave the chat channel
      */
     public async leave(): Promise<void> {
-        const chat = await this.client.chat();
-        await chat.call<void>("co.fun.chat.leave_chat", {
+        const ws = await this.client.chat();
+        await ws.call<void>("co.fun.chat.leave_chat", {
             chat_name: this.name,
         });
     }
@@ -120,10 +122,10 @@ export class Chat extends Base<APIChatChannel> {
      * Send a message to the chat channel
      */
     public async sendMessage(text: string): Promise<void> {
-        const chat = await this.client.chat();
-        await chat.publish(
+        const ws = await this.client.chat();
+        await ws.publish(
             eventsIn(this.name).topic,
-            { message_type: 1, type: 200, text },
+            { message_type: MessageType.TEXT_MESSAGE, type: EventType.MESSAGE, text },
             { acknowledge: true, exclude_me: true },
         );
     }
@@ -132,36 +134,36 @@ export class Chat extends Base<APIChatChannel> {
      * Invite users to the chat channel
      */
     public async invite(userIds: string[]): Promise<void> {
-        const chat = await this.client.chat();
+        const ws = await this.client.chat();
         const rpc = inviteUsers(this.name, userIds);
-        await chat.call<void>(rpc.procedure, rpc.kwargs);
+        await ws.call<void>(rpc.procedure, rpc.kwargs);
     }
 
     /**
      * Kick a user from the chat channel
      */
     public async kick(userId: string): Promise<void> {
-        const chat = await this.client.chat();
+        const ws = await this.client.chat();
         const rpc = kickMember(this.name, userId);
-        await chat.call<void>(rpc.procedure, rpc.kwargs);
+        await ws.call<void>(rpc.procedure, rpc.kwargs);
     }
 
     /**
      * Accept an invite to a chat channel
      */
     public async acceptInvite(): Promise<void> {
-        const chat = await this.client.chat();
+        const ws = await this.client.chat();
         const rpc = acceptInvite(this.name);
-        await chat.call<void>(rpc.procedure, rpc.kwargs);
+        await ws.call<void>(rpc.procedure, rpc.kwargs);
     }
 
     /**
      * Decline an invite to a chat channel
      */
     public async declineInvite(): Promise<void> {
-        const chat = await this.client.chat();
+        const ws = await this.client.chat();
         const rpc = declineInvite(this.name);
-        await chat.call<void>(rpc.procedure, rpc.kwargs);
+        await ws.call<void>(rpc.procedure, rpc.kwargs);
     }
 
     /**
@@ -171,8 +173,8 @@ export class Chat extends Base<APIChatChannel> {
         limit: number = 50,
         next?: number,
     ): Promise<{ messages: ChatMessage[]; next: number; prev: number }> {
-        const chat = await this.client.chat();
-        const result = await chat.call<APIGetMessagesResponse>("co.fun.chat.list_messages", {
+        const ws = await this.client.chat();
+        const result = await ws.call<APIGetMessagesResponse>("co.fun.chat.list_messages", {
             chat_name: this.name,
             limit,
             ...(next && { next }),

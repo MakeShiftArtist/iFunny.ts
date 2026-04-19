@@ -9,17 +9,11 @@ import { ChatMessage } from "./ChatMessage";
  */
 export class ChatFeed extends BaseFeed {
     /**
-     * The channel name
-     */
-    public readonly channelName: string;
-
-    /**
      * @param client Client attached to the ChatFeed
      * @param channelName The name of the chat channel
      */
     public constructor(client: Client, channelName: string) {
         super(client, channelName);
-        this.channelName = channelName;
     }
 
     /**
@@ -27,13 +21,13 @@ export class ChatFeed extends BaseFeed {
      * @param limit The maximum number of messages to fetch per page (default: 50)
      */
     public async *scroll(limit: number = 50): AsyncGenerator<ChatMessage> {
-        const chat = await this.client.chat();
+        const ws = await this.client.chat();
         let next: number | undefined;
 
         do {
-            const result = await chat.call<APIGetMessagesResponse>(
+            const result = await ws.call<APIGetMessagesResponse>(
                 "co.fun.chat.list_messages",
-                { chat_name: this.channelName, limit, ...(next && { next }) },
+                { chat_name: this.url, limit, ...(next && { next }) },
             );
 
             for (const message of result.messages ?? []) {

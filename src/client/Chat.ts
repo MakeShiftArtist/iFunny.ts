@@ -195,6 +195,7 @@ export class Chat {
     public disconnect(): void {
         if (this.#ws) {
             this.#ws.close();
+            this.#ws = null;
             this.#connected = false;
             this.#session = null;
         }
