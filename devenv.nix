@@ -1,8 +1,5 @@
 {
   pkgs,
-  lib,
-  config,
-  inputs,
   ...
 }:
 
@@ -18,6 +15,7 @@
   languages.nix.enable = true;
   languages.deno.enable = true;
   languages.javascript.npm.enable = true;
+  languages.javascript.nodejs.enable = true;
   languages.javascript.enable = true;
 
   scripts."build:npm".exec = ''
