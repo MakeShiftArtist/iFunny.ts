@@ -1,8 +1,5 @@
 {
   pkgs,
-  lib,
-  config,
-  inputs,
   ...
 }:
 
@@ -24,5 +21,6 @@
     bun.enable = true;
   };
 
+  git-hooks.hooks.prettier.enable = true;
   # See full reference at https://devenv.sh/reference/options/
 }
