@@ -18,7 +18,6 @@
     enable = true;
     npm.enable = true;
     nodejs.enable = true;
-    bun.enable = true;
   };
 
   git-hooks.hooks.prettier.enable = true;
