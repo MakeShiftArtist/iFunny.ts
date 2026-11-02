@@ -13,8 +13,7 @@ import type { Client } from "../client/Client";
 import type { URLSearchParams } from "url";
 
 export type ModifyParams =
-    | { from?: APIFeedFrom; limit?: number }
-    | URLSearchParams;
+    { from?: APIFeedFrom; limit?: number } | URLSearchParams;
 
 /**
  * Represents content from iFunny
