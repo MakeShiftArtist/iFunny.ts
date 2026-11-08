@@ -5,18 +5,18 @@ import {
     RESTAPISignUpSuccess,
     RESTAPISuccessResponse as Success,
 } from "@ifunny/ifunny-api-types";
-import { BaseClient } from "./BaseClient";
-import { CaptchaError } from "../errors/CaptchaError";
-import { ClientOptions } from "./BaseClient";
-import { ContentManager } from "../managers/ContentManager";
-import { FeedManager } from "../managers/FeedManager";
-import { If } from "../utils/Types";
-import { iFunnyError } from "../errors/iFunnyError";
-import { UserManager } from "../managers/UserManager";
-import { Util } from "../utils/Util";
+import { BaseClient } from "./BaseClient.js";
+import { CaptchaError } from "../errors/CaptchaError.js";
+import { ClientOptions } from "./BaseClient.js";
+import { ContentManager } from "../managers/ContentManager.js";
+import { FeedManager } from "../managers/FeedManager.js";
+import { If } from "../utils/Types.js";
+import { iFunnyError } from "../errors/iFunnyError.js";
+import { UserManager } from "../managers/UserManager.js";
+import { Util } from "../utils/Util.js";
 import FormData from "form-data";
-import { AppManager } from "../managers/AppManager";
-import User from "../structures/User";
+import { AppManager } from "../managers/AppManager.js";
+import User from "../structures/User.js";
 
 /**
  * Method params for Client#signUp()

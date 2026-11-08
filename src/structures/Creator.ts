@@ -1,6 +1,6 @@
-import { Base } from "./Base";
-import type { Client } from "../client/Client";
-import type { User } from "./User";
+import { Base } from "./Base.js";
+import type { Client } from "../client/Client.js";
+import type { User } from "./User.js";
 import type {
     APIContentCreator,
     APINickColor,

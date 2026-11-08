@@ -5,10 +5,10 @@ import {
     RESTAPIContentResponse,
     RESTAPIStatusCode,
 } from "@ifunny/ifunny-api-types";
-import { CachedManager } from "./CachedManager";
-import { Client } from "../client/Client";
-import { Content } from "../structures/Content";
-import { iFunnyError } from "../errors/iFunnyError";
+import { CachedManager } from "./CachedManager.js";
+import { Client } from "../client/Client.js";
+import { Content } from "../structures/Content.js";
+import { iFunnyError } from "../errors/iFunnyError.js";
 import { ICachingOptions } from "node-ts-cache";
 
 /**

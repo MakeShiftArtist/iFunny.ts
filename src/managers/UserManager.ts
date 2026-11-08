@@ -4,11 +4,11 @@ import {
     IFUNNY_ERRORS,
     RESTAPISuccessResponse as Success,
 } from "@ifunny/ifunny-api-types";
-import { CachedManager } from "./CachedManager";
-import { Client } from "../client/Client";
+import { CachedManager } from "./CachedManager.js";
+import { Client } from "../client/Client.js";
 import { ICachingOptions } from "node-ts-cache";
-import { iFunnyError } from "../errors/iFunnyError";
-import { User } from "../structures/User";
+import { iFunnyError } from "../errors/iFunnyError.js";
+import { User } from "../structures/User.js";
 
 /**
  * Manages iFunny Users

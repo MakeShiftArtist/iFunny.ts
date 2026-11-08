@@ -7,9 +7,9 @@ import type {
     APINewsType,
     APINewsUser,
 } from "@ifunny/ifunny-api-types";
-import type { Nullify } from "../utils/Types";
-import Content from "./Content";
-import Client from "../client/Client";
+import type { Nullify } from "../utils/Types.js";
+import Content from "./Content.js";
+import Client from "../client/Client.js";
 
 /**
  * Represents a News object from the Activity Feed

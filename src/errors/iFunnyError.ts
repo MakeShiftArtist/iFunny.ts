@@ -4,8 +4,8 @@ import {
     RESTAPIErrorResponse,
     RESTAPIiFunnyError,
 } from "@ifunny/ifunny-api-types";
-import { CaptchaError } from "./CaptchaError";
-import { Client } from "../client/Client";
+import { CaptchaError } from "./CaptchaError.js";
+import { Client } from "../client/Client.js";
 
 /**
  * A class representing an error thrown by iFunny.ts.

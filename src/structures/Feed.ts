@@ -1,7 +1,7 @@
-import { BaseFeed, PaginateConfig } from "./BaseFeed";
-import { Content } from "./Content";
+import { BaseFeed, PaginateConfig } from "./BaseFeed.js";
+import { Content } from "./Content.js";
 import type { APIContent } from "@ifunny/ifunny-api-types";
-import type { Client } from "../client/Client";
+import type { Client } from "../client/Client.js";
 
 /**
  * Represents a feed on iFunny

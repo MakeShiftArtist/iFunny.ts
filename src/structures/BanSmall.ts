@@ -3,9 +3,9 @@ import {
     type APIBanSmall,
     type APIBanType,
 } from "@ifunny/ifunny-api-types";
-import { Base } from "./Base";
-import { User } from "./User";
-import type { BaseUser } from "./BaseUser";
+import { Base } from "./Base.js";
+import { User } from "./User.js";
+import type { BaseUser } from "./BaseUser.js";
 
 /**
  * Represents a Ban on iFunny

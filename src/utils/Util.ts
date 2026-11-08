@@ -1,9 +1,9 @@
-import { DefaultBasicAuthConfig } from "./Constants";
+import { DefaultBasicAuthConfig } from "./Constants.js";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import crypto from "crypto";
-import type { BasicAuthConfig } from "./Types";
-import type { Client } from "../client/Client";
-import type { PaginateConfig } from "../structures/BaseFeed";
+import type { BasicAuthConfig } from "./Types.js";
+import type { Client } from "../client/Client.js";
+import type { PaginateConfig } from "../structures/BaseFeed.js";
 import type {
     RESTAPIErrorResponse,
     RESTAPIItems,

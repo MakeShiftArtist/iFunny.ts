@@ -1,2 +1,2 @@
-export { CaptchaError } from "./CaptchaError";
-export { iFunnyError } from "./iFunnyError";
+export { CaptchaError } from "./CaptchaError.js";
+export { iFunnyError } from "./iFunnyError.js";

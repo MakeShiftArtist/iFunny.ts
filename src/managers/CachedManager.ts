@@ -1,6 +1,6 @@
-import { Client } from "../client/Client";
-import { Cache } from "../structures/Cache";
-import { DataStructure } from "../structures/Cache";
+import { Client } from "../client/Client.js";
+import { Cache } from "../structures/Cache.js";
+import { DataStructure } from "../structures/Cache.js";
 import { ICachingOptions } from "node-ts-cache";
 
 /**

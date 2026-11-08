@@ -6,7 +6,7 @@ import {
     DefaultClientId,
     DefaultClientSecret,
     DefaultBasicTokenLength,
-} from "../utils/Constants";
+} from "../utils/Constants.js";
 import { APIClientUser as ClientPayload } from "@ifunny/ifunny-api-types";
 import { EventEmitter } from "eventemitter3";
 import { ICachingOptions } from "node-ts-cache";

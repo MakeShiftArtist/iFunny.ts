@@ -8,10 +8,10 @@ import {
     type APIUserProfile,
     type APIUserProfileNums,
 } from "@ifunny/ifunny-api-types";
-import { BanSmall } from "./BanSmall";
-import { Base } from "./Base";
-import { MemeExperience } from "./MemeExperience";
-import type { Client } from "../client/Client";
+import { BanSmall } from "./BanSmall.js";
+import { Base } from "./Base.js";
+import { MemeExperience } from "./MemeExperience.js";
+import type { Client } from "../client/Client.js";
 
 /**
  * Base User class that user class will inherit from.

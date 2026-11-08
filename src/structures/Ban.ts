@@ -4,10 +4,10 @@ import {
     type APIBanReason,
     type APIBanType,
 } from "@ifunny/ifunny-api-types";
-import { Base } from "./Base";
-import { Comment } from "./Comment";
-import { Content } from "./Content";
-import type { User } from "./User";
+import { Base } from "./Base.js";
+import { Comment } from "./Comment.js";
+import { Content } from "./Content.js";
+import type { User } from "./User.js";
 
 /**
  * Represents a complete Ban Object on iFunny

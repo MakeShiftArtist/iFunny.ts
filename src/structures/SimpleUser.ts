@@ -5,9 +5,9 @@ import {
     type APISimpleUser,
     type APIUserNums,
 } from "@ifunny/ifunny-api-types";
-import { Base } from "./Base";
-import type { Client } from "../client/Client";
-import type { User } from "./User";
+import { Base } from "./Base.js";
+import type { Client } from "../client/Client.js";
+import type { User } from "./User.js";
 
 /**
  * Simple user class, typically found in pagination

@@ -14,9 +14,9 @@ import {
     type APIFeedFrom,
     type Size,
 } from "@ifunny/ifunny-api-types";
-import { Base } from "./Base";
-import { Creator } from "./Creator";
-import type { Client } from "../client/Client";
+import { Base } from "./Base.js";
+import { Creator } from "./Creator.js";
+import type { Client } from "../client/Client.js";
 
 /**
  * The Base Content that all Content Types will extend

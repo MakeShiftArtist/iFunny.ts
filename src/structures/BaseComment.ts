@@ -4,11 +4,11 @@ import {
     type APICommentNum,
     type APICommentState,
 } from "@ifunny/ifunny-api-types";
-import { Base } from "./Base";
-import { Comment } from "./Comment";
-import { SimpleUser } from "./SimpleUser";
-import { Thumbnail } from "./Thumbnail";
-import type { Content } from "./Content";
+import { Base } from "./Base.js";
+import { Comment } from "./Comment.js";
+import { SimpleUser } from "./SimpleUser.js";
+import { Thumbnail } from "./Thumbnail.js";
+import type { Content } from "./Content.js";
 
 /**
  * Represents a BaseComment on iFunny

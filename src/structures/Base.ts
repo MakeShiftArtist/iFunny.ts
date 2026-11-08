@@ -1,6 +1,6 @@
 import { type APIBasePayload, Endpoints } from "@ifunny/ifunny-api-types";
-import type { Client } from "../client/Client";
-import type { Nullify } from "../utils/Types";
+import type { Client } from "../client/Client.js";
+import type { Nullify } from "../utils/Types.js";
 
 /**
  * Base class for all structures.

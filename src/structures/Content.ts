@@ -6,10 +6,10 @@ import {
     type RESTAPIContentSmileUsersResponse,
     APIComment,
 } from "@ifunny/ifunny-api-types";
-import { BaseContent } from "./BaseContent";
-import { SimpleUser } from "./SimpleUser";
-import { Comment } from "./Comment";
-import type { Client } from "../client/Client";
+import { BaseContent } from "./BaseContent.js";
+import { SimpleUser } from "./SimpleUser.js";
+import { Comment } from "./Comment.js";
+import type { Client } from "../client/Client.js";
 import type { URLSearchParams } from "url";
 
 export type ModifyParams =

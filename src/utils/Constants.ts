@@ -1,4 +1,4 @@
-import { BasicAuthConfig, BasicAuthLength } from "./Types";
+import { BasicAuthConfig, BasicAuthLength } from "./Types.js";
 
 // * User Agent
 // ? As of 7/24/22 on Android 7.1.2

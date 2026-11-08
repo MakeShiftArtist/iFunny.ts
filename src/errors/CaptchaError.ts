@@ -1,5 +1,5 @@
-import { Client } from "../client/Client";
-import { iFunnyError } from "./iFunnyError";
+import { Client } from "../client/Client.js";
+import { iFunnyError } from "./iFunnyError.js";
 import {
     RESTAPICaptchaType,
     RESTAPIErrorCaptchaRequired,

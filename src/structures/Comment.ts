@@ -1,6 +1,6 @@
-import { BaseComment } from "./BaseComment";
+import { BaseComment } from "./BaseComment.js";
 import type { APIComment } from "@ifunny/ifunny-api-types";
-import type { Content } from "./Content";
+import type { Content } from "./Content.js";
 
 // TODO: Add Comment methods
 
