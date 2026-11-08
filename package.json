@@ -44,7 +44,7 @@
         "prepack": "npm run rebuild",
         "docs": "typedoc",
         "docs:clean": "rm -rf ./docs",
-        "docs:publish": "npm run docs:clean && npm run docs && gh-pages -d ./docs/ -t true",
+        "docs:publish": "npm run docs:clean && npm run docs && gh-pages -d ./docs/ -t",
         "login": "npx ts-node login.ts"
     },
     "repository": {
