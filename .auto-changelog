@@ -1,0 +1,19 @@
+{
+    "template": "keepachangelog",
+    "hideEmptyReleases": true,
+    "commitLimit": false,
+    "unreleased": true,
+    "tagPrefix": "v",
+    "replaceText": {
+        "([bB]reaking:\\s*)": "",
+        "([bB]reaking change:\\s*)": "",
+        "(^[fF]eat:\\s*)": "",
+        "(^[fF]ix:\\s*)": "",
+        "(^[cC]hore:\\s*)": "",
+        "(^[dD]ocs?:\\s*)": "",
+        "(^[rR]efactor:\\s*)": "",
+        "(^[tT]est:\\s*)": "",
+        "(^[sS]tyle:\\s*)": "",
+        "(^[pP]erf:\\s*)": ""
+    }
+}

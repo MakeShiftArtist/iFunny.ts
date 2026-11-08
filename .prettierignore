@@ -1,1 +1,20 @@
-changelog-template.hbs
+# Only TypeScript, JavaScript and JSON files are formatted: ignore everything,
+# then re-include directories and the extensions we care about.
+*
+!*/
+!*.ts
+!*.mts
+!*.cts
+!*.js
+!*.mjs
+!*.cjs
+!*.json
+
+# Build output and generated files
+dist/
+types/
+docs/
+node_modules/
+.devenv/
+.direnv/
+package-lock.json

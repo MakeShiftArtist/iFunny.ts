@@ -1,29 +1,24 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "outDir": "./dist",
-        "declarationDir": "./dist",
-        "rootDir": "./src",
-        "paths": {
-            "@/*": ["./src/*"]
-        },
-        "lib": ["ESNext"],
-        "module": "esnext",
-        "target": "esnext",
-        "moduleResolution": "bundler",
+        "strict": true,
+        "target": "ES2022",
+        "lib": ["ES2022"],
+        "types": ["node"],
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
         "moduleDetection": "force",
-        "allowImportingTsExtensions": true,
+        "sourceMap": true,
         "removeComments": false,
-        "noEmit": false,
-        "emitDeclarationOnly": true,
+        "rootDir": "./src",
         "declaration": true,
         "declarationMap": true,
-        "strict": true,
         "skipLibCheck": true,
-        "jsx": "react-jsx",
-        "allowSyntheticDefaultImports": true,
+        "noUnusedLocals": true,
+        "noImplicitOverride": true,
         "forceConsistentCasingInFileNames": true,
-        "allowJs": true
+        "verbatimModuleSyntax": false,
+        "isolatedModules": true
     },
     "include": ["src/**/*.ts"]
 }
