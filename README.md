@@ -79,8 +79,8 @@ NEVER SHARE THESE WITH ANYONE. A bearer token grants full control over your acco
 
 Install iFunny.ts
 
-```powershell
-  npm install ifunny.ts
+```sh
+npm install ifunny.ts
 ```
 
 ```ts
