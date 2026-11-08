@@ -1,170 +1,369 @@
 # Changelog
-> All notable changes to this project will be documented in this file.
-> This Changelog adheres to the [Semantic Versioning]("https://semver.org/")
 
-## 0.9.0 - 2025-12-29
+All notable changes to this project will be documented in this file.
 
-### Features
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-*  Add SimpleUser, News, BanSmall @makeshiftartist ([`5198710`](https://github.com/MakeShiftArtist/iFunny.ts/commit/519871004cc74da258a8758fd58b1da9ac4a0ae4))
-*  Fully implemented BaseContent @MakeShiftArtist ([`6123a3b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6123a3bdb666951b7e3279db9a6dae29e12b43e4))
-*  Add BaseUser @MakeShiftArtist ([`f15d6a4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f15d6a450830732f7513e0b1a456eb6fc05caaca))
-*  Add feeds, content, and util to Client @makeshiftartist ([`93a99b0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/93a99b038ae39c7fa13071de79d288f18f9b32d4))
-*  Refactor iFunnyError @makeshiftartist ([`7271cd4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7271cd4b11b6581600041862256619f549d1cdd5))
-*  Add iFunnyError handling @MakeShiftArtist ([`67ddd59`](https://github.com/MakeShiftArtist/iFunny.ts/commit/67ddd59dd1ef1543bab68eb4383804f1fbfab192))
-*  Add Client @MakeShiftArtist ([`974d6bf`](https://github.com/MakeShiftArtist/iFunny.ts/commit/974d6bf2791cd4acbf4c174f42e2f4bd60179704))
-*  Improved Ban @makeshiftartist ([`844600f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/844600f2ad06c42c9541eef43b30c1205206d7f5))
-*  Add BaseClient @MakeShiftArtist ([`0560308`](https://github.com/MakeShiftArtist/iFunny.ts/commit/05603081f41a63d86472acbe1a5c6fdd99b0048a))
-*  Add Creator @MakeShiftArtist ([`b024e29`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b024e29f61bc471bd4fd9f0c5557c82b68985892))
-*  Add BaseComment and Comment @makeshiftartist ([`5504f3f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5504f3fdedacc30ae9878a721755d89003553c13))
-*  Added Client.users @MakeShiftArtist ([`63a12f3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/63a12f3fa39862e90153968dbadf078f433969da))
-*  Added Base Object @MakeShiftArtist ([`e1fb342`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e1fb3429db1458c45aae7bf9688565874ea3179e))
-*  Add BaseFeed and Feed @makeshiftartist ([`9e03bd1`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9e03bd177f11bac257d2ec0c7e7fd110847aaec6))
-*  Add Methods @MakeShiftArtist ([`ca3e04b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/ca3e04b16c73cabe9e5263c32dd7c9fa3833f265))
-*  Add Cache class and improve docs @makeshiftartist ([`8350408`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8350408fcfc15df3334de64be92fd0a2189d113f))
-*  Add methods to Content @makeshiftartist ([`b86821c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b86821cd8007de5e3e13c1a7b97285c551476bf8))
-*  Add Ban @MakeShiftArtist ([`7c11c8a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7c11c8a151edca68af0aebd017c91674e011cfdd))
-*  Add id, create, and cropped to Thumbnail @makeshiftartist ([`59922ff`](https://github.com/MakeShiftArtist/iFunny.ts/commit/59922ff09753857caf4623e99cc5f7e86e6d291e))
-*  Add more utility methods @makeshiftartist ([`6806420`](https://github.com/MakeShiftArtist/iFunny.ts/commit/68064201973a846c9508b2506d1b6bb938effda7))
-*  Added nicks and email checking and fixed fetch @MakeShiftArtist ([`b76bde7`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b76bde77e7a21fa3d89fee8329aa61914a4ec5a0))
-*  Add AppManager.ts @makeshiftartist ([`9f0844c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9f0844c9c796fdbcfcf46e263d36a24c61fb26de))
-*  Implement Cache and fix docs @makeshiftartist ([`fe5aa32`](https://github.com/MakeShiftArtist/iFunny.ts/commit/fe5aa32bf1d96828297d8af6b9e3b6c96b00a12c))
-*  Add modifySubscription and timeline to User @makeshiftartist ([`34ac85f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/34ac85f30fadaee5ca052c31b1630713220d290d))
-*  Add FeedManager @makeshiftartist ([`bad074e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/bad074ea4d62d0548d2d1a509387c89851255981))
-*  Add MemeExperience @MakeShiftArtist ([`d069d77`](https://github.com/MakeShiftArtist/iFunny.ts/commit/d069d77ea6944dbd17c75bec75b8ef998a57341c))
-*  Add Constants @MakeShiftArtist ([`e30f3bc`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e30f3bcaa921dc9146bd869b8da363c8b328a566))
-*  Add Util @MakeShiftArtist ([`9f16015`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9f16015e9282e5234dac2ead6c148b04db4eabc0))
-*  Added getters to Thumbnail @makeshiftartist ([`f349bfa`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f349bfa335446f66109a86d3b828757db8b6ddf3))
-*  Add CaptchaError @makeshiftartist ([`2f746d3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2f746d3fbba324358a09b8966714c25ef87457ef))
-*  Improved Error Handling @MakeShiftArtist ([`3b85fc2`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3b85fc2791b135ef41b7ef53edbc8176ebbe6d4e))
-*  Add User @MakeShiftArtist ([`65f80f2`](https://github.com/MakeShiftArtist/iFunny.ts/commit/65f80f25d4afdea5367e0f0e63ab69c5bd9c1bcf))
-*  Add BaseContent @MakeShiftArtist ([`bac9cee`](https://github.com/MakeShiftArtist/iFunny.ts/commit/bac9ceef14ccd96bc34fa6be8e0883dcea7d1c41))
-*  Add CachedManager @MakeShiftArtist ([`e47a36b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e47a36bc2ed58f7457db83b6b0eb36025aff6de1))
-*  Add Content @makeshiftartist ([`ec7b37a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/ec7b37a998d70e325bbc695366985d75e37fa3a7))
-*  Added more custom errors @MakeShiftArtist ([`86edf10`](https://github.com/MakeShiftArtist/iFunny.ts/commit/86edf105973da191bd1d1249208c09c05197c418))
-*  Created Thumbnail (WIP) @MakeShiftArtist ([`1898320`](https://github.com/MakeShiftArtist/iFunny.ts/commit/189832086c5d6b21ac8bc8f678980e89c1e2a698))
-*  add prettier config @MakeShiftArtist ([`8d2b381`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8d2b38118cbd321c76419cf10b99295ef968537d))
-*  Add UserManager @MakeShiftArtist ([`6015b52`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6015b5277102717d977244671490baac29219278))
-*  Add UserNotFound and UserUnavailable @MakeShiftArtist ([`3a2d5c4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3a2d5c4abba790d4245f5bb4214b02564415a7dd))
-*  Add daysUntilNextMilestone @MakeShiftArtist ([`b7ac7d9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b7ac7d90b91e2612fb16112f5adf3d145d82841f))
-*  Add UncaughtAxiosError @MakeShiftArtist ([`baf4633`](https://github.com/MakeShiftArtist/iFunny.ts/commit/baf463372be68a74ccf6f1f77ae0f5069f703844))
-*  Add index exports @MakeShiftArtist ([`5edd391`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5edd39181d9c970010958e2054d0d931d2646458))
-*  isAxiosError returns AxiosError&lt;RESTAPIErrorResponse&gt; @MakeShiftArtist ([`dbe355d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/dbe355d514cebd6d0bed1600c2726ada02645ef4))
+Generated by [`auto-changelog`](https://github.com/CookPete/auto-changelog).
 
-### Fixes
+## [0.10.0](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.9.0...0.10.0)
 
-*  Add package.json and package-lock.json @MakeShiftArtist ([`b1a46a9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b1a46a9989357fa2aee95a533eccf5ca7259be4a))
-*  Update dependencies @MakeShiftArtist ([`7f60a69`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7f60a6934efc03725593555f29679b704dcf8426))
-*  Library now uses camelCase @makeshiftartist ([`47242e7`](https://github.com/MakeShiftArtist/iFunny.ts/commit/47242e7d7e2cb5accf763adfae153d706c9e15bb))
-*  Library now uses camelCase and improved docs @makeshiftartist ([`83d959e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/83d959e9fed16574059ede950a39f626db7c7812))
-*  CHANGELOG.md to OLD_CHANGELOG.md due to version bug @MakeShiftArtist ([`905b780`](https://github.com/MakeShiftArtist/iFunny.ts/commit/905b78078ca46ae9de595b46d6c0c2ede9514c41))
-*  Improve docs and slight refactor @makeshiftartist ([`b6b061d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b6b061dc0b52489f203a03ee2237374d6bc0c190))
-*  Improve error handler @makeshiftartist ([`006ebbc`](https://github.com/MakeShiftArtist/iFunny.ts/commit/006ebbc25193438831fd1c6edce1ff12ddac48fe))
-*  Fix Client#login and Client#sign_up @makeshiftartist ([`5de26c9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5de26c996e89b499e75fb4a97d3ed3ee51b479a8))
-*  Improved error handler @MakeShiftArtist ([`36be51c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/36be51c8d6925672fe77e07b0698baba6184b02e))
-*  Improved paginate method @makeshiftartist ([`20cbc46`](https://github.com/MakeShiftArtist/iFunny.ts/commit/20cbc460048a50a122df36a36e91f1216ecaa036))
-*  Cache works properly now @MakeShiftArtist ([`37f9c7a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/37f9c7a6fda432373b5026c959b4c568ddf71fce))
-*  Add cache_config and fix casing @makeshiftartist ([`e4e7316`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e4e7316f2e26c35bd277c0d6bf09bbe7beaff23d))
-*  Fixed UserManager @MakeShiftArtist ([`edf6e5f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/edf6e5f4560102abf63e009ce6bbcc5013af83a7))
-*  Moved Nullify to utils/Util @MakeShiftArtist ([`3a01fcb`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3a01fcbe0cadf2357be023f873ef646ff2338c8f))
-*  Added try catch to Client.signUp @MakeShiftArtist ([`610d868`](https://github.com/MakeShiftArtist/iFunny.ts/commit/610d868f4fbaca74fbb8a2cede4dddf4b943536d))
-*  Update dependencies @MakeShiftArtist ([`5de8a86`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5de8a86bad37463934eef51cb5a6d9ede1d86ba5))
-*  Move auth interceptor to Client @makeshiftartist ([`42dd280`](https://github.com/MakeShiftArtist/iFunny.ts/commit/42dd280740fa195328f491fee6a0ec2efaf3521b))
-*  Added missing messages @MakeShiftArtist ([`de5c80f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/de5c80f98a4e9af3573f5a57c571de133ca8c12e))
-*  Private properties are now private @makeshiftartist ([`7ba831e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7ba831ed147cd5f1b7eef4c0cd7167e1962f860b))
-*  Fixed tsconfig.json @MakeShiftArtist ([`86cdb1b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/86cdb1bfa784bcb54cd8aa4443ae283baa55acc9))
-*  Casing and improved docs @makeshiftartist ([`c76c80f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/c76c80f97935797402525b5a06924c66a7697dc4))
-*  Fixed imports @makeshiftartist ([`563c9ee`](https://github.com/MakeShiftArtist/iFunny.ts/commit/563c9ee30a57adf809d94eda2eea33bcef4324a3))
-*  Add npmignore @MakeShiftArtist ([`931444f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/931444f543164257b79cc3eb9cef0982c3164cc0))
-*  Added new and unknown static methods to iFunnyError @MakeShiftArtist ([`d129fa7`](https://github.com/MakeShiftArtist/iFunny.ts/commit/d129fa7c43fc1aea8c7fc4b2f532cb2bd32b38e3))
-*  Updated imports and scripts @makeshiftartist ([`91a7fde`](https://github.com/MakeShiftArtist/iFunny.ts/commit/91a7fde36485974fc9b98e8fc0c1908f189f151f))
-*  isAxiosError now takes a data type @MakeShiftArtist ([`c6e3424`](https://github.com/MakeShiftArtist/iFunny.ts/commit/c6e3424a2d0a88b20d30cd18df5e6669c376b885))
-*  Client.signUp fixed @MakeShiftArtist ([`ebb3735`](https://github.com/MakeShiftArtist/iFunny.ts/commit/ebb37350e79c48729577b441db9ec90290fb63ba))
-*  Add @discordjs/collection @MakeShiftArtist ([`71afe30`](https://github.com/MakeShiftArtist/iFunny.ts/commit/71afe3014b62a4cc04e40c3d40975d95055b4274))
-*  Removed useless fetch override from User @MakeShiftArtist ([`57830a5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/57830a5547b47f249a2c12a74708e41609509256))
-*  Structures now pass payload instead of ID @MakeShiftArtist ([`dd8312a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/dd8312a91ce54945038ac5404653cca560302291))
-*  Fixed type imports @makeshiftartist ([`b40cc55`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b40cc55d33c487db21e557b46eb3086bb17526c4))
-*  Imports @MakeShiftArtist ([`26f96c5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/26f96c5f0f71bd306f46bc588de7f50906e9fbf3))
-*  Fix casing @makeshiftartist ([`29ef03a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/29ef03a6494daa5a93e91ce3d58a7f47bbdca761))
-*  Improve some error messages @makeshiftartist ([`b44a969`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b44a969df61144723261583e8efac11bcbccc402))
-*  Changed BaseUser.payload to APIUser @MakeShiftArtist ([`4e367be`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4e367bedf0f2f414f07d2e3c8f32421e6c159ec2))
-*  Payload is now a required arg for structures @MakeShiftArtist ([`8dee88d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8dee88dae591716984e833aa14e724d7d1674453))
-*  Bugs with BaseContent.endpoint_url @makeshiftartist ([`c3c231a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/c3c231aca96119406f6e30aaa5083a5152a6a823))
-*  interceptors use handleError @MakeShiftArtist ([`819d1c5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/819d1c5abb2092f039cac3597c3cb8883cfc98cc))
-*  Updated default version info @makeshiftartist ([`9a564b3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9a564b35297bc7b3ed248fe443efec11a0d8b290))
-*  Fixed old error code label @MakeShiftArtist ([`0c41deb`](https://github.com/MakeShiftArtist/iFunny.ts/commit/0c41debd2b6ebf1af8d0f01261aaf199bfef9de6))
-*  Removed unused jest config @MakeShiftArtist ([`014ea04`](https://github.com/MakeShiftArtist/iFunny.ts/commit/014ea04df8b2a0287f89c1913af9fc7ca89a302d))
-*  Add skipLibCheck and skipDefaultLibCheck @makeshiftartist ([`bf283ed`](https://github.com/MakeShiftArtist/iFunny.ts/commit/bf283edf868fe73182353ca8be6f8ec52aa13f02))
-*  Rename Feed.paginate to Feed.scroll @makeshiftartist ([`afdd577`](https://github.com/MakeShiftArtist/iFunny.ts/commit/afdd5770f4b2ac020a0d874ff6d89a7c05243cd5))
-*  Fixed tsconfig default imports @makeshiftartist ([`419bd8e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/419bd8e9dcc2cf6e43c65a5f9503dc4d83775c41))
-*  Added doc to npmignore @makeshiftartist ([`2839b6c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2839b6cae22212515f478c2e491572258508a667))
-*  Now ts strips internal @makeshiftartist ([`4fbaf20`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4fbaf2087de623d5b3c579fe2047692938454a01))
-*  Fixed chores in changelog @MakeShiftArtist ([`866263e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/866263edb8fb22ffe414a6e6a39d3ac78abfcbb5))
-*  Add basicLength to ClientConfig @makeshiftartist ([`2181be4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2181be4d673b07f3eef7736300f772e9b71fc2fe))
-*  DataStructure now takes payload instead of id @MakeShiftArtist ([`652d4c0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/652d4c0a8145a0e5bf52c20526c0d765504e7b21))
-*  Added .env to .gitignore adn .npmignore @MakeShiftArtist ([`1771051`](https://github.com/MakeShiftArtist/iFunny.ts/commit/17710519585ea8f6c3b49f31f403c3096a22d8e4))
-*  Added override keyword to BaseUser.id @MakeShiftArtist ([`934fb65`](https://github.com/MakeShiftArtist/iFunny.ts/commit/934fb6516baea77302f4e2c71ed06fed6eb3215c))
-*  Added override keyword to BaseContent.id @MakeShiftArtist ([`b680bff`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b680bff335bab0969c365a6406c064c58e92525b))
-*  Changed paginate to a protected method @MakeShiftArtist ([`4fa12b3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4fa12b3323b34c48372e469b83fbfe8d8a9af162))
-*  Remove unused variable @MakeShiftArtist ([`8088101`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8088101aec3f4fc0c815942a71cd47b690c4a05e))
-*  Fixed imports in Messages.ts @MakeShiftArtist ([`9895a9a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9895a9acf1dbf76a742deb6a023488c677071dc5))
-*  import endpoints from @ifunny/ifunny-api-types @MakeShiftArtist ([`3a8722f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3a8722fa525631bf9e482a558f335f86b9e8ce22))
-*  Undo npm version @MakeShiftArtist ([`9144934`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9144934fe26d7f1158a4f4f93de86774b9023eb0))
+### Commits
 
-### Documentation
+- chore(package): refactor package, tsconfig, and prettier to be consistent across packages [`1f5387a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/1f5387a5140365995dc375c7f2ecf9663e5ec993)
+- chore(devenv): remove bun [`96302e6`](https://github.com/MakeShiftArtist/iFunny.ts/commit/96302e60d3042ed9c88a1956d965a445804f3e46)
+- chore(src): add file extensions to imports and format with prettier [`84e1fe5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/84e1fe5a0c24378faa397d8c9901dc95893036f0)
+- chore(changelog): remove OLD_CHANGELOG.md [`f16a76c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f16a76c6582898d85e624f7656c550bca326fe81)
+- chore(devenv): update devenv to latest version [`8076b63`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8076b630d4e5425a51e7b06213a27f471124dcce)
+- Chore(deps): Bump axios from 1.15.2 to 1.20.0 [`61c1e82`](https://github.com/MakeShiftArtist/iFunny.ts/commit/61c1e82c80d322374d80f8391eef10597137aa4f)
+- style(login): run prettier on login.ts [`4300cb2`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4300cb2f2a8db2694a3092dc460715762a89d499)
+- Chore(deps): Bump axios from 1.13.2 to 1.13.5 [`9a327e1`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9a327e1dbcc467f76aba3420edd99531575dfd43)
+- chore(scripts): add scripts [`a0aaef0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a0aaef0896937c80d4d2297f714e57f7365944c0)
+- Chore(deps-dev): Bump minimatch from 3.1.2 to 3.1.5 [`5f13644`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5f13644e20f29baf64a4ba5456383cfdc7ebf8fb)
+- Chore(deps-dev): Bump @humanfs/node from 0.16.7 to 0.16.8 [`21cff75`](https://github.com/MakeShiftArtist/iFunny.ts/commit/21cff75dbb461285103313da225f0a4243e12825)
+- chore(devenv): add prettier and git hook [`7b74b29`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7b74b29e138d6de21597055ceb353dce2da75936)
+- Chore(deps-dev): Bump brace-expansion from 1.1.12 to 1.1.21 [`b6939a9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b6939a9ec1f4efb77d0553fda75fcb130c13dbd5)
+- Chore(deps): Bump axios from 1.13.5 to 1.15.0 [`46b06dc`](https://github.com/MakeShiftArtist/iFunny.ts/commit/46b06dce68bf4dae70b09490eb4610eba8897ef2)
+- Chore(deps): Bump form-data from 4.0.5 to 4.0.6 [`4449923`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4449923f1a1fc2baf504d160cec59b2b628cf48b)
+- Chore(deps-dev): Bump markdown-it from 14.1.0 to 14.3.3 [`7d51d18`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7d51d18b7124d1b52942c22fdff70b81b5a1a44a)
+- Chore(deps): Bump picomatch [`0127b3d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/0127b3dd7ce131756717f1da85f089dc561ada60)
+- Chore(deps-dev): Bump linkify-it from 5.0.0 to 5.0.2 [`fcec52d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/fcec52deafe079eb44da5e4f40e91be1fc094e03)
+- Chore(deps-dev): Bump js-yaml from 4.1.1 to 4.3.2 [`97dc14f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/97dc14f874b05195ab8703cc757851f3612cee05)
+- Chore(deps-dev): Bump handlebars from 4.7.9 to 4.7.10 [`0557306`](https://github.com/MakeShiftArtist/iFunny.ts/commit/0557306fc765a5f5948c94260c034ac5ca5228d3)
+- Chore(deps): Bump axios from 1.15.0 to 1.15.2 [`f599f77`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f599f77e0203d645383c4e408fe887d9d1a0614d)
+- Chore(deps-dev): Bump handlebars from 4.7.7 to 4.7.9 [`3c6082c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3c6082cde3a2f55b99989721eb300189ab590eb0)
+- chore(devenv): update lock file [`45ed0fb`](https://github.com/MakeShiftArtist/iFunny.ts/commit/45ed0fbd2665fcdcfd2f8b21ad5439e5f39034ca)
+- Chore(deps-dev): Bump flatted from 3.3.3 to 3.4.2 [`2e6c77a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2e6c77a14a8449ffdd8b497ae3c41ec06fb5edc0)
+- Chore(deps): Bump follow-redirects from 1.16.0 to 1.16.2 [`7455b00`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7455b005de878b68cdc6a63fa018363434a5fd51)
+- Chore(deps): Bump follow-redirects from 1.15.11 to 1.16.0 [`7dbd4b5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7dbd4b5c5a0ae8bf3d4112a786f2e0bac9632163)
+- style(readme): remove leading whitespace in shell script [`9449351`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9449351cf572dcf9e892312c29c171134c9d3582)
+- style(Content): run prettier [`7b26ea1`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7b26ea10c3c7128be9d78dd56abc0dd6a53fe560)
 
-*  Initial Docs @makeshiftartist ([`4e21a9b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4e21a9be9b83ba74e254fde175a1c5c4d80674da))
-*  Updated urls @makeshiftartist ([`279d851`](https://github.com/MakeShiftArtist/iFunny.ts/commit/279d85139ece2dd6a2249df20ef308dd3a7899d6))
-*  Improve and updated README.md @makeshiftartist ([`ee035a8`](https://github.com/MakeShiftArtist/iFunny.ts/commit/ee035a83521d6257df96b8f542ef3677f9ee8791))
-*  Add README @MakeShiftArtist ([`727be57`](https://github.com/MakeShiftArtist/iFunny.ts/commit/727be57f691b378978ce77a89c590a393acc3029))
-*  Improve docs @makeshiftartist ([`b4b991b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b4b991b5ed74b50429d3cd02436896bdae6d40aa))
-*  Ban now has better docs @MakeShiftArtist ([`21937a9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/21937a9a20584b906cf357d6724f918608c1b1fa))
-*  Updated readme to follow proper login methods @makeshiftartist ([`6e7071c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6e7071c3f11a4634414cc895b540db686744e4a8))
-*  Improve documentation @makeshiftartist ([`e38f5e4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e38f5e45cb4298a7286f4045dd71b39a2180a756))
-*  add missing doc comments and format @makeshiftartist ([`85a9b8e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/85a9b8ebc1fd379ead9be3f3f7533a20918281aa))
-*  Improved docs for CachedManager @MakeShiftArtist ([`c585d68`](https://github.com/MakeShiftArtist/iFunny.ts/commit/c585d68fb37d010ca7db5e1cb6127a3aa443136a))
-*  add missing docs from MemeExperience @makeshiftartist ([`8c98d71`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8c98d717c1583e46e55a8e8e48a160f1dc045aa2))
-*  Add docs to README.md @makeshiftartist ([`cd08647`](https://github.com/MakeShiftArtist/iFunny.ts/commit/cd08647e3552b5447db5417abfe080c6b92b6b68))
+## [v0.9.0](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.8.0...v0.9.0) - 2025-12-28
 
-### Chores
+### Commits
 
-*  Add gh-pages @makeshiftartist ([`17b8a31`](https://github.com/MakeShiftArtist/iFunny.ts/commit/17b8a31ea6bf4c0423a76377a4b54dbc6e3035fc))
-*  Fix imports and docs and casing @makeshiftartist ([`63b7fd0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/63b7fd011852836774a2659f8b746c31d857c546))
-*  Add typedoc-plugin-missing-exports @makeshiftartist ([`4b7a934`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4b7a9341f9bca1bc4b7a685972894ab2bf2b3b22))
-*  Moved Methods.ts to Util class @makeshiftartist ([`26ea18b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/26ea18b9f302aa8404af07e3c2bc6f8ef490d874))
-*  Add github workflows and templates @MakeShiftArtist ([`4134a85`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4134a85609e0e548f633dba442cd514b1cf4f2c9))
-*  Improve docs and imports @makeshiftartist ([`fb139e3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/fb139e38f779514aea906dd2a2f9e8e58ece2a73))
-*  Update dependencies @makeshiftartist ([`b0af39f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b0af39f0a81362c0122948600324c5d39b16fdbd))
-*  Update dependencies @makeshiftartist ([`e70eef9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e70eef9a94bd0498da0d9ca7f2117114d26819dc))
-*  Update dependencies @makeshiftartist ([`a2f11ff`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a2f11ff376e701dc6e11cb577731264dfb5546f7))
-*  Add LICENSE @MakeShiftArtist ([`11af852`](https://github.com/MakeShiftArtist/iFunny.ts/commit/11af8521bae4256078f1fc978196f7f8735441ce))
-*  Update dependencies @MakeShiftArtist ([`7b5f5f5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7b5f5f53848ca869f4b869f7ad35ba936d942186))
-*  Added login.ts quick start @makeshiftartist ([`4ec5eb0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4ec5eb0bdbf659193fb2d469e7e3b262fef03394))
-*  Clean up BaseClient @makeshiftartist ([`b226ea8`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b226ea846d1765bd693fa605cccce5159355910a))
-*  Add update-deps script @MakeShiftArtist ([`9948f6a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9948f6a651862b422dcde978512c5fd8be767b84))
-*  Rename src/utils/Util to src/utils/Types @makeshiftartist ([`411ac35`](https://github.com/MakeShiftArtist/iFunny.ts/commit/411ac35d83c7ad8c03d9b350a1221e179086b08e))
-*  Add changelog-template.hbs @MakeShiftArtist ([`75e38ce`](https://github.com/MakeShiftArtist/iFunny.ts/commit/75e38cea105142f4fca94490e89d31c4580f079f))
-*  Remove useless method @makeshiftartist ([`f8d888d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f8d888da732d10e87f8897500cd09402b4b4f87a))
-*  Update dependencies @makeshiftartist ([`d4358af`](https://github.com/MakeShiftArtist/iFunny.ts/commit/d4358af1845db29c8818dd6b20db879bb49b5d3d))
-*  Updated versions and casing @makeshiftartist ([`666cf3c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/666cf3c7fa689390ef5c363b3bb411d10d2de39e))
-*  Added tsconfig.json @MakeShiftArtist ([`57aa53f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/57aa53f7f8d16235c084f2145691f0bdf568b5e3))
-*  Update @ifunny/ifunny-api-types and scripts @MakeShiftArtist ([`d7a0a97`](https://github.com/MakeShiftArtist/iFunny.ts/commit/d7a0a977865d7041cf433af8ba11baba425210b7))
-*  Update dependencies @makeshiftartist ([`a5530d0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a5530d0b1981fcd5896aadf7744e57c049565cf4))
-*  Update dependencies @MakeShiftArtist ([`cdf61ef`](https://github.com/MakeShiftArtist/iFunny.ts/commit/cdf61ef0ce57484df3a309372e7a1d064d25e529))
-*  Update dependencies @MakeShiftArtist ([`9837b63`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9837b63a46740afe556a57f40be3b1501c96f913))
-*  Changed lets to consts where possible @makeshiftartist ([`3784db1`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3784db1a4f9576cde427e1943d7b669e27c5e550))
-*  Fix docs and exports @makeshiftartist ([`f29a90d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f29a90d80168395cb3db3b2cfc5daac62325a484))
-*  Add gitignore @MakeShiftArtist ([`127a770`](https://github.com/MakeShiftArtist/iFunny.ts/commit/127a7700657779bf16357edc554b6d78d0c5c34c))
-*  Sorted imports @makeshiftartist ([`e8bfef3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e8bfef36528a6fdf5e47fee32a5b2ffb1bad5930))
-*  Fixed urls in package.json @makeshiftartist ([`a674110`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a674110fcda885c3c3c6d91ffa59f3953b8e6a29))
-*  Improve scripts @makeshiftartist ([`e74e67b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e74e67b37b7f6c9c7dbee0413e84fc0e043b9dab))
-*  iFunnyError#code to iFunnyError.#code @MakeShiftArtist ([`122bc08`](https://github.com/MakeShiftArtist/iFunny.ts/commit/122bc0889b6570c16a242950340613512095e3ae))
-*  Sort imports @makeshiftartist ([`af6f058`](https://github.com/MakeShiftArtist/iFunny.ts/commit/af6f058a54a3a0d202a9a221493d838a07b26e9c))
-*  Added jest.config.js @MakeShiftArtist ([`1e29c9d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/1e29c9d480af9cbf0ad13b316b8d7222f6650571))
-*  Updated @ifunny/ifunny-api-types version @MakeShiftArtist ([`4394b91`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4394b91d668a52a7ffa1c99c829380deac09a333))
-*  Moved docs to its own script @makeshiftartist ([`884d791`](https://github.com/MakeShiftArtist/iFunny.ts/commit/884d79123b1fea35c61867e5adb63b9e75137a30))
-*  Add test.ts to gitignore @MakeShiftArtist ([`6b8f321`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6b8f3216405e14a65742a1492649fa59e2836481))
-*  Improved captcha_required error message @makeshiftartist ([`105c0c7`](https://github.com/MakeShiftArtist/iFunny.ts/commit/105c0c7b82eb78d49f7bb1c2a0d27209f342d787))
-*  Autocommit Changelog @MakeShiftArtist ([`5b53483`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5b53483cd1062f0a1bbccb44e790b24ce559de3c))
-*  Remove extra new line @makeshiftartist ([`2b2878e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2b2878edbcd90126bcd2c90b3a04fd85de731ae7))
-*  Add prettierignore @MakeShiftArtist ([`b0cbfba`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b0cbfba2b269bd6381afa55f4affd0e604f85754))
+- fix(config): don't track typedoc output [`09fae84`](https://github.com/MakeShiftArtist/iFunny.ts/commit/09fae8468e8201efba699169f0826fc08a54a166)
+- build(bun): configure tooling + update packages and scripts [`5fecef8`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5fecef8d3ed8bb506cd8c59f0a3999c9b95aee5f)
+- style(formatting): run prettier [`b241132`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b2411323cc36a8ff1064530706023f70a9beb665)
+- style(formatting): run prettier and convert @alias to @link [`18ba754`](https://github.com/MakeShiftArtist/iFunny.ts/commit/18ba7543dadce34ea02baee6b8b95046c8fa9777)
+- Chore(deps): Bump form-data from 4.0.0 to 4.0.4 [`a01128c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a01128c275b03472ec32e87da1294fabc0500999)
+- refactor(client): refactor client header types and format [`f9444e4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f9444e49778a658fe76db2ea48cefb66ce6814d0)
+- feat(devenv): :technologist: add devenv support [`c27666a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/c27666aa904a476fe5188a6e14e33efedf10ee52)
+- ci(bun): add bun to ci dependencies [`a511650`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a5116500b63b4f70c377ff0edbc40f8f0183098d)
+- chore(npm): add mod.ts files for module exporting [`3d359af`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3d359af72a56f9c0b7586ad765d87accb003ae62)
+- refactor(client): convert headers to object literals [`76ab9ca`](https://github.com/MakeShiftArtist/iFunny.ts/commit/76ab9caee8b1c50bcb64d968c51ef80d86011f11)
+- Chore(deps): Bump axios from 1.8.4 to 1.12.0 [`5b507a5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5b507a519bf864d49e5ba7889b90aabf41df060d)
+- chore(devenv): switch to unstable nixpkgs [`6bb577d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6bb577d71815df2aa1d0d5203aa85d747143fae1)
+- refactor(typescript): refactor exports to include everything and separate into modules [`d604e54`](https://github.com/MakeShiftArtist/iFunny.ts/commit/d604e546e81b40f5a92cc2eeee5e0a2d71de58a7)
+- chore(devenv): add nix and bun and switch to nodejs_25 [`ef46c63`](https://github.com/MakeShiftArtist/iFunny.ts/commit/ef46c636fbd038522c0fcb23f9cdbe36bbb8834e)
+- add prettier config [`8d2b381`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8d2b38118cbd321c76419cf10b99295ef968537d)
+- build(typescript): allow package to be installed via git [`44e4ac7`](https://github.com/MakeShiftArtist/iFunny.ts/commit/44e4ac7e0c132b4a768907bd6f631b10df597227)
+- chore(devenv): switch to quiet mode [`943a39a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/943a39afd693307cb1027bbfc1bad1108dfeb7be)
+- refactor(typescript): move types to dist [`68456b0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/68456b04b2328ac83cfe70e09dc318d40b524ea5)
+- build(typescript): add declarationMap [`2819b85`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2819b85685e89afc79497c9440183eebb6a6b1ec)
+- build(npm): add format script [`2f31bf7`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2f31bf737ed17010e5a20b645fd9f3449fe483d6)
+- chore(gitignore): add docs/ to gitignore [`55685ac`](https://github.com/MakeShiftArtist/iFunny.ts/commit/55685acc6e89d970653e6aa0ee055dd1b68ce14c)
+- chore(gitignore): add docs/* to gitignore [`aec201f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/aec201f8592d046ed34ca9fa4b669660a8e372c1)
+
+## [v0.8.0](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.7.1...v0.8.0) - 2025-04-03
+
+### Merged
+
+- Chore(deps): Bump axios from 1.6.0 to 1.7.4 [`#6`](https://github.com/MakeShiftArtist/iFunny.ts/pull/6)
+- Chore(deps): Bump follow-redirects from 1.15.5 to 1.15.6 [`#5`](https://github.com/MakeShiftArtist/iFunny.ts/pull/5)
+- Chore(deps): Bump follow-redirects from 1.15.2 to 1.15.5 [`#4`](https://github.com/MakeShiftArtist/iFunny.ts/pull/4)
+- Chore(deps): Bump axios from 0.27.2 to 1.6.0 [`#1`](https://github.com/MakeShiftArtist/iFunny.ts/pull/1)
+
+### Commits
+
+- chore(dep): :arrow_up: Upgrade dependencies to latest versions [`97cf250`](https://github.com/MakeShiftArtist/iFunny.ts/commit/97cf25026d7162003e87553c417c7b040ee8ade3)
+- fix(npm): :lock: address high severity vulnerabilies from npm audit fix [`3072875`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3072875642277a599c6e5e790863d40dec808a71)
+- fix(axios): :label: Change headers to AxiosHeaders [`6f83fac`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6f83fac9ed803659d4c6d91c76936513e4b43763)
+- chore(config): :hammer: make changelog no longer auto commit [`10f148b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/10f148ba1930c3d3afda0dcfa914b7bb92fc2b05)
+- chore(ci): Update node versions [`0d849e9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/0d849e900a354e4364a870352e0e8f712f52a3fd)
+
+## [v0.7.1](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.7.0...v0.7.1) - 2023-11-16
+
+### Commits
+
+- Update CHANGELOG.md [`b1631aa`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b1631aa8f3149d47e37a290b3884ed5e2fa09289)
+- chore(scripts): make npm version run rebuild [`596245d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/596245d8acaa64ed4cd96cfc3305f5dd702d3e7c)
+
+## [v0.7.0](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.6.5...v0.7.0) - 2023-10-31
+
+### Commits
+
+- feat(content): add delete and comments [`af4e8ca`](https://github.com/MakeShiftArtist/iFunny.ts/commit/af4e8ca5843938dc2be58e2a2aa5197becb57a29)
+- add missing doc comments and format [`85a9b8e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/85a9b8ebc1fd379ead9be3f3f7533a20918281aa)
+- Update CHANGELOG.md [`6f84031`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6f84031b4ea8d094e9a7ef8e98fccab61638cf63)
+
+## [v0.6.5](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.6.4...v0.6.5) - 2023-04-13
+
+### Commits
+
+- Add gh-pages [`17b8a31`](https://github.com/MakeShiftArtist/iFunny.ts/commit/17b8a31ea6bf4c0423a76377a4b54dbc6e3035fc)
+- Update CHANGELOG.md [`aeac062`](https://github.com/MakeShiftArtist/iFunny.ts/commit/aeac062d146b591224d715e980a06512ed1266d7)
+- Add docs to README.md [`cd08647`](https://github.com/MakeShiftArtist/iFunny.ts/commit/cd08647e3552b5447db5417abfe080c6b92b6b68)
+
+## [v0.6.4](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.6.3...v0.6.4) - 2023-04-13
+
+### Commits
+
+- Update CHANGELOG.md [`8ce62e2`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8ce62e26ea81301f583c7c5aa27716fce3bc7c25)
+- Fixed urls in package.json [`a674110`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a674110fcda885c3c3c6d91ffa59f3953b8e6a29)
+
+## [v0.6.3](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.6.2...v0.6.3) - 2023-04-13
+
+### Commits
+
+- Update CHANGELOG.md [`0b50e37`](https://github.com/MakeShiftArtist/iFunny.ts/commit/0b50e3747dee19b13200f00af2a774b8bbc1a5d6)
+- Moved docs to its own script [`884d791`](https://github.com/MakeShiftArtist/iFunny.ts/commit/884d79123b1fea35c61867e5adb63b9e75137a30)
+
+## [v0.6.2](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.6.1...v0.6.2) - 2023-04-13
+
+### Commits
+
+- Updated urls [`279d851`](https://github.com/MakeShiftArtist/iFunny.ts/commit/279d85139ece2dd6a2249df20ef308dd3a7899d6)
+- Update CHANGELOG.md [`a882b96`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a882b963cd345a3f247980f3379afb49a8b01ea0)
+- Added doc to npmignore [`2839b6c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2839b6cae22212515f478c2e491572258508a667)
+
+## [v0.6.1](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.6.0...v0.6.1) - 2023-04-13
+
+### Commits
+
+- Initial Docs [`4e21a9b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4e21a9be9b83ba74e254fde175a1c5c4d80674da)
+- Add typedoc-plugin-missing-exports [`4b7a934`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4b7a9341f9bca1bc4b7a685972894ab2bf2b3b22)
+- Added login.ts quick start [`4ec5eb0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4ec5eb0bdbf659193fb2d469e7e3b262fef03394)
+- Improve and updated README.md [`ee035a8`](https://github.com/MakeShiftArtist/iFunny.ts/commit/ee035a83521d6257df96b8f542ef3677f9ee8791)
+- Update CHANGELOG.md [`93d9515`](https://github.com/MakeShiftArtist/iFunny.ts/commit/93d9515f4073bb2ac8c71cfb7e0294d520892dca)
+
+## [v0.6.0](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.5.1...v0.6.0) - 2023-04-12
+
+### Commits
+
+- Library now uses camelCase [`47242e7`](https://github.com/MakeShiftArtist/iFunny.ts/commit/47242e7d7e2cb5accf763adfae153d706c9e15bb)
+- Update CHANGELOG.md [`cf91500`](https://github.com/MakeShiftArtist/iFunny.ts/commit/cf91500495234b1156767e8046ecd5ac8997d6db)
+- Library now uses camelCase and improved docs [`83d959e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/83d959e9fed16574059ede950a39f626db7c7812)
+- Add modifySubscription and timeline to User [`34ac85f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/34ac85f30fadaee5ca052c31b1630713220d290d)
+- Improved docs on FeedType and PaginateConfig [`bce9403`](https://github.com/MakeShiftArtist/iFunny.ts/commit/bce9403642f295b9224eb4b39ec841ccbffaa87a)
+- Update dependencies [`a5530d0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a5530d0b1981fcd5896aadf7744e57c049565cf4)
+- Improved Docs on iFunnyError [`7022888`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7022888a59a02641fd56017bd35a151e08023621)
+
+## [v0.5.1](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.5.0...v0.5.1) - 2022-11-26
+
+### Commits
+
+- Update dependencies [`b0af39f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b0af39f0a81362c0122948600324c5d39b16fdbd)
+- Update CHANGELOG.md [`c7507e1`](https://github.com/MakeShiftArtist/iFunny.ts/commit/c7507e167efc8e4721781e07d95d2b49ff1d7ed5)
+- Fix Client#login and Client#sign_up [`5de26c9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5de26c996e89b499e75fb4a97d3ed3ee51b479a8)
+- Add AppManager.ts [`9f0844c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9f0844c9c796fdbcfcf46e263d36a24c61fb26de)
+- Update CHANGELOG.md [`50f8a7a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/50f8a7adf31a21bd7114ad1380c58896093a7a91)
+- Updated readme to follow proper login methods [`6e7071c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6e7071c3f11a4634414cc895b540db686744e4a8)
+- Updated versions and casing [`666cf3c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/666cf3c7fa689390ef5c363b3bb411d10d2de39e)
+- Changed lets to consts where possible [`3784db1`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3784db1a4f9576cde427e1943d7b669e27c5e550)
+- Improve scripts [`e74e67b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e74e67b37b7f6c9c7dbee0413e84fc0e043b9dab)
+- Add skipLibCheck and skipDefaultLibCheck [`bf283ed`](https://github.com/MakeShiftArtist/iFunny.ts/commit/bf283edf868fe73182353ca8be6f8ec52aa13f02)
+- Improved captcha_required error message [`105c0c7`](https://github.com/MakeShiftArtist/iFunny.ts/commit/105c0c7b82eb78d49f7bb1c2a0d27209f342d787)
+
+## [v0.5.0](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.4.0...v0.5.0) - 2022-11-12
+
+### Commits
+
+- Fix imports and docs and casing [`63b7fd0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/63b7fd011852836774a2659f8b746c31d857c546)
+- Moved Methods.ts to Util class [`26ea18b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/26ea18b9f302aa8404af07e3c2bc6f8ef490d874)
+- Add SimpleUser, News, BanSmall [`5198710`](https://github.com/MakeShiftArtist/iFunny.ts/commit/519871004cc74da258a8758fd58b1da9ac4a0ae4)
+- Improve docs and imports [`fb139e3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/fb139e38f779514aea906dd2a2f9e8e58ece2a73)
+- Update dependencies [`e70eef9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e70eef9a94bd0498da0d9ca7f2117114d26819dc)
+- Add feeds, content, and util to Client [`93a99b0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/93a99b038ae39c7fa13071de79d288f18f9b32d4)
+- Deleted built in error handler [`76220d5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/76220d5642415e8bab0b2fe8c0ca153dac1dac52)
+- Update dependencies [`a2f11ff`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a2f11ff376e701dc6e11cb577731264dfb5546f7)
+- Refactor iFunnyError [`7271cd4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7271cd4b11b6581600041862256619f549d1cdd5)
+- Improved Ban [`844600f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/844600f2ad06c42c9541eef43b30c1205206d7f5)
+- Improve docs and slight refactor [`b6b061d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b6b061dc0b52489f203a03ee2237374d6bc0c190)
+- Add BaseComment and Comment [`5504f3f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5504f3fdedacc30ae9878a721755d89003553c13)
+- Clean up BaseClient [`b226ea8`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b226ea846d1765bd693fa605cccce5159355910a)
+- Add BaseFeed and Feed [`9e03bd1`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9e03bd177f11bac257d2ec0c7e7fd110847aaec6)
+- Add Cache class and improve docs [`8350408`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8350408fcfc15df3334de64be92fd0a2189d113f)
+- Add methods to Content [`b86821c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b86821cd8007de5e3e13c1a7b97285c551476bf8)
+- Improve error handler [`006ebbc`](https://github.com/MakeShiftArtist/iFunny.ts/commit/006ebbc25193438831fd1c6edce1ff12ddac48fe)
+- Add id, create, and cropped to Thumbnail [`59922ff`](https://github.com/MakeShiftArtist/iFunny.ts/commit/59922ff09753857caf4623e99cc5f7e86e6d291e)
+- Add more utility methods [`6806420`](https://github.com/MakeShiftArtist/iFunny.ts/commit/68064201973a846c9508b2506d1b6bb938effda7)
+- Rename src/utils/Util to src/utils/Types [`411ac35`](https://github.com/MakeShiftArtist/iFunny.ts/commit/411ac35d83c7ad8c03d9b350a1221e179086b08e)
+- Improve docs [`b4b991b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b4b991b5ed74b50429d3cd02436896bdae6d40aa)
+- Implement Cache and fix docs [`fe5aa32`](https://github.com/MakeShiftArtist/iFunny.ts/commit/fe5aa32bf1d96828297d8af6b9e3b6c96b00a12c)
+- Improved paginate method [`20cbc46`](https://github.com/MakeShiftArtist/iFunny.ts/commit/20cbc460048a50a122df36a36e91f1216ecaa036)
+- Add FeedManager [`bad074e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/bad074ea4d62d0548d2d1a509387c89851255981)
+- Added getters to Thumbnail [`f349bfa`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f349bfa335446f66109a86d3b828757db8b6ddf3)
+- Add CaptchaError [`2f746d3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2f746d3fbba324358a09b8966714c25ef87457ef)
+- Remove useless method [`f8d888d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f8d888da732d10e87f8897500cd09402b4b4f87a)
+- Add cache_config and fix casing [`e4e7316`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e4e7316f2e26c35bd277c0d6bf09bbe7beaff23d)
+- Update CHANGELOG.md [`88e764a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/88e764a6c1f75aeafbeec8422d630a20e95af2ed)
+- Move auth interceptor to Client [`42dd280`](https://github.com/MakeShiftArtist/iFunny.ts/commit/42dd280740fa195328f491fee6a0ec2efaf3521b)
+- Private properties are now private [`7ba831e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7ba831ed147cd5f1b7eef4c0cd7167e1962f860b)
+- Update dependencies [`d4358af`](https://github.com/MakeShiftArtist/iFunny.ts/commit/d4358af1845db29c8818dd6b20db879bb49b5d3d)
+- Improve documentation [`e38f5e4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e38f5e45cb4298a7286f4045dd71b39a2180a756)
+- Casing and improved docs [`c76c80f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/c76c80f97935797402525b5a06924c66a7697dc4)
+- Fixed imports [`563c9ee`](https://github.com/MakeShiftArtist/iFunny.ts/commit/563c9ee30a57adf809d94eda2eea33bcef4324a3)
+- Updated imports and scripts [`91a7fde`](https://github.com/MakeShiftArtist/iFunny.ts/commit/91a7fde36485974fc9b98e8fc0c1908f189f151f)
+- Add Content [`ec7b37a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/ec7b37a998d70e325bbc695366985d75e37fa3a7)
+- Fix docs and exports [`f29a90d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f29a90d80168395cb3db3b2cfc5daac62325a484)
+- Improve docs and typings [`a7f84e5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a7f84e54bae08ba4ecf7d04487aba8579030df10)
+- Fixed type imports [`b40cc55`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b40cc55d33c487db21e557b46eb3086bb17526c4)
+- Sorted imports [`e8bfef3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e8bfef36528a6fdf5e47fee32a5b2ffb1bad5930)
+- Fix casing [`29ef03a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/29ef03a6494daa5a93e91ce3d58a7f47bbdca761)
+- Improve some error messages [`b44a969`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b44a969df61144723261583e8efac11bcbccc402)
+- add missing docs from MemeExperience [`8c98d71`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8c98d717c1583e46e55a8e8e48a160f1dc045aa2)
+- Bugs with BaseContent.endpoint_url [`c3c231a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/c3c231aca96119406f6e30aaa5083a5152a6a823)
+- Updated default version info [`9a564b3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9a564b35297bc7b3ed248fe443efec11a0d8b290)
+- Sort imports [`af6f058`](https://github.com/MakeShiftArtist/iFunny.ts/commit/af6f058a54a3a0d202a9a221493d838a07b26e9c)
+- Rename Feed.paginate to Feed.scroll [`afdd577`](https://github.com/MakeShiftArtist/iFunny.ts/commit/afdd5770f4b2ac020a0d874ff6d89a7c05243cd5)
+- Fixed tsconfig default imports [`419bd8e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/419bd8e9dcc2cf6e43c65a5f9503dc4d83775c41)
+- Now ts strips internal [`4fbaf20`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4fbaf2087de623d5b3c579fe2047692938454a01)
+- Add basicLength to ClientConfig [`2181be4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2181be4d673b07f3eef7736300f772e9b71fc2fe)
+- Remove extra new line [`2b2878e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/2b2878edbcd90126bcd2c90b3a04fd85de731ae7)
+
+## [v0.4.0](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.3.4...v0.4.0) - 2022-09-11
+
+### Commits
+
+- Fully implemented BaseContent [`6123a3b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6123a3bdb666951b7e3279db9a6dae29e12b43e4)
+- Add Creator [`b024e29`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b024e29f61bc471bd4fd9f0c5557c82b68985892)
+- Added nicks and email checking and fixed fetch [`b76bde7`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b76bde77e7a21fa3d89fee8329aa61914a4ec5a0)
+- Ban now has better docs [`21937a9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/21937a9a20584b906cf357d6724f918608c1b1fa)
+- Improved Error Handling [`3b85fc2`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3b85fc2791b135ef41b7ef53edbc8176ebbe6d4e)
+- Added more custom errors [`86edf10`](https://github.com/MakeShiftArtist/iFunny.ts/commit/86edf105973da191bd1d1249208c09c05197c418)
+- Update dependencies [`cdf61ef`](https://github.com/MakeShiftArtist/iFunny.ts/commit/cdf61ef0ce57484df3a309372e7a1d064d25e529)
+- Improved docs for CachedManager [`c585d68`](https://github.com/MakeShiftArtist/iFunny.ts/commit/c585d68fb37d010ca7db5e1cb6127a3aa443136a)
+- Update CHANGELOG.md [`a428154`](https://github.com/MakeShiftArtist/iFunny.ts/commit/a428154a8e9970343a495fc2ca9979f23e984471)
+- Created Thumbnail (WIP) [`1898320`](https://github.com/MakeShiftArtist/iFunny.ts/commit/189832086c5d6b21ac8bc8f678980e89c1e2a698)
+- Structures now pass payload instead of ID [`dd8312a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/dd8312a91ce54945038ac5404653cca560302291)
+- Payload is now a required arg for structures [`8dee88d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8dee88dae591716984e833aa14e724d7d1674453)
+- Add daysUntilNextMilestone [`b7ac7d9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b7ac7d90b91e2612fb16112f5adf3d145d82841f)
+- iFunnyError#code to iFunnyError.#code [`122bc08`](https://github.com/MakeShiftArtist/iFunny.ts/commit/122bc0889b6570c16a242950340613512095e3ae)
+- Fixed old error code label [`0c41deb`](https://github.com/MakeShiftArtist/iFunny.ts/commit/0c41debd2b6ebf1af8d0f01261aaf199bfef9de6)
+- DataStructure now takes payload instead of id [`652d4c0`](https://github.com/MakeShiftArtist/iFunny.ts/commit/652d4c0a8145a0e5bf52c20526c0d765504e7b21)
+
+## [v0.3.4](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.3.3...v0.3.4) - 2022-09-05
+
+### Commits
+
+- Moved Nullify to utils/Util [`3a01fcb`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3a01fcbe0cadf2357be023f873ef646ff2338c8f)
+- Changed BaseUser.payload to APIUser [`4e367be`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4e367bedf0f2f414f07d2e3c8f32421e6c159ec2)
+- Update CHANGELOG.md [`0e39245`](https://github.com/MakeShiftArtist/iFunny.ts/commit/0e39245f0d82a49f348ce2f2870214f7586c22b6)
+
+## [v0.3.3](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.3.2...v0.3.3) - 2022-09-05
+
+### Commits
+
+- Update dependencies [`7f60a69`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7f60a6934efc03725593555f29679b704dcf8426)
+- Update CHANGELOG.md [`7c77102`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7c77102d98f3e8fec9cde7685ac8020ac3c8b1ec)
+- Removed unused jest config [`014ea04`](https://github.com/MakeShiftArtist/iFunny.ts/commit/014ea04df8b2a0287f89c1913af9fc7ca89a302d)
+- Update CHANGELOG.md [`8d3d4f8`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8d3d4f887a32097801fe41f785861583a92a9b09)
+- Added .env to .gitignore adn .npmignore [`1771051`](https://github.com/MakeShiftArtist/iFunny.ts/commit/17710519585ea8f6c3b49f31f403c3096a22d8e4)
+
+## [v0.3.2](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.3.1...v0.3.2) - 2022-09-05
+
+### Commits
+
+- CHANGELOG.md to OLD_CHANGELOG.md due to version bug [`905b780`](https://github.com/MakeShiftArtist/iFunny.ts/commit/905b78078ca46ae9de595b46d6c0c2ede9514c41)
+- Update CHANGELOG.md [`3e71143`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3e711431572537514d24fede0c268dc1a1322e64)
+- Update CHANGELOG.md [`824c9f8`](https://github.com/MakeShiftArtist/iFunny.ts/commit/824c9f836c3defd1c347911c9fb2c29cf391529f)
+
+## [v0.3.1](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.3.0...v0.3.1) - 2022-09-04
+
+### Commits
+
+- Updates dependencies [`44d1300`](https://github.com/MakeShiftArtist/iFunny.ts/commit/44d13001da1e4cb648b803d67a752d659e111e11)
+- Update CHANGELOG.md [`54aa25a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/54aa25af25c60a69a8d737f8469d87c25648ff6a)
+- Updated @ifunny/ifunny-api-types version [`4394b91`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4394b91d668a52a7ffa1c99c829380deac09a333)
+
+## [v0.3.0](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.2.2...v0.3.0) - 2022-08-28
+
+### Commits
+
+- Added Client.users [`63a12f3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/63a12f3fa39862e90153968dbadf078f433969da)
+- Improved error handler [`36be51c`](https://github.com/MakeShiftArtist/iFunny.ts/commit/36be51c8d6925672fe77e07b0698baba6184b02e)
+- Cache works properly now [`37f9c7a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/37f9c7a6fda432373b5026c959b4c568ddf71fce)
+- Fixed UserManager [`edf6e5f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/edf6e5f4560102abf63e009ce6bbcc5013af83a7)
+- Added missing messages [`de5c80f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/de5c80f98a4e9af3573f5a57c571de133ca8c12e)
+- Fixed tsconfig.json [`86cdb1b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/86cdb1bfa784bcb54cd8aa4443ae283baa55acc9)
+- Add npmignore [`931444f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/931444f543164257b79cc3eb9cef0982c3164cc0)
+- Update @ifunny/ifunny-api-types and scripts [`d7a0a97`](https://github.com/MakeShiftArtist/iFunny.ts/commit/d7a0a977865d7041cf433af8ba11baba425210b7)
+- Added new and unknown static methods to iFunnyError [`d129fa7`](https://github.com/MakeShiftArtist/iFunny.ts/commit/d129fa7c43fc1aea8c7fc4b2f532cb2bd32b38e3)
+- isAxiosError now takes a data type [`c6e3424`](https://github.com/MakeShiftArtist/iFunny.ts/commit/c6e3424a2d0a88b20d30cd18df5e6669c376b885)
+- Removed useless fetch override from User [`57830a5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/57830a5547b47f249a2c12a74708e41609509256)
+- Update CHANGELOG.md [`0617243`](https://github.com/MakeShiftArtist/iFunny.ts/commit/0617243e8e5bd4fa6a0c04c088542ff74c2e07ff)
+- interceptors use handleError [`819d1c5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/819d1c5abb2092f039cac3597c3cb8883cfc98cc)
+- Add UserNotFound and UserUnavailable [`3a2d5c4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3a2d5c4abba790d4245f5bb4214b02564415a7dd)
+- Add UncaughtAxiosError [`baf4633`](https://github.com/MakeShiftArtist/iFunny.ts/commit/baf463372be68a74ccf6f1f77ae0f5069f703844)
+- isAxiosError returns AxiosError&lt;RESTAPIErrorResponse&gt; [`dbe355d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/dbe355d514cebd6d0bed1600c2726ada02645ef4)
+- Added override keyword to BaseUser.id [`934fb65`](https://github.com/MakeShiftArtist/iFunny.ts/commit/934fb6516baea77302f4e2c71ed06fed6eb3215c)
+- Added override keyword to BaseContent.id [`b680bff`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b680bff335bab0969c365a6406c064c58e92525b)
+
+## [v0.2.2](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.2.1...v0.2.2) - 2022-08-28
+
+### Commits
+
+- Update CHANGELOG.md [`d1b6830`](https://github.com/MakeShiftArtist/iFunny.ts/commit/d1b68304998190e7088b5cb62a74b9bb4720139b)
+- Changed paginate to a protected method [`4fa12b3`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4fa12b3323b34c48372e469b83fbfe8d8a9af162)
+
+## [v0.2.1](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.2.0...v0.2.1) - 2022-08-25
+
+### Commits
+
+- Autocommit Changelog [`5b53483`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5b53483cd1062f0a1bbccb44e790b24ce559de3c)
+
+## [v0.2.0](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.1.1...v0.2.0) - 2022-08-25
+
+### Commits
+
+- Add BaseUser [`f15d6a4`](https://github.com/MakeShiftArtist/iFunny.ts/commit/f15d6a450830732f7513e0b1a456eb6fc05caaca)
+- Add iFunnyError handling [`67ddd59`](https://github.com/MakeShiftArtist/iFunny.ts/commit/67ddd59dd1ef1543bab68eb4383804f1fbfab192)
+- Add Client [`974d6bf`](https://github.com/MakeShiftArtist/iFunny.ts/commit/974d6bf2791cd4acbf4c174f42e2f4bd60179704)
+- Add BaseClient [`0560308`](https://github.com/MakeShiftArtist/iFunny.ts/commit/05603081f41a63d86472acbe1a5c6fdd99b0048a)
+- Update dependencies [`7b5f5f5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7b5f5f53848ca869f4b869f7ad35ba936d942186)
+- Added Base Object [`e1fb342`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e1fb3429db1458c45aae7bf9688565874ea3179e)
+- Add Methods [`ca3e04b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/ca3e04b16c73cabe9e5263c32dd7c9fa3833f265)
+- Add Ban [`7c11c8a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/7c11c8a151edca68af0aebd017c91674e011cfdd)
+- Add update-deps script [`9948f6a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9948f6a651862b422dcde978512c5fd8be767b84)
+- Add README [`727be57`](https://github.com/MakeShiftArtist/iFunny.ts/commit/727be57f691b378978ce77a89c590a393acc3029)
+- Add MemeExperience [`d069d77`](https://github.com/MakeShiftArtist/iFunny.ts/commit/d069d77ea6944dbd17c75bec75b8ef998a57341c)
+- Add Constants [`e30f3bc`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e30f3bcaa921dc9146bd869b8da363c8b328a566)
+- Add Util [`9f16015`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9f16015e9282e5234dac2ead6c148b04db4eabc0)
+- Added try catch to Client.signUp [`610d868`](https://github.com/MakeShiftArtist/iFunny.ts/commit/610d868f4fbaca74fbb8a2cede4dddf4b943536d)
+- Update dependencies [`5de8a86`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5de8a86bad37463934eef51cb5a6d9ede1d86ba5)
+- Add User [`65f80f2`](https://github.com/MakeShiftArtist/iFunny.ts/commit/65f80f25d4afdea5367e0f0e63ab69c5bd9c1bcf)
+- Add BaseContent [`bac9cee`](https://github.com/MakeShiftArtist/iFunny.ts/commit/bac9ceef14ccd96bc34fa6be8e0883dcea7d1c41)
+- Add CachedManager [`e47a36b`](https://github.com/MakeShiftArtist/iFunny.ts/commit/e47a36bc2ed58f7457db83b6b0eb36025aff6de1)
+- Client.signUp fixed [`ebb3735`](https://github.com/MakeShiftArtist/iFunny.ts/commit/ebb37350e79c48729577b441db9ec90290fb63ba)
+- Update dependencies [`9837b63`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9837b63a46740afe556a57f40be3b1501c96f913)
+- Imports [`26f96c5`](https://github.com/MakeShiftArtist/iFunny.ts/commit/26f96c5f0f71bd306f46bc588de7f50906e9fbf3)
+- Add UserManager [`6015b52`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6015b5277102717d977244671490baac29219278)
+- Add index exports [`5edd391`](https://github.com/MakeShiftArtist/iFunny.ts/commit/5edd39181d9c970010958e2054d0d931d2646458)
+- Add test.ts to gitignore [`6b8f321`](https://github.com/MakeShiftArtist/iFunny.ts/commit/6b8f3216405e14a65742a1492649fa59e2836481)
+- Remove unused variable [`8088101`](https://github.com/MakeShiftArtist/iFunny.ts/commit/8088101aec3f4fc0c815942a71cd47b690c4a05e)
+- Fixed imports in Messages.ts [`9895a9a`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9895a9acf1dbf76a742deb6a023488c677071dc5)
+- import endpoints from @ifunny/ifunny-api-types [`3a8722f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/3a8722fa525631bf9e482a558f335f86b9e8ce22)
+- Undo npm version [`9144934`](https://github.com/MakeShiftArtist/iFunny.ts/commit/9144934fe26d7f1158a4f4f93de86774b9023eb0)
+
+## [v0.1.1](https://github.com/MakeShiftArtist/iFunny.ts/compare/v0.1.0...v0.1.1) - 2022-08-21
+
+### Commits
+
+- Add changelog-template.hbs [`75e38ce`](https://github.com/MakeShiftArtist/iFunny.ts/commit/75e38cea105142f4fca94490e89d31c4580f079f)
+- Added tsconfig.json [`57aa53f`](https://github.com/MakeShiftArtist/iFunny.ts/commit/57aa53f7f8d16235c084f2145691f0bdf568b5e3)
+- Add @discordjs/collection [`71afe30`](https://github.com/MakeShiftArtist/iFunny.ts/commit/71afe3014b62a4cc04e40c3d40975d95055b4274)
+- Added jest.config.js [`1e29c9d`](https://github.com/MakeShiftArtist/iFunny.ts/commit/1e29c9d480af9cbf0ad13b316b8d7222f6650571)
+- Fixed chores in changelog [`866263e`](https://github.com/MakeShiftArtist/iFunny.ts/commit/866263edb8fb22ffe414a6e6a39d3ac78abfcbb5)
+
+## v0.1.0 - 2022-08-15
+
+### Commits
+
+- Add package.json and package-lock.json [`b1a46a9`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b1a46a9989357fa2aee95a533eccf5ca7259be4a)
+- Add github workflows and templates [`4134a85`](https://github.com/MakeShiftArtist/iFunny.ts/commit/4134a85609e0e548f633dba442cd514b1cf4f2c9)
+- Add LICENSE [`11af852`](https://github.com/MakeShiftArtist/iFunny.ts/commit/11af8521bae4256078f1fc978196f7f8735441ce)
+- Add gitignore [`127a770`](https://github.com/MakeShiftArtist/iFunny.ts/commit/127a7700657779bf16357edc554b6d78d0c5c34c)
+- Add prettierignore [`b0cbfba`](https://github.com/MakeShiftArtist/iFunny.ts/commit/b0cbfba2b269bd6381afa55f4affd0e604f85754)
